@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        q::before {
+            content: "<<";
+            color: blue;
+        }
+
+        q::after {
+            content: ">>";
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<!--
+::before 会为当前元素创建一个子元素作为伪元素
+::after 用来匹配已选中的元素的一个虚拟的最后子元素
+-->
+<q>一些引用</q>
+测试测试
+<q>一些引用</q>
+
+</body>
+</html>

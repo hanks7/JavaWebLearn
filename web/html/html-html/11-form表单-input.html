@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- form表单:
+ 收集用户输入的内容(文本,文件)
+action:提交到服务器地址
+method:指定提交时用哪种http方法:POST/GET 大小写未知,开发工具提示的是小写
+name:标识
+autocomplete:浏览器是否可以自动填充
+enctype:指定表单内容编码 UTF-8 -->
+
+<form
+        action="提交到服务器的地址"
+        method="post"
+        id="formID"
+        enctype="UTF-8"
+        style="border: 1px solid #f00;"
+>
+    <input type="text" maxlength="10" value="我是文本"/>  <!--value:默认值-->
+    <br>
+    <input type="password" value="我是密码"/>
+    <br>
+    <input type="radio" value="0" checked name="gender"/> 男 <!--name的值必须相同 radio才能交互. checked : 默认的选中-->
+    <input type="radio" value="1" name="gender"/> 女
+    <br>
+    <input type="checkbox" checked value="0"/> 电影 <!--checked : 默认的选中-->
+    <input type="checkbox" value="1"/> 音乐
+    <input type="checkbox" value="2"/> 美术
+    <br>
+    <input type="button" value="我是按钮"/>
+    <br>
+    <input type="number"/><!--不需要value,你填写了,也不会显示-->
+    <br>
+    <input type="date"/>
+    <br>
+    <input type="color"/> <!--兼容性问题 ,不常用-->
+    <br>
+    <input type="color"/>
+    <br>
+    <input type="range" min="1" max="5"/>
+    <br>
+    <input type="url"/> <!--输入的是网址-->
+    <br>
+    <input type="file" multiple="multiple"/> <!--提交文件  multiple="multiple":表示多文件提交,不写的话,默认单文件提交-->
+    <br>
+    <select name="" id="about-dialog-button-bar" size="14" multiple>
+        <!--multiple:表示多选(课程未提交)还没试成功 size="4":表示展开选择框,你也可以去掉这个属性,对比看看什么效果-->
+        <option value="">苹果</option>
+        <option value="">香蕉</option>
+        <option value="">香蕉</option>
+        <option value="">香蕉</option>
+        <option value="">香蕉</option>
+        <option value="">香蕉</option>
+        <option value="" selected>橙子</option><!--selected:表示默认选中-->
+    </select>
+    <br>
+    <textarea style="resize: none;" rows="3" cols="4"> </textarea>
+    <!--rows="3" cols="4":表示3行4列 如果不写样式 还是可以拖拽改变文本区域的大小-->
+    <!--style="resize: none;"不可以拖拽改变文本区域的大小-->
+    <br>
+
+
+    <input type="submit" value="确定"/>  <!--如果你不写value默认是"提交"-->
+    <br>
+
+    <button type="reset" from="formID">重置</button><!--type="reset":重置表单内提交的内容-->
+</form>
+
+<button type="submit" from="formID">提交</button><!--from="formID" : 表示提交表单id为formID的表单-->
+
+</body>
+</html>

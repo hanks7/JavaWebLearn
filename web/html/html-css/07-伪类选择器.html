@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a:link {
+            color: green;
+        }
+
+        a:hover {
+            color: blue;
+        }
+
+        a:active {
+            color: yellow;
+        }
+
+        a:visited {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+
+<!--
+注意 这里":" 是在英文输入法的: 中文输入法下的:可能无法实现功能 伪类选择器不一定是链接,任何标签都可以
+
+:link 向未被访问的链接添加样式 (光标没有放在上面默认的样式)
+:hover 当鼠标悬浮上方时,向元素添加样式 (光标放在上面还没点)
+:active 向被激活的元素添加样式 (光标放在上面点击时)
+:visited 向被访问的链接添加样式 (光标放在上面点击后)
+-->
+
+<a href="#">www.baidu.com</a>
+
+
+</body>
+</html>

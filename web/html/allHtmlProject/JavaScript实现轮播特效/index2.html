@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .border {
+            border: 1px red solid;
+        }
+
+        @font-face {
+            font-family: 'iconfont';
+            src: url('img/font/iconfont.eot');
+            src: url('img/font/iconfont.eot') format('embedded-opentype'),
+            url('img/font/iconfont.woff') format('woff'),
+            url('img/font/iconfont.ttf') format('truetype'),
+            url('img/font/iconfont.svg#iconfont') format('svg');
+        }
+
+        body {
+            font-family: "微软雅黑";
+            color: #14191e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /*<!--*/
+        /*visible	默认值。内容不会被修剪，会呈现在元素框之外。*/
+        /*hidden	内容会被修剪，并且其余内容是不可见的。*/
+        /*scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。*/
+        /*auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。*/
+        /*inherit	规定应该从父元素继承 overflow 属性的值。*/
+        /*-->*/
+        .main {
+            margin: 30px auto;
+            position: relative;
+            width: 1200px;
+            height: 460px;
+            background-color: rgba(38, 35, 11, 0.21);
+            overflow: hidden; /*这里并不是去除浮动,是为了隐藏多出来的界面,你可以注释这句就能看出效果*/
+        }
+
+        .menu-content {
+            background: rgba(211, 140, 118, 0.32);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 244px;
+            height: 460px;
+            z-index: 2;
+            padding-top: 6px;
+        }
+
+        .menu-item {
+            height: 64px;
+            line-height: 66px;
+            font-size: 12px;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .menu-item a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: block;
+            padding: 0 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            height: 63px;
+            font-size: 16px;
+        }
+
+        .menu-item:last-child a {
+            border-bottom: none;
+        }
+
+        span:link {
+            background-color: green;
+        }
+
+        span:hover {
+            background-color: blue;
+        }
+
+        span:active {
+            background-color: yellow;
+        }
+
+        .menu-item i {
+            position: absolute;
+            right: 32px;
+            top: 24px;
+            color: rgba(255, 54, 108, 0.5);
+            font-size: 24px;
+            top: 2px;
+            font-style: normal;
+            font-weight: normal;
+            font-family: "iconfont";
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            margin-top: -25px;
+            z-index: 22;
+        }
+
+        .pre {
+            left: 244px;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .dots {
+            z-index: 22;
+            position: absolute;
+            bottom: 0px;
+            width: 100px;
+            line-height: 30px;
+            right: 30px;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+            background-color: rgba(7, 17, 27, 0.4);
+            cursor: pointer;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        .dots span.active {
+            box-shadow: 0 0 0 2px rgba(7, 17, 27, 0.4) inset;
+            background-color: #ffffff;
+        }
+        .slide1 {
+            background-image: url(img/bg1.jpg);
+        }
+
+        .slide2 {
+            background-image: url(img/bg2.jpg);
+        }
+
+        .slide3 {
+            background-image: url(img/bg3.jpg);
+        }
+        .banner {
+            width: 1200px;
+            height: 460px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner-slide {
+            width: 1200px;
+            height: 460px;
+            background-repeat: no-repeat;
+            float: left;
+            display: none;
+        }
+
+        .slide-active {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+<div class="main">
+    <!-- 菜单 -->
+    <div class="menu-content" id="menu-content">
+        <div class="menu-item">
+            <a href="">
+                <span>手机、配件</span>
+                <i class="icon">&#xe665;</i>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="">
+                <span>电脑</span>
+                <i class="icon">&#xe665;</i>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="">
+                <span>家用电器</span>
+                <i class="icon">&#xe665;</i>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="">
+                <span>家具</span>
+                <i class="icon">&#xe665;</i>
+            </a>
+        </div>
+    </div>
+    <div class="border button pre">
+    </div>
+    <div class="border button next">
+    </div>
+    <div class="dots border" id="dots">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+    </div>
+    <style>
+
+
+
+
+    </style>
+    <div class="banner" id="banner">
+        <a href="">
+            <div class="banner-slide slide1 slide-active"></div>
+        </a>
+        <a href="">
+            <div class="banner-slide slide2"></div>
+        </a>
+        <a href="">
+            <div class="banner-slide slide3"></div>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

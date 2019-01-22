@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a {
+            text-decoration: none; /*表示去除下划线*/
+            /* cursor: none;表示去除光标放在上面时的效果(在有的浏览器上连光标都没有)*/
+        }
+    </style>
+</head>
+<body>
+<!--
+target="_blank" //表示在新标签页中打开
+target="_self" //表示在当前页中打开
+-->
+<a href="https://www.baidu.com/" target="_blank">www.baidu.com</a>
+<br>
+<a href="javascript:;" target="_blank">禁止跳转1</a>
+<br>
+<a href="javascript:void (0);" target="_blank">禁止跳转2</a>
+<br>
+<!--
+href="#titleThird" //表示跳转到id为titleThird的控件的位置
+-->
+<a href="#titleThird" target="_blank">#titleThird</a>
+
+<div id="@+id/titleThird"></div>
+</body>
+</html>

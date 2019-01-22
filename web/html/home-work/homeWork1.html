@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用Servlet完成加法计算器</title>
+    <style>
+        * {
+            margin: 12px;
+        }
+    </style>
+</head>
+<body>
+
+
+<form
+        action="http://localhost:8080/jdbc/HomeWorkServlet.do?parameter1=1&parameter2=2"
+        method="get"
+        id="formID"
+        enctype="UTF-8"
+        style="border: 1px solid #f00;"
+        onsubmit="return check(this)"
+>
+    <h4>加法计算器</h4>
+    <div>
+        加数1<input type="text" maxlength="10" value="" name="parameter1" />  <!--value:默认值-->
+        <br>
+    </div>
+    <div>
+        加数2<input type="text" maxlength="10" value="" name="parameter2"/>  <!--value:默认值-->
+        <br>
+    </div>
+
+
+    <input type="submit" value="确定"/>  <!--如果你不写value默认是"提交"-->
+    <br>
+
+</form>
+
+<script type="text/javascript">
+    function check(form) {
+        if(form.parameter1.value==='') {
+            alert("请输入parameter1!");
+            form.userId.focus();
+            return false;
+        }
+        if(form.parameter2.value===''){
+            alert("请输入parameter2!");
+            form.password.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

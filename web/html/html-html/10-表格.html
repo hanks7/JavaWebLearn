@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:style="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+tr:表示行 td表示列
+<br>
+<table>
+    <tr>
+        <td>学号</td>
+        <td>姓名</td>
+        <td>性别</td>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>学号</th> <!--th标签表示表格头,默认字体会加粗-->
+        <th>姓名</th>
+        <th>性别</th>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+</table>
+
+
+<table>
+    <thead><!--表头-->
+    <tr>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>总分</th>
+    </tr>
+    </thead>
+    <tfoot><!--表底-->
+    <tr>
+        <td></td>
+        <td></td>
+        <td>80</td>
+    </tr>
+    </tfoot>
+
+    <tbody><!--表格体-->
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>80</td>
+    </tr>
+    </tbody>
+</table>
+
+<!--
+border :边框 指的是外边框
+cellspacing:单元格间距 外边距
+cellpadding:单元格边距  内边距
+colspan:单元格跨列
+rowspan:单元格跨行
+align:内容对齐
+-->
+
+<table border="12" cellspacing="16" cellpadding="10">
+    <tr align="center">
+        <td>学号</td>
+        <td>姓名</td>
+        <td>性别</td>
+    </tr>
+    <tr align="center">
+        <td>54564</td>
+        <td>hanks7</td>
+        <td rowspan="2">男</td>
+    </tr>
+    <tr align="center">
+        <td>54564</td>
+        <td>hanks7</td>
+    </tr>
+</table>
+
+<table border="12" cellspacing="16" cellpadding="10">
+    <tbody align="center"><!--表格体-->
+    <tr>
+        <td>学号</td>
+        <td>姓名</td>
+        <td>性别</td>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td rowspan="2">男</td> <!--rowspan="2"表示占两列-->
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

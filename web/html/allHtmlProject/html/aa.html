@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <style type="text/css">
+        .test-input {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>输入数字： <input type="text" id="aa-input"></p>
+
+    <p>输入数字： <input type="button" id="aa-button" value="点击按钮" onclick="buttonClick()"></p>
+
+    <div id="aa-div" data-type="imooc">请稍后....</div>
+
+    <button onclick="openwindow()">创建窗口</button>
+    <button onclick="myFunction()">调整窗口</button>
+    <button onclick="moveFunction()">移动窗口</button>
+    <button onclick="closeFunction()">关闭窗口</button>
+
+
+    <hr/>
+
+    <button onclick="button1()">当前显示器屏幕宽度</button>
+    <button onclick="button2()">当前显示器屏幕高度</button>
+    <button onclick="button3()">当前窗口文档显示宽度</button>
+    <button onclick="button4()">当前窗口文档显示高度</button>
+
+
+    <br/>
+    <button onclick="button5()">点击打开输入的网站myfotophun</button>
+
+
+    <script type="text/javascript">
+        var TAG = "输出";
+
+        function log(tag, content) {
+            console.log(TAG + ":" + tag, content);
+        }
+
+        function log2(content) {
+            log("", content)
+        }
+
+        function buttonClick() {
+            var x = document.getElementById("aa-input").value;
+            log("aa-input", x);
+            if (x > 50) {
+                document.getElementById("aa-div").innerHTML = x;
+            }
+            /*
+
+                        log2(5 == 5);
+                        log2(5 == '5');
+                        log2(5 === 5);
+                        log2(5 === '5');
+
+                        var a = 1;
+                        switch (a) {
+                            case 1:
+                                log("switch", "a=1");
+                                break;
+                            case 2:
+                                log("switch", "a=1");
+                                break;
+                            case 3:
+                                log("switch", "a=1");
+                                break;
+                            default:
+                                log("switch", "default");
+                        }
+
+                        var person={name:"houjianjun",age:18, sex: 1}
+                        for (key in person) {
+                            log2(person[key]);
+                        }*/
+            /*  for (var i = 1; i < 10; i++) {
+                  log(i);
+              }*/
+            /*  var guess_int=10;
+                var num = prompt("请输入您的名字", ""); //将输入的内容赋给变量 name ，
+
+                //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+                if (num)//如果返回的有内容
+                {
+                    if(num>guess_int){
+                        alert("您猜大了");
+                        return;
+                    }
+                    if(num<guess_int){
+                        alert("您猜小了");
+                        return;
+                    }
+
+                    alert("您猜对了");
+                }*/
+
+            var main_div = document.getElementById("aa-div");
+            main_div.style.color = "blue";
+
+        }
+        var w;
+
+        function openwindow() {
+            w = window.openwindow2(' ', '', 1300, 900);
+            // w = window.open(' ', '', 'width=300,height=300');
+
+
+        }
+
+        function openwindow2(url, name, iWidth, iHeight) {
+// url 转向网页的地址
+// name 网页名称，可为空
+// iWidth 弹出窗口的宽度
+// iHeight 弹出窗口的高度
+//window.screen.height获得屏幕的高，window.screen.width获得屏幕的宽
+            var iTop = (window.screen.height - 30 - iHeight) / 2; //获得窗口的垂直位置;
+            var iLeft = (window.screen.width - 10 - iWidth) / 2; //获得窗口的水平位置;
+            //height=900,innerHeight=900,width=1300,innerWidth=1300,top=75,left=305,toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no
+            var str = 'height=' + iHeight + ',innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no';
+
+            log("str", str);
+            return window.open(url, name, str);
+        }
+
+        function myFunction() {
+            w.resizeTo(500, 500);
+            w.focus();
+        }
+
+        function moveFunction() {
+            w.moveTo(700, 500);
+            w.focus();
+        }
+
+        function closeFunction() {
+            w.close();
+            w.focus();
+        }
+        log2(screen.availHeight);//屏幕高度,不包括Windows的底部的任务栏
+        log2(screen.availWidth);//屏幕宽度,
+        log2(window.innerWidth);//浏览器页面的宽度
+        log2(window.innerHeight);//浏览器页面的高度
+
+        function button1() {
+            alert(screen.availWidth);
+        }
+        function button2() {
+            alert(screen.availHeight);
+        }
+        function button3() {
+            alert(window.innerWidth);//浏览器页面的宽度
+        }
+        function button4() {
+            alert(window.innerHeight);//浏览器页面的高度
+        }
+        function button5() {
+            var num = prompt("请输入网站地址", ""); //将输入的内容赋给变量 name ，
+
+            //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+            openwindow2(num, '', 1200, 900);
+        }
+
+        log("返回web 主机的域名", location.hostname);
+        log("返回当前页面的路径和文件名", location.pathname);
+        log("返回所使用的web协议<http://或者 https://", location.protocol);
+        log("返回当前页面的整个url", location.href);
+
+        /**
+         * window.history 对象在编写时可不使用 window这个前缀
+         * history.back()- 与在浏览器点击后退按钮相同
+         * history.forward()-与在浏览器中点击按钮向前相同
+         * history.go()
+         *
+         * go(-1)==history.back();
+         * go(1)==forward();
+         */
+    </script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            color:lightblue;!important;/*!important可提高选择器优先级别到最高*/
+        }
+        .myclass{
+            color:yellow;
+        }
+        #p {
+            color: green;
+        }
+    </style>
+
+</head>
+<body>
+<!--
+ 内联样式的优先级别高于外联样式
+ 外联样式:id选择器级别最高,其次是类选择器
+ 元素选择器和伪类
+-->
+<p id="p" class="myclass" style="color: red;">这是一个段落</p>
+</body>
+</html>

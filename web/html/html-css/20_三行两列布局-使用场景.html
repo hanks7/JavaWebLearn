@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三行两列布局</title>
+    <style>
+        html, body {
+            margin: 0;
+        }
+
+        #container {
+            height: 500px;
+            width: 100%;
+            background-color: #b5eea2;
+        }
+
+        .nav {
+            border:1px red solid;
+            position: relative;
+            float: left;
+            width: 49%;
+            height: 480px;
+            text-align: center;
+        }
+
+        .nav img {
+            position: absolute;
+            margin-top: 150px;
+            margin-left:-100px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="nav">
+        <img src="http://climg.mukewang.com/58c0f808000129a303600215.jpg"
+             alt="Test">
+    </div>
+    <div class="nav">
+        <img src="http://climg.mukewang.com/58c0f819000198a703600214.jpg"
+             alt="Test">
+    </div>
+</div>
+</body>
+</html>

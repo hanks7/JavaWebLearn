@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="css/reset.css"/>
+</head>
+<body>
+<style>
+    .main {
+        position: relative;
+        height: 460px;
+        width: 1200px;
+        margin: 20px auto;
+    }
+
+    .banner {
+        width: 1200px;
+        height: 460px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .banner-slide {
+        width: 1200px;
+        height: 460px;
+        background-repeat: no-repeat;
+        float: left;
+        display: none;
+    }
+
+    .visible {
+        display: block;
+    }
+
+    .slide1 {
+        background-image: url(img/bg1.jpg);
+    }
+
+    .slide2 {
+        background-image: url(img/bg2.jpg);
+    }
+
+    .slide3 {
+        background-image: url(img/bg3.jpg);
+    }
+</style>
+<div class="main">
+    <div class="banner">
+        <a href="">
+            <div class="banner-slide slide1 visible"></div>
+        </a>
+        <a href="">
+            <div class="banner-slide slide2"></div>
+        </a>
+        <a href="">
+            <div class="banner-slide slide3"></div>
+        </a>
+
+
+    </div>
+    <style>
+        .button {
+            position: absolute;
+            height: 80px;
+            width: 40px;
+            left: 244px;
+            top: 50%;
+            margin-top: -40px;
+            background: url(img/arrow.png) center no-repeat;
+            transform: rotate(180deg);
+        }
+
+        .next {
+            transform: rotate(0deg);
+            left: auto;
+            right: 0;
+        }
+
+        .button:hover {
+            background-color: #333;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }
+
+        .dots {
+            position: absolute;
+            width: 90px;
+            height: 30px;
+            bottom: 15px;
+            right: 100px;
+        }
+
+        .dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+            background-color: rgba(7, 17, 27, 0.4);
+            display: inline-block;
+        }
+
+        .dots span.active {
+            box-shadow: 0 0 0 2px rgba(7, 17, 27, 0.4) inset;
+            background-color: #ffffff;
+        }
+    </style>
+    <div class="button"></div>
+    <div class="button next"></div>
+    <div class="dots">
+        <span class="active"></span>
+        <span class=""></span>
+        <span class=""></span>
+    </div>
+
+</div>
+
+</body>
+</html>
