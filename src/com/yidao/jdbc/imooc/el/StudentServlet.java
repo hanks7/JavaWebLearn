@@ -1,4 +1,4 @@
-package com.yidao.jdbc.imooc.jstlEL;
+package com.yidao.jdbc.imooc.el;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * el 表达式练习
+ */
 @WebServlet("/info")
 public class StudentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

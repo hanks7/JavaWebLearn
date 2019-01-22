@@ -1,4 +1,4 @@
-package com.yidao.jdbc.imooc.jstlEL;
+package com.yidao.jdbc.imooc.el;
 
 public class Student {
 	private String name;

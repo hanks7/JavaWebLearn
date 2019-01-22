@@ -213,7 +213,7 @@ public class UJdbc {
 //		delete(1);
         // 查询数据库得到结果
 //        insertBatch();
-        UtilGson.GsonToJson(setlect());
+        Ugson.toJson(setlect());
 
     }
 

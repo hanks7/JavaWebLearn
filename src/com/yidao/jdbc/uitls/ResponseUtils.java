@@ -49,7 +49,7 @@ public class ResponseUtils {
 	 * @Description: TODO(页面异步回调返回Json)
 	 */
 	public static void outputJson(HttpServletResponse response, Object obj) {
-		String s = UtilGson.GsonToJson(obj);
+		String s = Ugson.toJson(obj);
 		response.setContentType("text/plain;charset=UTF-8");
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");

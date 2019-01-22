@@ -10,7 +10,7 @@ import java.sql.ResultSetMetaData;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.yidao.jdbc.uitls.UtilGson.*;
+import static com.yidao.jdbc.uitls.Ugson.*;
 
 
 public class MyUtils {
@@ -82,7 +82,7 @@ public class MyUtils {
 			String msg) {
 		MessageDataBean messageBean = new MessageDataBean();
 		messageBean.setContent(code, msg, "");
-		String responseText = GsonToJson(messageBean);
+		String responseText = toJson(messageBean);
 		ResponseUtils.renderJson(response, responseText);
 	}
 
@@ -96,7 +96,7 @@ public class MyUtils {
 	public static void trueMessage(HttpServletResponse response, Object data) {
 		MessageDataBean messageBean = new MessageDataBean();
 		messageBean.setContent(0, "success", data);
-		String responseText = GsonToJson(messageBean);
+		String responseText = toJson(messageBean);
 		ResponseUtils.renderJson(response, responseText);
 	}
 

@@ -6,6 +6,9 @@ package com.yidao.jdbc.uitls;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +17,7 @@ import java.util.Map;
  * @Description 简单封装alibaba产出的json处理框架 (JSON parser + JSON generator)
  * @Date 2014年9月28日
  */
-public class UtilGson {
+public class Ugson {
 	private static Gson gson = null;
 	static {
 		if (gson == null) {
@@ -22,7 +25,7 @@ public class UtilGson {
 		}
 	}
 
-	private UtilGson() {
+	private Ugson() {
 	}
 
 	/**
@@ -31,12 +34,12 @@ public class UtilGson {
 	 * @param object
 	 * @return
 	 */
-	public static <T> String GsonToJson(T object) {
+	public static <T> String toJson(T object) {
 		String gsonString = null;
 		if (gson != null) {
 			gsonString = gson.toJson(object);
 		}
-		Ulog.i("GsonToJson",gsonString);
+		Ulog.i("toJson",gsonString);
 		return gsonString;
 	}
 
@@ -47,7 +50,7 @@ public class UtilGson {
 	 * @param cls
 	 * @return
 	 */
-	public static <T> T GsonToBean(String gsonString, Class<T> cls) {
+	public static <T> T toBean(String gsonString, Class<T> cls) {
 		T t = null;
 		if (gson != null) {
 			t = gson.fromJson(gsonString, cls);
@@ -62,7 +65,7 @@ public class UtilGson {
 	 * @param cls
 	 * @return
 	 */
-	public static <T> List<T> GsonToList(String gsonString, Class<T> cls) {
+	public static <T> List<T> toList(String gsonString, Class<T> cls) {
 		List<T> list = null;
 		if (gson != null) {
 			list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
@@ -77,7 +80,7 @@ public class UtilGson {
 	 * @param gsonString
 	 * @return
 	 */
-	public static <T> List<Map<String, T>> GsonToListMaps(String gsonString) {
+	public static <T> List<Map<String, T>> toListMaps(String gsonString) {
 		List<Map<String, T>> list = null;
 		if (gson != null) {
 			list = gson.fromJson(gsonString,
@@ -93,7 +96,7 @@ public class UtilGson {
 	 * @param gsonString
 	 * @return
 	 */
-	public static <T> Map<String, T> GsonToMaps(String gsonString) {
+	public static <T> Map<String, T> toMaps(String gsonString) {
 		Map<String, T> map = null;
 		if (gson != null) {
 			map = gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
