@@ -34,5 +34,6 @@ public class Servlet1 extends HttpServlet {
         UJdbc.useDB();
         MyUtils.trueMessage(response, UJdbc.setlect());
         UJdbc.closeMySQLConn();
+
     }
 }
