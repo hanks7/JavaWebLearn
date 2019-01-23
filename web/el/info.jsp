@@ -1,5 +1,6 @@
+<%@ page import="com.yidao.jdbc.imooc.el.Student" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "com.imooc.el.Student"%>
+		 pageEncoding="UTF-8"  %>
 <!DOCTYPE html>
 <html>
 <head>

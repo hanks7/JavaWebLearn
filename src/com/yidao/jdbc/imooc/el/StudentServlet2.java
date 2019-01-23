@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * el 表达式练习
  */
-@WebServlet("/info")
-public class StudentServlet extends HttpServlet {
+@WebServlet("/info2")
+public class StudentServlet2 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String teacher = request.getParameter("teacher");
         Student stu = new Student();
