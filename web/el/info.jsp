@@ -1,4 +1,4 @@
-<%@ page import="com.yidao.jdbc.imooc.el.Student" %>
+<%@ page import="com.yidao.jdbc.imooc.daty2el.Student" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"  %>
 <!DOCTYPE html>
