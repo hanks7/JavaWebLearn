@@ -3,30 +3,28 @@ package com.yidao.jdbc.uitls;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpRequest;
-import org.apache.http.NoHttpResponseException;
-import org.apache.http.ParseException;
+
+import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -46,6 +44,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.pool.PoolStats;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
@@ -138,18 +137,18 @@ public class HttpUtils {
                 result = EntityUtils.toString(entity, ContentType.getOrDefault(entity).getCharset());
                 EntityUtils.consume(entity);
             }
-        } catch (ConnectTimeoutException var25) {
-            ;
-        } catch (SocketTimeoutException var26) {
-            ;
-        } catch (ClientProtocolException var27) {
-            ;
-        } catch (ParseException var28) {
-            ;
-        } catch (IOException var29) {
-            ;
-        } catch (Exception var30) {
-            ;
+        } catch (ConnectTimeoutException exc) {
+            return exc.getMessage();
+        } catch (SocketTimeoutException exc) {
+            return exc.getMessage();
+        } catch (ClientProtocolException exc) {
+            return exc.getMessage();
+        } catch (ParseException exc) {
+            return exc.getMessage();
+        } catch (IOException exc) {
+            return exc.getMessage();
+        } catch (Exception exc) {
+            return exc.getMessage();
         } finally {
             try {
                 if (response != null) {
@@ -168,6 +167,94 @@ public class HttpUtils {
         return result;
     }
 
+
+    public static String doPost(String url, Map<String, String> map, String charset) {
+        CloseableHttpClient httpClient = null;
+        HttpPost httpPost = null;
+        String result = null;
+        try {
+            httpClient = HttpClients.createDefault();
+            httpPost = new HttpPost(url);
+            //设置参数
+            List<NameValuePair> list = new ArrayList<>();
+            Iterator iterator = map.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> elem = (Map.Entry<String, String>) iterator.next();
+                list.add(new BasicNameValuePair(elem.getKey(), elem.getValue()));
+            }
+            if (list.size() > 0) {
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list, charset);
+                httpPost.setEntity(entity);
+            }
+            HttpResponse response = httpClient.execute(httpPost);
+            if (response != null) {
+                HttpEntity resEntity = response.getEntity();
+                if (null != resEntity) {
+                    result = EntityUtils.toString(resEntity, ContentType.getOrDefault(resEntity).getCharset());
+                    EntityUtils.consume(resEntity);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return unicodeToString(result);
+    }
+
+    /**
+     * 获取字符串的unicode编码
+     * 汉字“木”的Unicode 码点为Ox6728
+     *
+     * @param s 木
+     * @return \ufeff\u6728  \ufeff控制字符 用来表示「字节次序标记（Byte Order Mark）」不占用宽度
+     * 在java中一个char是采用unicode存储的 占用2个字节 比如 汉字木 就是 Ox6728 4bit+4bit+4bit+4bit=2字节
+     */
+    public static String stringToUnicode(String s) {
+        try {
+            StringBuffer out = new StringBuffer("");
+            //直接获取字符串的unicode二进制
+            byte[] bytes = s.getBytes("unicode");
+            //然后将其byte转换成对应的16进制表示即可
+            for (int i = 0; i < bytes.length - 1; i += 2) {
+                out.append("\\u");
+                String str = Integer.toHexString(bytes[i + 1] & 0xff);
+                for (int j = str.length(); j < 2; j++) {
+                    out.append("0");
+                }
+                String str1 = Integer.toHexString(bytes[i] & 0xff);
+                out.append(str1);
+                out.append(str);
+            }
+            return out.toString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Unicode转 汉字字符串
+     *
+     * @param str \u6728
+     * @return '木' 26408
+     */
+    public static String unicodeToString(String str) {
+
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            //group 6728
+            String group = matcher.group(2);
+            //ch:'木' 26408
+            ch = (char) Integer.parseInt(group, 16);
+            //group1 \u6728
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + "");
+        }
+        return str;
+    }
+
+
     private static SSLConnectionSocketFactory createSSLConnSocketFactory() {
         SSLConnectionSocketFactory sslsf = null;
         X509TrustManager trustManager = new X509TrustManager() {
@@ -184,7 +271,7 @@ public class HttpUtils {
 
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init((KeyManager[])null, new TrustManager[]{trustManager}, (SecureRandom)null);
+            sslContext.init((KeyManager[]) null, new TrustManager[]{trustManager}, (SecureRandom) null);
             sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -200,8 +287,8 @@ public class HttpUtils {
                 Map<HttpRoute, PoolStats> routeStatsMap = new HashMap();
                 Iterator var2 = routeSet.iterator();
 
-                while(var2.hasNext()) {
-                    HttpRoute route = (HttpRoute)var2.next();
+                while (var2.hasNext()) {
+                    HttpRoute route = (HttpRoute) var2.next();
                     PoolStats stats = connManager.getStats(route);
                     routeStatsMap.put(route, stats);
                 }

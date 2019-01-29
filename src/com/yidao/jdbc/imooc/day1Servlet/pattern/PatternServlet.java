@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 所有含有/pattern/的url都会被拦截
+ */
 @WebServlet("/pattern/*")
 public class PatternServlet extends HttpServlet{
 

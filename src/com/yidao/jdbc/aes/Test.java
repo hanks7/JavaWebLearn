@@ -3,8 +3,10 @@ package com.yidao.jdbc.aes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.model.KeyPairInfo;
+import com.yidao.jdbc.uitls.HttpUtils;
 import com.yidao.jdbc.uitls.Ulog;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Test {
@@ -20,9 +22,9 @@ public class Test {
         String bizParam = "{\"hospitalID\":\"123200004660027298\",\"hospitalName\":\"苏州大学附属第一医院\",\"startTime\":\"2018-06-22\",\"endTime\":\"2018-06-26\",\"startRN\":0,\"recordNum\":1000}";
 
         // appId
-        String appId="MDMUD024";
+        String appId = "MDMUD024";
         // 初始化签名工具对象
-        RsaHelper rsaHelper = new RsaHelper( appId);
+        RsaHelper rsaHelper = new RsaHelper(appId);
 
 //        // 加签方法
         String ciphertext = rsaHelper.sign(bizParam, priateKey);
@@ -34,14 +36,43 @@ public class Test {
 
         // 服务端验签流程,实际环境ciphertext为获取的参数
         Gson GSON = new Gson();
-        Map<String, Object> result = GSON.fromJson(ciphertext, new TypeToken<Map<String, Object>>() {}.getType());
+        Map<String, Object> result = GSON.fromJson(ciphertext, new TypeToken<Map<String, Object>>() {
+        }.getType());
         Ulog.i("解析：" + result);
-        Ulog.i("验签结果:"+rsaHelper.decryptresponse(result,publicKey));
-        Ulog.i("解析业务数据:"+rsaHelper.decode(result.get("bizContent").toString()));
+        Ulog.i("验签结果:" + rsaHelper.decryptresponse(result, publicKey));
+        Ulog.i("解析业务数据:" + rsaHelper.decode(result.get("bizContent").toString()));
 
 
         KeyPairInfo keyPairInfo = rsaHelper.getKeyPair(1024);
-        Ulog.i("PrivateKey:"+ keyPairInfo.getPrivateKey());
-        Ulog.i("PublicKey:"+  keyPairInfo.getPublicKey());
+//        Ulog.i("PrivateKey:"+ keyPairInfo.getPrivateKey());
+//        Ulog.i("PublicKey:"+  keyPairInfo.getPublicKey());
+
+
+        String message = HttpUtils.sendGetRequest("http://116.247.74.76:8682/api/AutoUpdate?id=00000000000001", null);
+        Ulog.i("message", message);
+
+
+
+        Map<String,String> params = new HashMap<>();
+        params.put("UDI_DI","010082700209497017201130108409387");
+        params.put("UDI_EXPIDATE","201130");
+        params.put("UDI_MANUDATE","8409387");
+        params.put("UDI_LOT","161130");
+        params.put("UDI_SN","30001");
+        String result2 = HttpUtils.doPost("http://116.247.74.76:8681/CustomServicesApi/EasipassGetUdiInfo",params,"UTF-8");
+
+        Ulog.i("result2",(result2));
+
+        doPostTest();
+
+
+    }
+
+    private static void doPostTest() {
+        String url = "http://admin.tingwen.me/index.php/api/interfaceXykj/touList";
+        Map<String,String> params = new HashMap<>();
+        params.put("page","100");
+        String result = HttpUtils.doPost(url,params,"UTF-8");
+        Ulog.i("doPostTest()",(result));
     }
 }
