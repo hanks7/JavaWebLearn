@@ -7,10 +7,29 @@
         #u3 li {
             border: solid 1px red;
             display: inline-block;
-            background-color: lightgreen;
         }
         li:nth-child(2) {
-            color: #ff34c2;
+            background-color: #68ff7b;
+        }
+        /*选取大于等于4标签，“n”表示从整数*/
+        li:nth-child(n+4) {
+            background-color: #58e6ff;
+        }
+        /*选取小于等于4标签*/
+        li:nth-child(-n+4) {
+            background-color: #43a6ff;
+        }
+        /*选取偶数标签*/
+        li:nth-child(2n) {
+            background-color: #3229ff;
+        }
+        /*选取奇数标签*/
+        li:nth-child(2n-1) {
+            background-color: #b237ff;
+        }
+        /*选取倒数第几个标签,3表示选取第3个*/
+        li:nth-last-child(3){
+            background-color: #ff2728;
         }
     </style>
 
@@ -21,6 +40,17 @@
 <ul id="u3">
     <li>苹果</li>
     <li>西瓜</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
+    <li>香蕉</li>
     <li>香蕉</li>
 </ul>
 
