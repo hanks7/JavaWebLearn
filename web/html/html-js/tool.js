@@ -9,18 +9,37 @@ var tools = (function () {
             if (content === undefined) {
                 console.log(tag + "<br/><br/>");
             } else {
-                console.log(tag+"==="+ content + "<br/><br/>");
+                console.log(tag + "===" + content + "<br/><br/>");
             }
         },
         w: function (tag, content) {
             if (content === undefined) {
                 document.writeln(tag + "<br/><br/>");
             } else {
-                document.writeln(tag+"==="+ content + "<br/><br/>");
+                document.writeln(tag + "===" + content + "<br/><br/>");
             }
         }
     }
     return {
-        Ulog:log
+        Ulog: log
     };
+})();
+var Ulog = (function () {
+    var log = {
+        i: function (tag, content) {
+            if (content === undefined) {
+                console.log(tag + "<br/><br/>");
+            } else {
+                console.log(tag + "===" + content + "<br/><br/>");
+            }
+        },
+        w: function (tag, content) {
+            if (content === undefined) {
+                document.writeln(tag + "<br/><br/>");
+            } else {
+                document.writeln(tag + "===" + content + "<br/><br/>");
+            }
+        }
+    }
+    return log;
 })();

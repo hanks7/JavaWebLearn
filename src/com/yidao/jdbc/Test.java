@@ -6,10 +6,10 @@ import com.yidao.jdbc.uitls.Ulog;
 
 
 public class Test {
-    static int i=1;
+    static int i = 1;
 
     public static void foo(int t) {
-        t=2;
+        t = 2;
     }
 
     public static void main(String[] strings) {
@@ -20,7 +20,7 @@ public class Test {
         TestLog.i("测试引入的module");
 
         foo(i);
-        Ulog.i("i",i);
+        Ulog.i("i", i);
     }
 
 }

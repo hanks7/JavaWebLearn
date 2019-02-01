@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript">
+
+
         for (var i = 0; i < 5; i++) {
-            setTimeout(function() {
+            extracted(i);
+        }
+        function extracted(i) {
+            setTimeout(function () {
                 console.log(new Date, i);
             }, 1000);
         }
