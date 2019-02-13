@@ -7,15 +7,20 @@
 
 
         for (var i = 0; i < 5; i++) {
-            extracted(i);
-        }
-        function extracted(i) {
             setTimeout(function () {
                 console.log(new Date, i);
-            }, 1000);
+            }, 1);
         }
 
-        console.log(new Date, i);
+        // for (var i = 0; i < 5; i++) {
+        //     setTimeout(function(j) {
+        //         console.log(new Date, j);
+        //     }, 1000, i);
+        // }
+
+        // console.log(new Date, i);
+
+
 
     </script>
 </head>

@@ -1,0 +1,52 @@
+<!DOCTYPE html >
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>jQuery实验室</title>
+
+    <style>
+        /* 高亮css类 */
+        .highlight {
+            color: red;
+            font-size: 30px;
+            background: lightblue;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="section">
+    <h2>jQuery选择器实验室</h2>
+    <input style="height: 24px" id="txtSelector"/>
+    <button id="btnSelect" style="height: 30px">选择</button>
+    <hr/>
+</div>
+<div>
+    <h1 id="1">1111</h1>
+    <h1 class="class-h1">2222</h1>
+    <h1>3333</h1>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    /*
+        id选择器使用"#id值"进行选择
+        css选择器使用".css类名"进行选择
+        $(".myclass").addClass("highlight");
+    */
+
+    document.getElementById("btnSelect").onclick = function () {
+        var selector = document.getElementById("txtSelector").value;
+        //jquery的选择器方法
+        //选择器
+        jQuery("*").removeClass("highlight");
+        $(selector).addClass("highlight");
+
+    }
+    // $("#1,.class-h1").addClass("highlight"); 重点 一个方法可以传入多个参数,对多个dom 进行操作
+</script>
+</body>
+</html>
