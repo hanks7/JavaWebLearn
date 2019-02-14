@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../html-js/tool.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            // $.ajax({
+            //     url: "/jdbc/Servlet1",
+            //     context: document.body,
+            //     success: function (json) {
+            //         Ulog.i("json", json);
+            //     }
+            // });
+
+            $.ajax({
+                "url": "/jdbc/Servlet1",
+                "data": {"level": "1"},
+                "type": "get",
+                "dataType": "json",
+                "success": function (json) {
+                    Ulog.i("json",JSON.stringify(json));
+                }
+            })
+        })
+
+
+    </script>
+</head>
+<body>
+hello world
+</body>
+</html>

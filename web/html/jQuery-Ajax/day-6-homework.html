@@ -1,0 +1,67 @@
+<!DOCTYPE html >
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="../html-js/tool.js"></script>
+    <title>作业</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+
+</head>
+
+<body>
+<div class="section">
+    <style>
+        .top-button {
+            height: 30px;
+            background-color: #d3d3d3;
+        }
+    </style>
+
+    <div>
+        <button id="btnSelectColorBule" class="top-button">蓝色</button>
+        <button id="btnSelectColorGreen" class="top-button">绿色</button>
+    </div>
+    <div id="divMain" style="width:200px;height:200px;border: 1px #a9a9a9 solid;margin: 12px 0px;">
+
+    </div>
+    <div>
+        输入颜色首字母 :
+        <input style="height: 24px" id="txtSelector"/>
+    </div>
+
+    <script type="text/javascript">
+
+        //ready()则是在页面dom被浏览器解释完成后执行
+        $(document).ready(function () {
+            alert("欢迎来到设置颜色的页面");
+        })
+
+        //简化形式
+        $(function () {
+            $("#btnSelectColorBule").on("click", function () {
+                $("#divMain").css({"color": "red","background-color":"#0000ff",  "font-weight": "normal", "font-style": "italic"});
+                $("#divMain").text("蓝色背景")
+            });
+
+            $("#btnSelectColorGreen").click(function () {
+                $("#divMain").css({"color": "red","background-color":"#008000", "font-weight": "bold", "font-style": "italic"});
+                $("#divMain").text("绿色背景")
+            });
+
+            $("#txtSelector").keypress(function (event) {
+                Ulog.i(event);
+                if (event.keyCode == 32) {
+                    $(this).css("color", "red");
+                }else{
+                    $(this).css("background","lightgreen")
+                }
+            });
+        })
+    </script>
+</div>
+
+
+</body>
+</html>
