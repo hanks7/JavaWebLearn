@@ -1,60 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
     <script type="text/javascript" src="../html-js/tool.js"></script>
-<script type="text/javascript">
-	var json = [
-		{
-			"empno": 7369,
-			"ename": "李宁",
-			"job": "软件工程师",
-			"hiredate": "2017-05-12",
-			"salary": 13000,
-			"dname": "研发部"
-		},
-		{
-			"empno": 7499,
-			"ename": "王乐",
-			"job": "客户经理",
-			"hiredate": "2017-04-22",
-			"salary": 10000,
-			"dname": "市场部",
-			"customers": [
-				{
-					"cname": "李东"
-				},
-				{
-					"cname": "刘楠"
-				}
-			]
-		}
-	];
+    <script type="text/javascript">
+        var json = [
+            {
+                "empno": 7369,
+                "ename": "李宁",
+                "job": "软件工程师",
+                "hiredate": "2017-05-12",
+                "salary": 13000,
+                "dname": "研发部"
+            },
+            {
+                "empno": 7499,
+                "ename": "王乐",
+                "job": "客户经理",
+                "hiredate": "2017-04-22",
+                "salary": 10000,
+                "dname": "市场部",
+                "customers": [
+                    {
+                        "cname": "李东"
+                    },
+                    {
+                        "cname": "刘楠"
+                    }
+                ]
+            }
+        ];
 
-	Ulog.i(json);//在浏览器控制台中对json内容进行输出
+        Ulog.i(json);//在浏览器控制台中对json内容进行输出
 
-	for(var i = 0 ; i < json.length ; i++){
-		var bean = json[i];
-		document.write("<h1>");
-		document.write(bean.empno);
-		document.write("," + bean.ename);
-		document.write("," + bean.job);
-		document.write("," + bean.hiredate);
-		document.write("," + bean.salary);
-		document.write("," + bean.dname);
-		
-		document.write("</h1>");
-		if(bean.customers != null){
-			document.write("<h2>---");
-			for(var j = 0 ; j < bean.customers.length ; j++){
-				var customer = bean.customers[j];
-				document.write(customer.cname + ",");
-			}
-			document.write("</h2>");
-		}
-	}
-</script>
+        for (var i = 0; i < json.length; i++) {
+            var bean = json[i];
+            document.write("<h1>");
+            document.write(bean.empno);
+            document.write("," + bean.ename);
+            document.write("," + bean.job);
+            document.write("," + bean.hiredate);
+            document.write("," + bean.salary);
+            document.write("," + bean.dname);
+
+            document.write("</h1>");
+            if (bean.customers != null) {
+                document.write("<h2>---");
+                for (var j = 0; j < bean.customers.length; j++) {
+                    var customer = bean.customers[j];
+                    document.write(customer.cname + ",");
+                }
+                document.write("</h2>");
+            }
+        }
+
+        /**
+         *  json转字符串
+         * @type {any}
+         */
+        var strJson = JSON.stringify(json);
+        /**
+         * 字符串转json
+         * @type {any}
+         */
+        var jsonBean = JSON.parse(strJson);
+
+        Ulog.i("strJson",strJson);
+        Ulog.i("jsonBean",jsonBean);
+    </script>
 </head>
 <body>
 

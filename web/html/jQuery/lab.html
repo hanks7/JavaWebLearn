@@ -37,27 +37,55 @@
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-    /*
+    /**
+     *
+     *   jQuery 与 $ 都可以调用jQuery框架
+     *
+     * /
+
+
+    /**
         id选择器使用"#id值"进行选择
         css选择器使用".css类名"进行选择
         $(".myclass").addClass("highlight");
     */
 
     document.getElementById("btnSelect").onclick = function () {
-        var selector = document.getElementById("txtSelector").value;
+        var strSelector = document.getElementById("txtSelector").value;
         //jquery的选择器方法
         //选择器
         jQuery("*").removeClass("highlight");
-        $(selector).addClass("highlight");
+        $(strSelector).addClass("highlight");
     }
+
+    //******************************层叠 与 属性 选择器**********************
+
     // $("#1,.class-h1").addClass("highlight"); 重点 一个方法可以传入多个参数,对多个dom 进行操作
     // $("form input").addClass("highlight"); 包含子元素和子元素的子元素
     // $("form > input").addClass("highlight"); 只包含子元素，不包含子元素的子元素
+
     // $('h1[id="1"]').addClass("highlight"); 属性选择器 id相同
     // $('h1[id!="1"]').addClass("highlight"); id不同
     // $('h1[id^="1"]').addClass("highlight"); id开始 为"1"相同
     // $('h1[id$="3"]').addClass("highlight"); id结尾为"3"相同
     // $('h1[id*="1"]').addClass("highlight"); 包含"1"
+
+    //******************************位置 选择器**********************
+
+
+    // $("strSelector:first").addClass("highlight");获取第一个元素
+    // $("strSelector:last").addClass("highlight");获取最后一个元素
+    // $("strSelector:even").addClass("highlight");获取偶数位置的元素
+    // $("strSelector:odd").addClass("highlight");获取奇数位置的元素
+    // $("strSelector:eq(3)").addClass("highlight");获取指定位置的元素 这里选择的是"3"
+
+    //******************************表单选择器**********************
+
+    // $("strSelector:input").addClass("highlight");匹配所有 input, textarea, select 和 button 元素
+    // $("strSelector:text").addClass("highlight");匹配所有的单行文本框。
+    // $("strSelector:password").addClass("highlight");匹配所有密码框。
+    // $("strSelector:image").addClass("highlight");匹配所有图像域。
+
 </script>
 </body>
 </html>
