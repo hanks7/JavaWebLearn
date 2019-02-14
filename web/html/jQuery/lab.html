@@ -26,8 +26,13 @@
 </div>
 <div>
     <h1 id="1">1111</h1>
+    <h1 id="12">1111</h1>
+    <h1 id="13">1111</h1>
+    <h1 id="143">1111</h1>
+    <h1 id="43">1111</h1>
     <h1 class="class-h1">2222</h1>
-    <h1>3333</h1>
+    <h1>3333</h1><br/>
+    <a style="color: darkgreen" href="https://blog.csdn.net/pseudonym_/article/details/76093261/">JQuery_九大选择器</a>
 </div>
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -44,9 +49,15 @@
         //选择器
         jQuery("*").removeClass("highlight");
         $(selector).addClass("highlight");
-
     }
     // $("#1,.class-h1").addClass("highlight"); 重点 一个方法可以传入多个参数,对多个dom 进行操作
+    // $("form input").addClass("highlight"); 包含子元素和子元素的子元素
+    // $("form > input").addClass("highlight"); 只包含子元素，不包含子元素的子元素
+    // $('h1[id="1"]').addClass("highlight"); 属性选择器 id相同
+    // $('h1[id!="1"]').addClass("highlight"); id不同
+    // $('h1[id^="1"]').addClass("highlight"); id开始 为"1"相同
+    // $('h1[id$="3"]').addClass("highlight"); id结尾为"3"相同
+    // $('h1[id*="1"]').addClass("highlight"); 包含"1"
 </script>
 </body>
 </html>
