@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>操作元素属性</title>
+<title>day-4-设置元素内容</title>
 
 <style>
 .myclass {
@@ -67,21 +67,16 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-	<script type="text/javascript">
-        /**
-		 * attr 表示是属性的意思
-		 * .attr("href") 表示获取 属性为href的值
-		 *
-		 * .attr("href" , "http://www.163.com")
-		 * 表示将属性为"href"修改为"http://www.163.com"
-         * @type {*|jQuery}
-         */
-		var href_attr =  $("a[href*='163']").attr("href");
-		alert(href_attr);
-		$("a[href*='163']").attr("href" , "http://www.163.com");
-		var attr = $("a").attr("href");
-		alert(attr);
-		// $("a").removeAttr("href");
+	<script>
+		$("input[name='uname']").val("administrator");
+		var v = $("input[name='uname']").val();//administrator
+		alert(v);
+		//text与html方法最大的区别在于对于文本中的html标签是否进行转义
+		//$("span.myclass").text("<b>锄禾日当午，汗滴禾下土</b>");
+		$("span.myclass").html("<b>锄禾日当午，汗滴禾下土</b>");
+		
+		var vspan = $("span.myclass").text();
+		alert(vspan);
 	</script>
 </body>
 </html>
