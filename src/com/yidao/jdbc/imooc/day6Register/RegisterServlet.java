@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RegisterServlet
+ * 正则表达式
  */
 @WebServlet("/servlet/RegisterServlet")
 public class RegisterServlet extends HttpServlet {

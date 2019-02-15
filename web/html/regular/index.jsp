@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>注册页面</title>
+<title>正则表达式</title>
 </head>
 <body>
 	<center>
