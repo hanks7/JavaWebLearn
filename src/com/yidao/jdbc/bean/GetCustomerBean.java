@@ -12,4 +12,12 @@ public List<CustomerBean> getList() {
 public void setList(List<CustomerBean> list) {
 	this.customers = list;
 }
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("GetCustomerBean{");
+		sb.append("customers=").append(customers);
+		sb.append('}');
+		return sb.toString();
+	}
 }

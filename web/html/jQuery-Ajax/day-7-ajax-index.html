@@ -18,14 +18,21 @@
 			}
 			console.log(xmlhttp);
 			//2. 发送Ajax请求
-			xmlhttp.open("GET" , "/ajax/content" , true);
+			xmlhttp.open("GET" , "http://localhost:8080/jdbc/Servlet1" , true);// true 表示为异步请求
+			// xmlhttp.open("GET" , "/jdbc/Servlet1" , true);
 			xmlhttp.send();
 			//3. 处理服务器响应
 			xmlhttp.onreadystatechange = function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+
+                function getCustomer() {
+                    return jsonBean.message;
+                }
+
+                if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 					var t = xmlhttp.responseText;
-					alert(t);
-					document.getElementById("divContent").innerHTML = t;
+                    var jsonBean = JSON.parse(t);
+					alert(getCustomer());
+					document.getElementById("divContent").innerHTML = getCustomer();
 				}
 			}
 		}

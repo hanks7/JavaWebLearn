@@ -17,7 +17,7 @@
 	}
 	//2. 发送Ajax请求
 	//true 代表异步执行  false代表同步执行
-	xmlhttp.open("GET" , "/ajax/news_list" , true);
+	xmlhttp.open("GET" , "http://localhost:8080/jdbc/Servlet1" , true);
 	xmlhttp.send();
 	console.log("请求发送完成");
 	/* 同步处理代码
@@ -35,18 +35,19 @@
 		}
 		document.getElementById("container").innerHTML = html;
 	}*/
+	// var json={"code":0,"message":"success","data":{"customers":[{"id":1,"name":"houjianjun"}],"code":0}};
 	//3. 处理服务器响应
 	 xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 			var text = xmlhttp.responseText;
 			console.log(text);
 			var json = JSON.parse(text);
-			console.log(json);
+			// console.log(json);
 			var html = "";
-			for(var i = 0 ; i < json.length ; i++){
-				var news = json[i];
-				html = html + "<h1>" + news.title + "</h1>";
-				html = html + "<h2>" + news.date + "&nbsp;" + news.source +"</h2>"
+			for(var i = 0 ; i < json.data.customers.length ; i++){
+				var bean = json.data.customers[i];
+				html = html + "<h1>" + bean.name + "</h1>";
+				html = html + "<h2>" + bean.phone + "&nbsp;" + bean.email +"</h2>"
 				html = html + "<hr/>"
 			}
 			document.getElementById("container").innerHTML = html;

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/Servlet1")
-public class Servlet1 extends HttpServlet {
+public class ServletMain extends HttpServlet {
     /**
      * Myservlet:是此工程名称 test:是web.xml<url-pattern>名字</url-pattern>
      * http://localhost:8080/untitled/test

@@ -93,7 +93,7 @@ public class UJdbc {
     /**
      * 批量增加
      */
-    private static int insertBatch() {
+    public static int insertBatch() {
         int[] i;
         String sql = "insert into customer (name,phone,email) values(?,?,?)";
         try {
@@ -176,7 +176,7 @@ public class UJdbc {
      * @return
      */
     public static GetCustomerBean setlect() {
-        String sql = "select id,name,phone,email from customer limit 2;";
+        String sql = "select id,name,phone,email from customer limit 10;";
         GetCustomerBean bean2 = new GetCustomerBean();
         List<CustomerBean> list = new ArrayList<CustomerBean>();
         try {
