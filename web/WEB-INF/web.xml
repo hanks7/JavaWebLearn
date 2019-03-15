@@ -5,6 +5,12 @@
          version="4.0">
     <display-name>jdbc</display-name>
 
+
+ <!--***************注意************************
+             application context :jdbc
+     ***************注意************************-->
+
+
     <!--欢迎页面,哪个存在就优先显示哪个,就算在二级目录也能给你找出来,不知配置,就是 根目录/index.html-->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
