@@ -14,7 +14,7 @@ import java.io.IOException;
 public class UserAgentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
+
         String userAgent = request.getHeader("User-Agent");
 
         if (userAgent.length() > 0) {
