@@ -11,8 +11,13 @@ import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
+//        testAes();
 
 
+        doGetTest();
+    }
+
+    private static void testAes() {
         // 公钥
         String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCaxUxHsZHY3i5U5Ey4SQP4jzIy3AX/TaVSsED2BiXdZbjcVBREOkuFCUCrM4/cAaRNvb4dpLOK+JQHz1kYwS1yeMYgaHwpetFCMgAYPcI45Urun/GM+FgYt146xgQnt3/ndqJXyXNybslZeWAT28zs3TQ4XPInbZqK3LGRIkhmcQIDAQAB";
         // 私钥
@@ -52,7 +57,6 @@ public class Test {
         Ulog.i("message", message);
 
 
-
         Map<String,String> params = new HashMap<>();
         params.put("UDI_DI","010082700209497017201130108409387");
         params.put("UDI_EXPIDATE","201130");
@@ -64,8 +68,11 @@ public class Test {
         Ulog.i("result2",(result2));
 
         doPostTest();
+    }
 
-
+    private static void doGetTest() {
+        String result = HttpUtils.sendGetRequest("http://easyway.com.cn:8088/CustomServicesApi/Scanner?type=1&code=test&msg=t&verify=1",null);
+        Ulog.i("result",result);
     }
 
     private static void doPostTest() {

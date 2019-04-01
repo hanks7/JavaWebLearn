@@ -10,8 +10,8 @@ import java.util.List;
 public class UJdbc {
     private static String driver = "com.mysql.jdbc.Driver";
     private static String dataBase = "tarena";
-    private static String user = "root";
-    private static String pass = "root";
+    private static String USER = "root";
+    private static String PASS = "root";
 
     private static final String URL = "jdbc:mysql://localhost:3306/";// 数据库连接字符串，这里的dataBase为数据库名
 
@@ -27,7 +27,7 @@ public class UJdbc {
     public static void startMySQLConn() {
         try {
             Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(URL, user, pass);// 输入链接地址 ,账号,密码
+            conn = DriverManager.getConnection(URL, USER, PASS);// 输入链接地址 ,账号,密码
             if (!conn.isClosed()) {
                 Ulog.i("成功链接到数据库!");
             }
