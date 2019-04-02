@@ -17,43 +17,32 @@ public class JDBCSqlServerUtil {
     private static String USER = "sa";
     private static String PASS = "123qwe.com";
     private static String dataBase = "MDS5";
-    private static final String URL = "jdbc:sqlserver://172.16.1.86";// 数据库连接字符串，这里的dataBase为数据库名
+    private static final String URL = "jdbc:sqlserver://172.16.1.86;DatabaseName=MDS5";
+    ;// 数据库连接字符串，这里的dataBase为数据库名
 
     static Connection conn = null;
     static Statement statement = null;
     static PreparedStatement ps = null;
     static ResultSet rs = null;
 
+
     /**
      * 链接数据库
      */
     public static void startMySQLConn() {
         try {
-            // 加载驱动
-            Class.forName(driver);
-            String url = "jdbc:sqlserver://172.16.1.86;DatabaseName=MDS5";
-            String user = "sa";
-            String password = "123qwe.com";
-            // 获取数据库连接（连上数据库）
-            Connection connection = DriverManager.getConnection(url, user, password);
-            // 执行查询，返回ResultSet（结果集）
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);// 输入链接地址 ,账号,密码
+            if (!conn.isClosed()) {
+                Ulog.i("成功链接到数据库! ");
+            }
 
+            statement = conn.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    /**
-     * 使用哪个数据库
-     */
-    public static void useDB() {
-        String sql = "use " + dataBase + ";";
-        try {
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     /**
      * 关闭数据库
      */
@@ -74,37 +63,28 @@ public class JDBCSqlServerUtil {
      *
      * @return
      */
-    public static GetCustomerBean setlect() {
-        String sql = "SELECT a.Title,a.Name FROM TA_Alert as a WHERE a.Name like '%上海佳婧贸易商行%';";
+    public static void setlect() {
+        String sql = "SELECT  Name FROM TA_Alert where Name like '%第十%'";
 
-        GetCustomerBean bean2 = new GetCustomerBean();
-        List<CustomerBean> list = new ArrayList<CustomerBean>();
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             CustomerBean bean;
             while (rs.next()) {
-                bean = new CustomerBean();
 
-                bean.setPhone(rs.getString(1));
-                bean.setEmail(rs.getString(2));
+                Ulog.i("rs.getString(1)", rs.getString(1));
 
-                list.add(bean);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        bean2.setList(list);
-        return bean2;
     }
 
 
     public static void main(String[] args) {
         startMySQLConn();
-//        useDB();
-//        setlect();
-//        Ulog.i( setlect());
-//        closeMySQLConn();
+        setlect();
+        closeMySQLConn();
     }
 
 }
