@@ -1,9 +1,6 @@
 package com.yidao.jdbc;
 
-import com.hanks.test.TestLog;
-import com.yidao.jdbc.uitls.HttpUtils;
-import com.yidao.jdbc.uitls.MyUtils;
-import com.yidao.jdbc.uitls.UJdbc;
+import com.yidao.jdbc.uitls.UtilJdbcMySql;
 import com.yidao.jdbc.uitls.Ulog;
 
 
@@ -24,11 +21,11 @@ public class Test {
 //        foo(i);
 //        Ulog.i("i", i);
 
-        UJdbc.startMySQLConn();
-        UJdbc.useDB();
-        UJdbc.insertBatch();
-        Ulog.i( UJdbc.setlect());
-        UJdbc.closeMySQLConn();
+        UtilJdbcMySql.startMySQLConn();
+        UtilJdbcMySql.useDB();
+        UtilJdbcMySql.insertBatch();
+        Ulog.i( UtilJdbcMySql.setlect());
+        UtilJdbcMySql.stopMySQLConn();
     }
 
 }

@@ -7,7 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UJdbc {
+/**
+ * 如果要使用SQLServerDriver 驱动必须要到mysql-connector-java-5.1.34-bin.jar
+ */
+public class UtilJdbcMySql {
     private static String driver = "com.mysql.jdbc.Driver";
     private static String dataBase = "tarena";
     private static String USER = "root";
@@ -16,7 +19,6 @@ public class UJdbc {
     private static final String URL = "jdbc:mysql://localhost:3306/";// 数据库连接字符串，这里的dataBase为数据库名
 
     static Connection conn = null;
-    static Statement statement = null;
     static PreparedStatement ps = null;
     static ResultSet rs = null;
 
@@ -29,10 +31,9 @@ public class UJdbc {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(URL, USER, PASS);// 输入链接地址 ,账号,密码
             if (!conn.isClosed()) {
-                Ulog.i("成功链接到数据库!");
+                Ulog.i("链接到数据库!");
             }
 
-            statement = conn.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,11 +42,11 @@ public class UJdbc {
     /**
      * 关闭数据库
      */
-    public static void closeMySQLConn() {
+    public static void stopMySQLConn() {
         if (conn != null) {
             try {
                 conn.close();
-                Ulog.i("数据库链接终端");
+                Ulog.i("关闭数据库链接 ");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -201,6 +202,35 @@ public class UJdbc {
     }
 
     /**
+     * 从数据库中得到name为b的phone的值
+     *
+     * @return
+     */
+    public static void setlect(int limitNum) {
+        String sql = "select id,name,phone,email from customer limit ?;";
+        List<CustomerBean> list = new ArrayList<>();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, limitNum);
+            rs = ps.executeQuery();
+            CustomerBean bean;
+            while (rs.next()) {
+                bean = new CustomerBean();
+
+                bean.setId(Integer.valueOf(rs.getString(1)));
+                bean.setName(rs.getString(2));
+                bean.setPhone(rs.getString(3));
+                bean.setEmail(rs.getString(4));
+                Ulog.i("bean",bean.toString());
+
+                list.add(bean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * @param args
      */
     public static void main(String[] args) {
@@ -213,7 +243,8 @@ public class UJdbc {
 //		delete(1);
         // 查询数据库得到结果
 //        insertBatch();
-        Ugson.toJson(setlect());
+//        Ugson.toJson(setlect());
+        setlect(10);
 
     }
 

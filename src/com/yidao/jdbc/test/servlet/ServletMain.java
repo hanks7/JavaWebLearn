@@ -1,6 +1,6 @@
 package com.yidao.jdbc.test.servlet;
 
-import com.yidao.jdbc.uitls.UJdbc;
+import com.yidao.jdbc.uitls.UtilJdbcMySql;
 import com.yidao.jdbc.uitls.MyUtils;
 
 import javax.servlet.ServletException;
@@ -30,10 +30,10 @@ public class ServletMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UJdbc.startMySQLConn();
-        UJdbc.useDB();
-        MyUtils.trueMessage(response, UJdbc.setlect());
-        UJdbc.closeMySQLConn();
+        UtilJdbcMySql.startMySQLConn();
+        UtilJdbcMySql.useDB();
+        MyUtils.trueMessage(response, UtilJdbcMySql.setlect());
+        UtilJdbcMySql.stopMySQLConn();
 
     }
 }

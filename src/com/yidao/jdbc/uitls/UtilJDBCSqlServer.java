@@ -1,22 +1,16 @@
 package com.yidao.jdbc.uitls;
 
-import com.yidao.jdbc.bean.CustomerBean;
-import com.yidao.jdbc.bean.GetCustomerBean;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 如果要使用SQLServerDriver 驱动必须要到sqljdbc4.jar 具体可看文章
  * https://www.cnblogs.com/javahr/p/8276298.html
  */
-public class JDBCSqlServerUtil {
+public class UtilJDBCSqlServer {
 
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String USER = "sa";
     private static String PASS = "123qwe.com";
-    private static String dataBase = "MDS5";
     private static final String URL = "jdbc:sqlserver://172.16.1.86;DatabaseName=MDS5";
     ;// 数据库连接字符串，这里的dataBase为数据库名
 
@@ -46,11 +40,11 @@ public class JDBCSqlServerUtil {
     /**
      * 关闭数据库
      */
-    public static void closeMySQLConn() {
+    public static void stopMySQLConn() {
         if (conn != null) {
             try {
                 conn.close();
-                Ulog.i("数据库链接终端 ");
+                Ulog.i("关闭数据库链接 ");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -63,16 +57,19 @@ public class JDBCSqlServerUtil {
      *
      * @return
      */
-    public static void setlect() {
-        String sql = "SELECT  Name FROM TA_Alert where Name like '%第十%'";
+    public static void setlect(String... value) {
+        String sql = "SELECT  * FROM TA_Alert where Name like ? and TA_Alert.AlertID > ? and TA_Alert.AlertID < ? ";
 
         try {
             ps = conn.prepareStatement(sql);
+            for (int i = 0; i < value.length; i++) {
+                ps.setString(1+1, value[0]);
+            }
+            ps.setString(1, "%上海市第%人民医院%");
             rs = ps.executeQuery();
-            CustomerBean bean;
             while (rs.next()) {
 
-                Ulog.i("rs.getString(1)", rs.getString(1));
+                Ulog.i("rs.getString( Name )", rs.getString("Name"));
 
             }
         } catch (Exception e) {
@@ -84,7 +81,7 @@ public class JDBCSqlServerUtil {
     public static void main(String[] args) {
         startMySQLConn();
         setlect();
-        closeMySQLConn();
+        stopMySQLConn();
     }
 
 }
