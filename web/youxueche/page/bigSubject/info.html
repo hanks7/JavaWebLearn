@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>科目信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+	<table class="table table-bordered .table-condensed">
+		<tr>
+			<td>编号:</td>
+			<td id="id"></td>
+		</tr>
+		<tr>
+			<td>科目名称:</td>
+			<td><input type="text" name="name" />
+			<input type="hidden" name="id" /></td>
+		</tr>
+		<tr>
+			<td>适用车型:</td>
+		    <td>
+		     	<label><input type="checkbox" id="carType0" value="A1" class="minimal-red"/>A1</label>
+		        <label><input type="checkbox" id="carType1" value="A2" class="minimal-red"/>A2</label>
+			    <label><input type="checkbox" id="carType2" value="A3" class="minimal-red"/>A3</label>
+			    <label><input type="checkbox" id="carType3" value="B1" class="minimal-red"/>B1</label>
+			    <label><input type="checkbox" id="carType4" value="B2" class="minimal-red"/>B2</label>
+			    <label><input type="checkbox" id="carType5" value="C1" class="minimal-red"/>C1</label>
+			    <label><input type="checkbox" id="carType6" value="C2" class="minimal-red"/>C2</label>
+			    <label><input type="checkbox" id="carType7" value="C3" class="minimal-red"/>C3</label>
+			    <label><input type="checkbox" id="carType8" value="C4" class="minimal-red"/>C4</label>
+			    <label><input type="checkbox" id="carType9" value="C5" class="minimal-red"/>C5</label>
+			    <label><input type="checkbox" id="carType10" value="D" class="minimal-red"/>D</label>
+			    <label><input type="checkbox" id="carType11" value="E" class="minimal-red"/>E</label>
+			    <label><input type="checkbox" id="carType12" value="F" class="minimal-red"/>F</label>
+			    <input type="hidden" name="carType"/>
+		     </td>
+		</tr>
+		
+		<tr>
+			<td colspan="5" style="text-align: center;">
+				<button type="button" onclick="updateBigSub();" class="btn btn-info">修改</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var bigId = href[1];
+    	getBigSubject(bigId);
+    	
+    	//获取科目资料
+    	function getBigSubject(id){
+    		$.ajax({
+    			url : "../../bigSubjects/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							$(this).html(data["result"][id]);
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							if(name == "carType"){//复选框选中
+    								var carTypes = data["result"][name].split(",");
+    								for (var i = 0; i < carTypes.length; i++) {
+    									$("input[value='" + carTypes[i] + "']").parent().click();
+    								}
+    							}
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改科目
+    	function updateBigSub(){
+    		var carType="";
+    		$("#form1").find("input[id^='carType']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				carType += $(this).val()+",";
+    			}
+    		});
+    		carType = carType.substr(0,carType.length-1);
+			$("input[name='carType']").val(carType);
+    		$.ajax({
+    			url : "../../bigSubjects/update.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					location.reload();
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

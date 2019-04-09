@@ -1,8 +1,5 @@
 package com.yidao.jdbc;
 
-import com.yidao.jdbc.uitls.UtilJdbcMySql;
-import com.yidao.jdbc.uitls.Ulog;
-
 
 public class Test {
     static int i = 1;
@@ -21,11 +18,11 @@ public class Test {
 //        foo(i);
 //        Ulog.i("i", i);
 
-        UtilJdbcMySql.startMySQLConn();
-        UtilJdbcMySql.useDB();
-        UtilJdbcMySql.insertBatch();
-        Ulog.i( UtilJdbcMySql.setlect());
-        UtilJdbcMySql.stopMySQLConn();
+//        UtilJdbcMySql.startMySQLConn();
+//        UtilJdbcMySql.useDB();
+//        UtilJdbcMySql.insertBatch();
+//        Ulog.i( UtilJdbcMySql.setlect());
+//        UtilJdbcMySql.stopMySQLConn();
     }
 
 }

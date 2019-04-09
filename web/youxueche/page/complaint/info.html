@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>投诉信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>投诉者:</td>
+					<td id="student"></td>
+					<td>投诉时间:</td>
+					<td id="createDate"></td>
+				<tr>
+					<td>投诉对象:</td>
+					<td id="type"></td>
+					<td>具体投诉对象:</td>
+					<td id="driverOrSchool"></td>
+				</tr>
+				<tr>
+					<td>投诉内容:</td>
+					<td colspan="3" id="content"></td>
+				</tr>
+				<tr>
+					<td>管理部门意见:</td>
+					<td colspan="3" id="depaopinion"></td>
+				</tr>
+				<tr>
+					<td>培训机构意见:</td>
+					<td colspan="3">
+						<input type="text" name="schopinion" style="width:600px;"/>
+						<input type="hidden" name="id">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="updateComplaint();" class="btn btn-info">修改</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var complaintId = href[1];
+		getComplaint(complaintId);
+	
+    	//查看投诉信息
+    	function getComplaint(id){
+    		$.ajax({
+    			url : "../../complaint/get.ao",
+    			type : 'POST',
+    			data :{
+    				"id" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							$(this).html(data["result"][id]);
+    						}
+    					});
+    					$("table").find("input").each(function(){
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+
+    	//修改分支机构信息
+    	function updateComplaint(){
+    		$.ajax({
+    			url : "../../complaint/update.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					location.reload();
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

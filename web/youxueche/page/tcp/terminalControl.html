@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>终端控制</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/http.js"></script>
+	<script type="text/javascript" src="../../js/alert.js"></script>
+	<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+	<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+	<script type="text/javascript" src="../../js/public.js" ></script>
+	<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../css/showLoading.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			终端控制
+		</p>
+	</div>
+	<div id="tabs">
+		 <ul>
+		    <li><a href="#tabs-1">无线升级</a></li>
+		    <li><a href="#tabs-2">连接指定服务器</a></li>
+		    <li><a href="#tabs-3">其他控制</a></li>
+		 </ul>
+		  <div id="tabs-1" style="height:600px;">
+		  		<table class="table table-bordered .table-condensed" id="dataUpdate">
+		  			<input type="hidden" name="cmdWord" value="1" />
+					<tr>
+						<td style="width: 120px">参数名称</td>
+						<td style="width: 120px">参数值</td>
+					</tr>
+					<tr>
+						<td>URL地址</td>
+						<td><input type="text" id="url" /></td>
+					</tr>		
+					<tr>
+						<td>拨号点名称</td>
+						<td><input type="text" id="dialName" /></td>
+					</tr>
+					<tr>
+						<td>拨号用户名</td>
+						<td><input type="text" id="dialUserName" /></td>
+					</tr>							
+					<tr>
+						<td>拨号密码</td>
+						<td><input type="text" id="dialUserPwd" /></td>
+					</tr>											
+					<tr>
+						<td>IP地址</td>
+						<td><input type="text" id="ip" /></td>
+					</tr>
+					<tr>
+						<td>TCP端口</td>
+						<td><input type="text" id="tcpPort" /></td>
+					</tr>
+					<tr>
+						<td>UDP端口</td>
+						<td><input type="text" id="udpPort" /></td>
+					</tr>
+					<tr>
+						<td>制造商ID</td>
+						<td><input type="text" id="manufactureId" /></td>
+					</tr>	
+					<tr>
+						<td>硬件版本</td>
+						<td><input type="text" id="hardwareVersion" /></td>
+					</tr>									
+					<tr>
+						<td>固件版本</td>
+						<td><input type="text" id="firmwareVersion" /></td>
+					</tr>
+					<tr>
+						<td>连接到指定服务器时限 </td>
+						<td><input type="text" id="time" /></td>
+					</tr>
+				</table> 
+		  		<div style="text-align: center;">
+					<input type="button" class="btn btn-info" value="开始升级" onclick="beginUpdate();" />
+					<input type="button" class="btn btn-danger" value="重置" onclick="reset();" />
+				</div>
+		  </div> 
+		  
+		  <div id="tabs-2" style="height:600px;">
+	  		<ul>
+			    <li><a href="#tabs-a">切换到指定监管平台服务器</a></li>
+			    <li><a href="#tabs-b">切换到原缺省监控平台服务器</a></li>
+			 </ul>
+			 <div id="tabs-a" style="height:500px;">
+				<table class="table table-bordered .table-condensed" id="dataConnecterSvr">
+					<input type="hidden" name="cmdWord" value="2" />
+					<input type="hidden" name="linkCtl" value="0" />
+					<tr>
+						<td style="width: 120px">参数名称</td>
+						<td style="width: 120px">参数值</td>
+					</tr>
+					<tr>
+						<td>监管平台鉴权码</td>
+						<td><input type="text" id="authString" /></td>
+					</tr>
+					<tr>
+						<td>拨号点名称</td>
+						<td><input type="text" id="dialName" /></td>
+					</tr>
+					<tr>
+						<td>拨号用户名</td>
+						<td><input type="text" id="dialUserName" /></td>
+					</tr>
+					<tr>
+						<td>拨号密码</td>
+						<td><input type="text" id="dialUserPwd" /></td>
+					</tr>
+					<tr>
+						<td>IP地址</td>
+						<td><input type="text" id="ip" /></td>
+					</tr>
+					<tr>
+						<td>TCP端口</td>
+						<td><input type="text" id="tcpPort" /></td>
+					</tr>
+					<tr>
+						<td>UDP端口</td>
+						<td><input type="text" id="udpPort" /></td>
+					</tr>
+					<tr>
+						<td>固件版本</td>
+						<td><input type="text" id="firmwareVersion" /></td>
+					</tr>
+					<tr>
+						<td>连接到指定服务器时限</td>
+						<td><input type="text" id="time" /></td>
+					</tr>
+			 	</table>
+			 	<div style="text-align: center" >
+					<input type="button" class="btn btn-info" value="确定" onclick="connectedPlatform();" />
+					<input type="button" class="btn btn-danger" value="重置" onclick="reset();" />
+				</div>
+		  	 </div>
+		  	 <div id="tabs-b" style="height:500px;" >
+		  	 	<form id='dataConnecterDefaultSvr'>
+		  	 	<input type="hidden" name="cmdWord" value="2" />
+			 	<input type="hidden" name="linkCtl" value="1" />
+			 	</form>
+		  		<input type="button" class="btn btn-info" value="确定" onclick="connectedDefalutPlatform();" />
+		   	 </div>
+		  </div>
+		  	 
+		  <div id="tabs-3" style="height:600px;">
+		  		<div style="margin-left:350px" id='otherSetting' ><br/>
+		  			<input type="radio" name="cmdWord" value="7">关闭所有无线通信<br/><br/>
+		  			<input type="radio" name="cmdWord" value="3">终端关机<br/><br/>
+		  			<input type="radio" name="cmdWord" value="4">终端复位<br/><br/>
+		  			<input type="radio" name="cmdWord" value="5">恢复出厂设置<br/><br/>  
+		  			<input type="radio" name="cmdWord" value="6">关闭数据通信<br/><br/>
+		  		</div><br/>
+		  		<div style="margin-left:330px;">
+		  			<input type="button" class="btn btn-info" value="确定" onclick="otherControl();" />
+		  		</div>
+		  </div>
+		</div>
+	
+	
+	 
+      
+<script type="text/javascript">
+	$("#tabs" ).tabs(); 
+	$("#tabs-2" ).tabs(); 
+	function beginUpdate(){
+		$.ajax({
+			url : "../../tcpReq/controlTerminal.ao",
+			type : 'POST',
+			data:'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#dataUpdate input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){	
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						alert( '更新成功！');
+					}
+					  
+				}catch(err){
+					alert("更新失败!");
+				}
+			}	
+		});
+	}
+	
+	
+	function connectedPlatform(){
+		$.ajax({
+			url : host+"/tcpReq/controlTerminal.ao",
+			type : 'POST',
+			data:'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#dataConnecterSvr input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){	
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						alert( '成功！');
+					}
+					  
+				}catch(err){
+					alert("失败!");
+				}
+			}	
+		});
+	}
+	function connectedDefalutPlatform(){
+		$.ajax({
+			url : host+"/tcpReq/controlTerminal.ao",
+			type : 'POST',
+			data:'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#dataConnecterDefaultSvr input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){	
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						alert( '成功！');
+					}
+					  
+				}catch(err){
+					alert("失败!");
+				}
+			}	
+		});
+	}
+	
+	function reset()
+	{
+		$("#tabs-1 input[type='text']").val('');
+		$("#tabs-2 input[type='text']").val('');
+	}
+	function otherControl()
+	{
+		$.ajax({
+			url : host+"/tcpReq/controlTerminal.ao",
+			type : 'POST',
+			data:'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#otherSetting input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){	
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						alert( '成功！');
+					}
+					  
+				}catch(err){
+					alert("失败!");
+				}
+			}	
+		});		
+	}
+	
+</script>
+</body>
+</html>

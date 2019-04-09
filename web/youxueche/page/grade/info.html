@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>修改班级信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>ID:</td>
+					<td id="id"></td>
+					<td>编号:</td>
+					<td id="seq"></td>
+				<tr>
+					<td>培训机构:</td>
+					<td id="school"></td>
+					<td>班级名称:</td>
+					<td>						 
+						<input type="text" id="classcurr"  name="classcurr" onblur="checkGradeName();" class="required maxlength:50"/>
+						<input type="hidden" name="id">
+					</td>
+				</tr>
+				<tr>
+					<td>金额(￥):</td>
+					<td>
+						<input type="text" name="price" class="required onlyNum"/>
+					</td>
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td>可培训车型:</td>
+					<td colspan="3">						 
+						<label><input type="checkbox" id="vehicletype1" value="A1" class="minimal-red" />A1</label>
+						<label><input type="checkbox" id="vehicletype2" value="A2" class="minimal-red" />A2</label>
+						<label><input type="checkbox" id="vehicletype3" value="A3" class="minimal-red" />A3</label>
+						<label><input type="checkbox" id="vehicletype4" value="B1" class="minimal-red" />B1</label>
+						<label><input type="checkbox" id="vehicletype5" value="B2" class="minimal-red" />B2</label>
+						<label><input type="checkbox" id="vehicletype7" value="C1" class="minimal-red" />C1</label>
+						<label><input type="checkbox" id="vehicletype8" value="C2" class="minimal-red" />C2</label>
+						<label><input type="checkbox" id="vehicletype9" value="C3" class="minimal-red" />C3</label>
+						<label><input type="checkbox" id="vehicletype10" value="C4" class="minimal-red" />C4</label>
+						<label><input type="checkbox" id="vehicletype11" value="C5" class="minimal-red" />C5</label>
+						<label><input type="checkbox" id="vehicletype12" value="D" class="minimal-red" />D</label>
+						<label><input type="checkbox" id="vehicletype13" value="E" class="minimal-red" />E</label>
+						<label><input type="checkbox" id="vehicletype14" value="F" class="minimal-red" />F</label>
+						<label><input type="checkbox" id="vehicletype15" value="M" class="minimal-red" />M</label>
+						<label><input type="checkbox" id="vehicletype16" value="N" class="minimal-red" />N</label>
+						<label><input type="checkbox" id="vehicletype17" value="P" class="minimal-red" />P</label>
+						<input type="hidden" name="vehicletype" class="required" />
+					</td>
+				</tr>
+				<tr>
+					<td>培训部分及方式:</td>
+					<td colspan="3">
+						<div>
+							<label><input type="radio" name="keMu1" id="keMu1" class="minimal-red" value="1" />第一部分集中教学</label>
+							<label><input type="radio" name="keMu1" id="keMu2" class="minimal-red" value="2" />第一部分网络教学</label>
+
+							<label><input type="radio" name="keMu2" id="keMu3" class="minimal-red" value="6" />第二部分普通教学</label>
+							<label><input type="radio" name="keMu2" id="keMu4" class="minimal-red" value="7" />第二部分智能教学</label>
+
+							<label><input type="radio" name="keMu3" id="keMu5" class="minimal-red" value="8" />第三部分普通教学</label>
+							<label><input type="radio" name="keMu3" id="keMu6" class="minimal-red" value="9" />第三部分智能教学</label>
+
+							<label><input type="radio" name="keMu4" id="keMu7" class="minimal-red" value="3" />第四部分集中教学</label>
+							<label><input type="radio" name="keMu4" id="keMu8" class="minimal-red" value="4" />第四部分网络教学</label>
+
+							<label><input type="checkbox" name="moni" value="5" />模拟器教学</label>
+							
+							<input type="hidden" name="subject" class="required"/>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>收费模式:</td>
+					<td>
+						<select name="chargemode"  style="width: 93px;">
+							<option value="1">一次性收费</option>
+							<option value="2">计时收费</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+					<td>付费模式:</td>
+					<td>
+						<select name="paymode"  style="width: 90px;">
+							<option value="1">先学后付</option>
+							<option value="2">先付后学</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>培训模式:</td>
+					<td>
+						<select name="trainningmode" id="trainningmode" style="width: 90px;">
+							<option value="1">定时培训</option>
+							<option value="2">预约培训</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+					<td>培训时段:</td>
+					<td>
+						<select name="trainningtime"  style="width: 90px;">
+							<option value="1">普通时段</option>
+							<option value="2">高峰时段</option>
+							<option value="3">节假日时段</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>服务内容:</td>
+					<td>
+						<input type="text" name="service"/>
+					</td>
+					<td>流程:</td>
+					<td id="flow"></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;" id="btnTd">
+						<button type="button" onclick="updateGrade();" class="btn btn-info">修改</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var gradeId = href[1];
+		getGrade(gradeId);
+		var schoolId = "";
+		
+    	//查看分支机构信息
+    	function getGrade(id){
+    		$.ajax({
+    			url : "../../grade/get.ao",
+    			type : 'POST',
+    			data :{
+    				"id" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					if(data["result"]["flowBa"] == 99){//添加删除备案按钮
+							var funPath = "..\\\\..\\\\http_grade\\\\deleteGradePutOnRecord.ao"; //删除备案
+    						var delBaBtn = '<button type="button" onclick="baAn(\''+funPath+'\','+id+');" class="btn btn-danger">删除备案</button>';
+    						$("#btnTd").append(delBaBtn);
+    					}
+    					schoolId = data["result"]["schoolId"];
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							$(this).html(data["result"][id]);
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						
+    						if(name != null && typeof(name) != "undefined" && name.indexOf("keMu") == -1){
+    							if(name == "vehicletype"){//复选框选中
+    								var vehicletypes = data["result"][name].split(",");
+    								for (var i = 0; i < vehicletypes.length; i++) {
+    									$("input[value='" + vehicletypes[i] + "']").parent().click();
+    								}
+								}else if (name == "subject") {
+									var subjects = data["result"][name].split(",");
+									for (var i = 0; i < subjects.length; i++) {
+										$("input[value='" + subjects[i] + "']").parent().click();
+									}
+								}else{
+									$(this).val(data["result"][name]);
+								}
+    						}	
+						});
+    					
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);//设置选中项
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}	
+    		});
+    	}
+		
+    	function checkGradeName(){
+    		$("input[id='classcurr']").parent().find("span[class='errorName']").remove();
+    		$.ajax({//名称若是修改,判断名称是否重复
+    			url : "../../grade/checkGradeName.ao",
+    			type : 'POST',
+    			data : {
+    				"name" : $("#classcurr").val(),
+    				"id" : $("#id").html(),
+    				"schoolId" : schoolId
+     			},
+     			cache : false,
+     			beforSend : ajaxstar,
+     			complete : ajaxend,
+     			dataType : "json",
+     			success : function(data){
+     				if(data["state"] == "success"){
+     					var span = "<span class='errorName'>该班级名已存在</span>";
+						$("input[id='classcurr']").parent().append(span);
+     				}
+     			}
+    		});	
+    	}
+    	
+    	//修改班级信息信息
+    	function updateGrade(){
+    		var vehicletype="";
+    		$("#form1").find("input[id^='vehicletype']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				vehicletype += $(this).val()+",";
+    			}
+    		});
+    		vehicletype = vehicletype.substr(0,vehicletype.length-1);
+			$("input[name='vehicletype']").val(vehicletype);
+			
+			var subject = "";
+			$("#form1").find("input[id^='keMu']").each(function(){
+				var check = $(this).prop("checked");
+				if(check == true){
+					subject += $(this).val()+",";
+				}
+			});
+			subject = subject.substring(0, subject.length-1);
+			$("input[name='subject']").val(subject);
+			var name = $("#classcurr").val();
+    		var id = $("#id").html();
+    		
+    		if(validata("form1")){
+				$.ajax({
+	    			url : "../../grade/update.ao",
+	    			type : 'POST',
+	    			data :$("#form1").serialize(),
+	    			cache : false,
+	    			beforeSend : ajaxstar,
+	    			complete : ajaxend,
+	    			dataType : "json",
+	    			success : function(data) {
+						sAlert(data["result"]);
+	    				if(data["state"] == "success"){
+	    					location.reload();
+	    				}
+	    			}
+	    		});
+    		}
+    	}
+    </script>
+</body>
+</html>

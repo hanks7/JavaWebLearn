@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加教学区域</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加教学区域 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>编号:</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>培训机构:</td>
+					<td id="schools">
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>名称:</td>
+					<td>						 
+						<input type="text" name="name" class="required maxlength:50" />
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>地址:</td>
+					<td>
+						<input type="text" name="address" class="required maxlength:150" />
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>可培训车型:</td>
+					<td colspan="3">
+						<!-- 可培训车型 vehicletype -->
+						<label><input type="checkbox" id="vehicletype1" value="A1" class="minimal-red" />A1</label>
+						<label><input type="checkbox" id="vehicletype2" value="A2" class="minimal-red" />A2</label>
+						<label><input type="checkbox" id="vehicletype3" value="A3" class="minimal-red" />A3</label>
+						<label><input type="checkbox" id="vehicletype4" value="B1" class="minimal-red" />B1</label>
+						<label><input type="checkbox" id="vehicletype5" value="B2" class="minimal-red" />B2</label>
+						<label><input type="checkbox" id="vehicletype7" value="C1" class="minimal-red" />C1</label>
+						<label><input type="checkbox" id="vehicletype8" value="C2" class="minimal-red" />C2</label>
+						<label><input type="checkbox" id="vehicletype9" value="C3" class="minimal-red" />C3</label>
+						<label><input type="checkbox" id="vehicletype10" value="C4" class="minimal-red" />C4</label>
+						<label><input type="checkbox" id="vehicletype11" value="C5" class="minimal-red" />C5</label>
+						<label><input type="checkbox" id="vehicletype12" value="D" class="minimal-red" />D</label>
+						<label><input type="checkbox" id="vehicletype13" value="E" class="minimal-red" />E</label>
+						<label><input type="checkbox" id="vehicletype14" value="F" class="minimal-red" />F</label>
+						<label><input type="checkbox" id="vehicletype15" value="M" class="minimal-red" />M</label>
+						<label><input type="checkbox" id="vehicletype16" value="N" class="minimal-red" />N</label>
+						<label><input type="checkbox" id="vehicletype17" value="P" class="minimal-red" />P</label>
+						<input type="hidden" name="vehicletype" class="required"/>
+					</td>
+				</tr>
+				<tr>
+					<td>教学区域类型:</td>
+					<td>
+						<select name="type" id="type" style="width: 90px;">
+							<option value="1">科目二</option>
+							<option value="2">科目三</option>
+						</select>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>可容纳车辆数:</td>
+					<td>
+						<input type="text" name="totalvehnum" maxlength="11" class="required onlyNum"/>
+					</td>
+					<td>已投放车辆数:</td>
+					<td>
+						<input type="text"name="curvehnum" maxlength="11" class="required onlyNum"/>
+					</td>
+				</tr>
+				<tr>
+					<td>教学区域面积(m²):</td>
+					<td colspan="3">
+						<input type="text" name="area" class="required onlyNum"/>
+					</td>
+				</tr>
+				<tr>
+					<td>教学区域空间坐标集合:</td>
+					<td colspan="3">
+						<input type="text" id="xys" name="polygon" readonly="readonly" class="required"/>
+						<button type="button" onclick="setPolygon();" class="btn btn-danger">设置电子围栏</button>
+					</td>
+				</tr>
+				<tr>
+					<td>备注:</td>
+					<td colspan="3">
+                    	<input type="text" name="remark"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="addRegion();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- 设置电子围栏 -->
+	<div id="setPolygonInfoDiv" style="display:none;" title="设置电子围栏">
+		<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+	</div>
+     
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+		    var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+		    if(schools != null){
+		    	var schoolHtml;
+		    	schoolHtml = '<select name="addeRegion.school" id="school" style="width: 160px;" class="required">';
+		    	schoolHtml += schools;
+		    	schoolHtml += '</select>';
+		    	$("#schools").html(schoolHtml);
+		    }
+		});
+		
+    	//添加教学区域信息
+    	function addRegion(){
+    		var vehicletype="";
+    		$("#form1").find("input[id^='vehicletype']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				vehicletype += $(this).val()+",";
+    			}
+    		});
+    		vehicletype = vehicletype.substr(0,vehicletype.length-1);
+			$("input[name='vehicletype']").val(vehicletype);
+			
+			if(validata("form1")){
+	    		$.ajax({
+	    			url : "../../region/add.ao",
+	    			type : 'POST',
+	    			data :$("#form1").serialize(),
+	    			cache : false,
+	    			beforeSend : ajaxstar,
+	    			complete : ajaxend,
+	    			dataType : "json",
+	    			success : function(data) {
+						sAlert(data["result"]);
+	    				if(data["state"] == "success"){
+	    					clearTable("form1");
+	    				}
+	    			}
+	    		});
+			}
+    	}
+		
+		//设置电子围栏
+		function setPolygon(){
+			$("#setPolygonInfoDiv").find("iframe").attr("src","setPolygon.html");
+			$("#setPolygonInfoDiv").dialog({
+				title : "设置电子围栏",
+				resizable : false,
+				width : 850,
+				height : 600,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+    	
+    	//保存从设置电子围栏页传过来的坐标集
+    	function setPolygonXy(xy){
+    		$("#xys").val(xy);
+    		$("#setPolygonInfoDiv").dialog("close");
+    	}
+    </script>
+</body>
+</html>

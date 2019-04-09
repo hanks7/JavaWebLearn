@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>违约金赔偿</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<!-- <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/289/za0sqcyf/jquery-1.6.min.js"></script>
+ --></head>
+<body>
+	<form id="form1">
+		<table class="table table-bordered .table-condensed">
+			<tbody>
+				<tr>
+					<td colspan="5"><label class="badge bg-blue">违约金赔偿设置</label></td>
+				</tr>
+				<tr>
+					<td>所属驾校:</td>
+					<td id="schools"></td>
+				<tr>	
+	            
+			</tbody>
+		</table>
+		<table class="table table-bordered .table-condensed" id="datas">
+			
+		</table>
+		<!-- <button type="button"  id="b1" onClick="delrow();" class="btn btn-info">删除</button>
+		<button type="button"  id="b2" onClick="addrow();" class="btn btn-info">增加</button> -->
+		<div style="text-align: center;">
+			<a href="javascript:void(0);" onclick="addPenaltyMoney();" class="btn btn-info">绑定设置</a>
+		</div>
+	</form>
+    <script type="text/javascript">
+    var htmlStr = "";//用于拼接表单
+    var jiaxiao;
+	var count = 0;//便于区分id的值
+	var stime = new Array();
+	var etime = new Array();
+	var proportions = new Array();
+	var strArray = new Array();
+	var divId = "";
+	//初始化驾校
+	$(function(){
+		createTable(0);
+		var storage = window.sessionStorage;
+	    var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+	    if(schools != null){
+	    	var schoolHtml;
+	    	schoolHtml = '<select name="addPenaltyMoney.school" class="required" id="school" style="width: 160px;">';
+	    	schoolHtml += schools;
+	    	schoolHtml += '</select>';
+	    	$("#schools").html(schoolHtml);
+	    }
+	    
+	});
+	
+	//删除表格操作
+	function delrow(){
+		$("#tb"+count).remove();
+		htmlStr = htmlStr.replace(strArray[count], "");
+		count = count - 1;
+		if(count == 0){
+			document.getElementById("b1").style.display = "none";
+		}
+    }
+	
+	//添加表格操作
+	function addrow(){
+		count = count + 1;
+		recordDate(count-1);
+		createTable(count);
+   	}
+	
+	//获取设置页面
+	var str = "";//用于拼接表单
+	function createTable(i){
+		/* if( i == 0){
+			document.getElementById("b1").style.display = "none";
+		}else{
+			document.getElementById("b1").style.display = "block";	
+		} */
+		str = "";
+		str += "<table class='table table-bordered .table-condensed' width='100%' border='1' id='tb"+i+"'>";
+		str += "<tr>";
+		str += "<td id=\"times"+i+"\">距离练车时间:</td>";
+		str += "<td>从</td>";
+		str += "<td>";
+		str += "<select name=\"addPenaltyMoney.sTime\" class=\"required\" id=\"sTime"+i+"\" style=\"width: 75px;\">";
+		str += "<option value=\"请选择\">请选择</option>";
+		str += "<option value=\"0\">0小时</option>";
+		str += "<option value=\"1\">1小时</option>";
+		str += "<option value=\"2\">2小时</option>";
+		str += "<option value=\"3\">3小时</option>";
+		str += "<option value=\"4\">4小时</option>";
+		str += "<option value=\"5\">5小时</option>";
+		str += "<option value=\"6\">6小时</option>";
+		str += "<option value=\"7\">7小时</option>";
+		str += "<option value=\"8\">8小时</option>";
+		str += "<option value=\"9\">9小时</option>";
+		str += "<option value=\"10\">10小时</option>";
+		str += "<option value=\"11\">11小时</option>";
+		str += "<option value=\"12\">12小时</option>";
+		str += "</select>";
+		str += "</td>";
+		str += "<td>至</td>";
+		str += "<td>";
+		str += "<select id=\"eTime"+i+"\" name=\"addPenaltyMoney.eTime\" class=\"required\" style=\"width: 75px;\">";
+		str += "<option value=\"请选择\">请选择</option>";
+		str += "<option value=\"0\">0小时</option>";
+		str += "<option value=\"1\">1小时</option>";
+		str += "<option value=\"2\">2小时</option>";
+		str += "<option value=\"3\">3小时</option>";
+		str += "<option value=\"4\">4小时</option>";
+		str += "<option value=\"5\">5小时</option>";
+		str += "<option value=\"6\">6小时</option>";
+		str += "<option value=\"7\">7小时</option>";
+		str += "<option value=\"8\">8小时</option>";
+		str += "<option value=\"9\">9小时</option>";
+		str += "<option value=\"10\">10小时</option>";
+		str += "<option value=\"11\">11小时</option>";
+		str += "<option value=\"12\">12小时</option>";
+		str += "</select>";
+		str += "</td>";
+		str += "</tr>";
+		str += "<tr>";
+		str += "<td>违约金百分比:</td>";
+		str += "<td colspan=\"2\"><input type=\"text\" value=\"0%\" id=\"proportions"+i+"\" readonly=\"readonly\" class=\"required\"/></td>";
+		str += "<input type=\"hidden\" id=\"proportion"+i+"\" value=\"0\"/>";
+		str += "<td colspan=\"2\"><div id=\"slider"+i+"\" onclick=\"keepDivId('"+i+"')\"></div></td>";
+		str += "</tr>";
+		htmlStr += str;
+		$("#datas").html(htmlStr);
+		$( "#slider"+i).slider({
+	      	range: "min",
+	      	min: 0,
+	      	max: 100,
+	      	slide: function( event, ui ) {
+	        	$( "#proportions"+i ).val( ui.value + "%");
+	        	$( "#proportion"+i ).val( ui.value);
+	      	}
+		}); 
+		strArray.push(str);
+		for(var j = 0; j < i; j++){
+			 $( "#slider"+j).slider({
+		      	range: "min",
+		    	value:proportionss ,
+		      	min: 0,
+		      	max: 100,
+		      	slide: function( event, ui ) {
+		      		if(divId != i){
+		      			$( "#proportions" + divId ).val( ui.value + "%");
+		        		$( "#proportion" + divId ).val( ui.value);
+		      		}	
+		      	}
+			});
+			
+			var sTimes = stime[j];
+			var eTimes = etime[j];
+			var proportionss = proportions[j];
+			$("#form1").find("input").each(function(){
+				var id = $(this).attr("id");
+				if(id != null && typeof(id) != "undefined"){
+					if(id == "proportions" + j){
+						$(this).val(proportionss+"%");
+						$( "#slider"+j).slider({
+					      	range: "min",
+					    	value:proportionss ,
+					      	min: 0,
+					      	max: 100,
+						}); 
+					}else if(id == "proportion" +j){
+						$(this).val(proportionss);
+					} 
+				}
+			});
+			
+			$("#form1").find("select").each(function(){
+				var id = $(this).attr("id");
+				if(id != null && typeof(id) != "undefined"){
+					if(id == "sTime" + j){
+						$(this).val(sTimes);
+					}else if(id == "eTime" + j){
+						$(this).val(eTimes);
+					}else if(id == "school"){
+						$(this).val($("#school").val());
+					}
+				}
+			});
+		}
+	}
+	function keepDivId(i){
+		//alert(i);
+		divId = i;
+	}
+	//用于记录已选择的数据
+	function recordDate(i){
+		for(var j = 0; j <= i; j++){
+			stime[j] = $("#sTime" + j).val();
+			etime[j] = $("#eTime" + j).val();
+			proportions[j] = $("#proportion" + j).val();
+		}
+		
+	}
+  	//绑定设置
+	function addPenaltyMoney() {
+  		var array = "";
+		for(var i = 0; i <= count; i++){
+			if(i < count){
+				array += stime[i] +"," + etime[i] + "," + proportions[i]+";";
+			}else{
+				array += $("#sTime" + i).val() + ",";
+				array += $("#eTime" + i).val() + ",";
+				array += $("#proportion" + i).val() + ";";
+			}	 
+		}
+		if(validata("form1")){
+			$.ajax({
+				url :"../../penaltyMoney/add.ao",
+				type : 'POST',
+				data : {
+					'jiaxiaoId' : $("#school").val(),
+					'array' : array
+				},
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function(data) {
+					sAlert(data["result"]);
+					if (data["state"] == "success") {
+						location.reload();
+					} 
+				}
+			});
+		}
+	}
+  	
+    </script>
+</body>
+</html>

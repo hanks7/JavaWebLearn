@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>违约金赔偿设置管理</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			违约金赔偿设置管理 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="id">违约金设置ID</option>
+				<option value="name">培训机构名称</option>
+			</select>
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+			<button type="button" onclick="addPenaltyMoney();"  class="btn btn-success">违约金设置</button>
+		</form>
+	</div>
+	
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="ids">违约金设置ID</td>
+			<td name="school">培训机构名称</td>
+			<td name="time">距离练车的时间</td>
+			<td name="proportion">赔偿比例</td>
+			<td name="id" other="penaltyMoney">操作</td>
+		</tr>
+	</table>
+	
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+    
+     <!-- 违约金赔偿信息 -->
+     <div id="penaltyMoneyInfoDiv" style="display:none;" title="违约金赔偿信息">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     <div id="addPenaltyMoneyDiv" style="display: none;" title="违约金赔偿信息设置">
+		<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+	</div>
+    <script type="text/javascript">
+    	searchPage(1,10);
+    	
+    	//分页查询
+    	function searchPage(pageNo,pageSize){
+    		$.ajax({
+    			url : "../../penaltyMoney/find.ao",
+    			type : 'POST',
+    			data : {
+    				"pageNo" : pageNo,
+    				"pageSize" : pageSize,
+    				"query" : $("#query").val(),
+    				"keywords" : $("#keywords").val()
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					insertTr(data, 0);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	//添加的方法
+    	function addPenaltyMoney() {
+    		$("#addPenaltyMoneyDiv").find("iframe").attr("src","./add.html");
+    		$("#addPenaltyMoneyDiv").dialog({
+    			title : "添加违约金赔偿设置",
+    			resizable : false,
+    			width : 800,
+    			height : 540,
+    			resizable : true,
+    			modal : true,
+    			buttons : {
+    				"关闭" : function() {
+    					$(this).dialog("close");
+    				}
+    			}
+    		});
+    	}
+    	//查看明细
+    	function look(id){
+			$("#penaltyMoneyInfoDiv").find("iframe").attr("src","info.html?id="+id);
+			$("#penaltyMoneyInfoDiv").dialog({
+				title : "违约金赔偿",
+				resizable : false,
+				width : 550,
+				height : 400,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    </script>
+</body>
+</html>

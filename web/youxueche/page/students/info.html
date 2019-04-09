@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>学员信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+	<table class="table table-bordered .table-condensed">
+		<tr>
+			<td>编号:</td>
+			<td id="id"></td>
+			<td>国籍:</td>
+			<td id="nationality"></td>
+			<td rowspan="10" id="simg">
+				
+			</td>
+		</tr>
+		<tr>
+			<td>培训机构:</td>
+			<td id="school"></td>
+			<td>班级:</td>
+			<td>
+				<select name="updateStudent.grades" id="grades" style="width: 90px;">
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>姓名:</td>
+			<td>						 
+				<input type="text" name="name" id="updateStudent.name" class="required maxlength:10" />
+				<input type="hidden" name="id" />
+			</td>
+			<td>性别:</td>
+			<td>
+				<select name="sex" id="sex" style="width: 90px;">
+					<option value="1">男</option>
+					<option value="2">女</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>证件类型:</td>
+			<td>
+				<select name="cardtype" id="cardtype" style="width: 90px;">
+					<option value="1">身份证</option>
+					<option value="2">护照</option>
+					<option value="3">军官证</option>
+					<option value="4">其他</option>
+				</select>
+			</td>
+			<td>证件号:</td>
+			<td>
+				<input type="text" name="idcard"  class="required conlength:18"/>
+			</td>
+		</tr>
+		<tr>
+			<td>住址:</td>
+			<td>
+				<input type="text" name="address" class="required maxlength:100"/>
+			</td>
+			<td>手机号:</td>
+			<td>
+				<input type="text" name="phone" class="required phone"/>
+			</td>
+		</tr>
+		<tr>
+			<td>业务类型:</td>
+			<td>
+				<select name="busitype" id="busitype" style="width: 90px;">
+					<option value="0">初领</option>
+					<option value="1">增领</option>
+					<option value="2">其他</option>
+				</select>
+			</td>
+			<td>学习车型:</td>
+			<td>
+				<select name="traintype" id="traintype" style="width: 90px;" class="required">
+					<option value="请选择">请选择</option>
+					<option value="A1">A1</option>
+					<option value="A2">A2</option>
+					<option value="A3">A3</option>
+					<option value="B1">B1</option>
+					<option value="B2">B2</option>
+					<option value="C1">C1</option>
+					<option value="C2">C2</option>
+					<option value="C3">C3</option>
+					<option value="C4">C4</option>
+					<option value="C5">C5</option>
+					<option value="D">D</option>
+					<option value="E">E</option>
+					<option value="F">F</option>
+					<option value="M">M</option>
+					<option value="N">N</option>
+					<option value="P">P</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>原准驾车型:</td>
+			<td>
+				<select name="perdritype" id="perdritype" style="width: 90px;">
+					<option value="无">无</option>
+					<option value="A1">A1</option>
+					<option value="A2">A2</option>
+					<option value="A3">A3</option>
+					<option value="B1">B1</option>
+					<option value="B2">B2</option>
+					<option value="C1">C1</option>
+					<option value="C2">C2</option>
+					<option value="C3">C3</option>
+					<option value="C4">C4</option>
+					<option value="C5">C5</option>
+					<option value="D">D</option>
+					<option value="E">E</option>
+					<option value="F">F</option>
+					<option value="M">M</option>
+					<option value="N">N</option>
+					<option value="P">P</option>
+				</select>
+			</td>
+			<td>驾驶证号:</td>
+			<td>
+				<input type="text" name="drilicnum" />
+			</td>
+		</tr>
+		<tr>
+			<td>驾驶证初领日期:</td>
+			<td>
+				<input type="text" onClick="WdatePicker();" name="fstdrilicdate" />
+			</td>
+			<td>学员状态:</td>
+			<td id="state"></td>
+		</tr>
+		<tr>
+			<td>报名人员:</td>
+			<td id="isname"></td>
+			<td>报名时间:</td>
+			<td id="applydate"></td>
+		</tr>
+		<tr>
+			<td>备案流程:</td>
+			<td id="flowBa"></td>
+			<td>流程备注:</td>
+			<td id="flowRemark"></td>
+		</tr>
+		<tr>
+			<td colspan="5" style="text-align: center;">
+				<button type="button" onclick="updateStu();" class="btn btn-info">修改</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var stuId = href[1];
+    	getStu(stuId);
+    	
+    	//获取学员资料
+    	function getStu(id){
+    		$.ajax({
+    			url : "../../student/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							if(id == "simg"){
+    								$(this).html("<img style='width:102px;heigth:126px;' src='"+pickerProjectAdd+data["result"][id]+"' />");
+    							}else{
+    								$(this).html(data["result"][id]);
+    							}
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							if(name == "updateStudent.grades"){
+    								var grades = data["result"]["grades"];
+    								var gradeHtml = "";
+    								var isuse = "";
+    								for(var i = 0; i < grades.length; i++){
+    									if(grades[i]["isuse"] == 1){
+    										isuse = grades[i]["id"];
+    									}
+    									gradeHtml += "<option value='"+grades[i]["id"]+"'>"+grades[i]["name"]+"</option>";
+    								}
+    								
+    								$(this).html(gradeHtml);//填空下拉列表框选项
+    								$(this).val(isuse);//设置选中项
+    							}else{
+    								$(this).val(data["result"][name]);
+    							}
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改学员信息
+    	function updateStu(){
+    		if(validata("form1")){
+        		$.ajax({
+        			url : "../../student/update.ao",
+        			type : 'POST',
+        			data :$("#form1").serialize(),
+        			cache : false,
+        			beforeSend : ajaxstar,
+        			complete : ajaxend,
+        			dataType : "json",
+        			success : function(data) {
+    					sAlert(data["result"]);
+        				if(data["state"] == "success"){
+        					location.reload();
+        				}
+        			}
+        		});
+    		}
+    	}
+    </script>
+</body>
+</html>

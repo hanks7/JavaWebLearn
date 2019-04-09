@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加班级</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加班级 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>编号:</td>
+					<td></td>
+					<td>培训机构:</td>
+					<td id="schools"></td>
+				</tr>
+				<tr>
+					<td>班级名称:</td>
+					<td>
+						<input type="text" name="classcurr" id="classcurr" class="required maxlength:50 "/>
+					</td>
+					<td>金额(￥):</td>
+					<td>
+						<input type="text" name="price" class="required onlyNum"/>
+					</td>
+				</tr>
+				<tr>
+					<td>可培训车型:</td>
+					<td colspan="4">						 
+						<label><input type="checkbox" id="vehicletype1" value="A1" class="minimal-red" />A1</label>
+						<label><input type="checkbox" id="vehicletype2" value="A2" class="minimal-red" />A2</label>
+						<label><input type="checkbox" id="vehicletype3" value="A3" class="minimal-red" />A3</label>
+						<label><input type="checkbox" id="vehicletype4" value="B1" class="minimal-red" />B1</label>
+						<label><input type="checkbox" id="vehicletype5" value="B2" class="minimal-red" />B2</label>
+						<label><input type="checkbox" id="vehicletype7" value="C1" class="minimal-red" />C1</label>
+						<label><input type="checkbox" id="vehicletype8" value="C2" class="minimal-red" />C2</label>
+						<label><input type="checkbox" id="vehicletype9" value="C3" class="minimal-red" />C3</label>
+						<label><input type="checkbox" id="vehicletype10" value="C4" class="minimal-red" />C4</label>
+						<label><input type="checkbox" id="vehicletype11" value="C5" class="minimal-red" />C5</label>
+						<label><input type="checkbox" id="vehicletype12" value="D" class="minimal-red" />D</label>
+						<label><input type="checkbox" id="vehicletype13" value="E" class="minimal-red" />E</label>
+						<label><input type="checkbox" id="vehicletype14" value="F" class="minimal-red" />F</label>
+						<label><input type="checkbox" id="vehicletype15" value="M" class="minimal-red" />M</label>
+						<label><input type="checkbox" id="vehicletype16" value="N" class="minimal-red" />N</label>
+						<label><input type="checkbox" id="vehicletype17" value="P" class="minimal-red" />P</label>
+						<input type="hidden" name="vehicletype" class="required"/>
+					</td>
+				</tr>
+				<tr>
+					<td>培训部分及方式:</td>
+					<td colspan="3">
+						<div>
+							<label><input type="radio" name="keMu1" class="minimal-red" checked="checked" value="1" />第一部分集中教学</label>
+							<label><input type="radio" name="keMu1" class="minimal-red" value="2" />第一部分网络教学</label>
+
+							<label><input type="radio" name="keMu2" class="minimal-red" checked="checked" value="6" />第二部分普通教学</label>
+							<label><input type="radio" name="keMu2" class="minimal-red" value="7" />第二部分智能教学</label>
+
+							<label><input type="radio" name="keMu3" class="minimal-red" checked="checked" value="8" />第三部分普通教学</label>
+							<label><input type="radio" name="keMu3" class="minimal-red" value="9" />第三部分智能教学</label>
+
+							<label><input type="radio" name="keMu4" class="minimal-red" checked="checked" value="3" />第四部分集中教学</label>
+							<label><input type="radio" name="keMu4" class="minimal-red" value="4" />第四部分网络教学</label>
+
+							<label><input type="checkbox" name="moni" value="5" />模拟器教学</label>
+							
+							<input type="hidden" name="subject" class="required" />
+						</div>
+					</td>
+					
+				</tr>
+				<tr>
+					<td>收费模式:</td>
+					<td>
+						<select name="chargemode"  style="width: 95px;">
+							<option value="1">一次性收费</option>
+							<option value="2">计时收费</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+					<td>付费模式:</td>
+					<td>
+						<select name="paymode"  style="width: 90px;">
+							<option value="1">先学后付</option>
+							<option value="2">先付后学</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>培训模式:</td>
+					<td>
+						<select name="trainningmode" id="trainningmode" style="width: 90px;">
+							<option value="1">定时培训</option>
+							<option value="2">预约培训</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+					<td>培训时段:</td>
+					<td>
+						<select name="trainningtime"  style="width: 90px;">
+							<option value="1">普通时段</option>
+							<option value="2">高峰时段</option>
+							<option value="3">节假日时段</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>服务内容:</td>
+					<td>
+						<input type="text" name="service"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" style="text-align: center;">
+						<button type="button" onclick="addGrade();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+		    var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+		    if(schools != null){
+		    	var schoolHtml;
+		    	schoolHtml = '<select name="addGrade.school" class="required" id="school" style="width: 160px;">';
+		    	schoolHtml += schools;
+		    	schoolHtml += '</select>';
+		    	$("#schools").html(schoolHtml);
+		    }
+		});
+		
+    	//添加班级信息
+    	function addGrade(){
+    		var vehicletype="";
+    		$("#form1").find("input[id^='vehicletype']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				vehicletype += $(this).val()+",";
+    			}
+    		});
+    		vehicletype = vehicletype.substr(0,vehicletype.length-1);
+			$("input[name='vehicletype']").val(vehicletype);
+			var name = $("input[name='classcurr']").val();
+			
+			var subject = "";
+			$("#form1").find("input[name^='keMu']").each(function(){
+				var select = $(this).prop("checked");
+				if(select == true){
+					subject += $(this).val()+",";
+				}
+			});
+			subject = subject.substring(0, subject.length-1);
+			$("input[name='subject']").val(subject);
+			
+			var classcurr = $("#classcurr").val();//输入的班级名称
+			if(classcurr != null && classcurr != "" && typeof(classcurr) != "undefined"){
+				$("#classcurr").parent().find("span[class='errorName']").remove();
+				var schoolId = $("#school").val();
+				$.ajax({
+					url : "../../grade/checkGradeName.ao",
+					type : 'POST',
+					data : {
+						"name" : classcurr ,
+						"schoolId" : schoolId
+					},
+					cache : false,
+					beforeSend : ajaxstar,
+					complete : ajaxend,
+					dataType : "json",
+					success : function(data) {
+						if(data["state"] == "success"){
+							var span = "<span class='errorName'>该班级名已存在</span>";
+							$("#classcurr").parent().append(span);
+						}
+					}	
+				});	
+			}else{
+				$(this).parent().find("span[class='errorName']").remove();
+			}
+			if(validata("form1")){
+				$.ajax({
+	    			url : "../../grade/add.ao",
+	    			type : 'POST',
+	    			data :$("#form1").serialize(),
+	    			cache : false,
+	    			beforeSend : ajaxstar,
+	    			complete : ajaxend,
+	    			dataType : "json",
+	    			success : function(data) {
+						sAlert(data["result"]);
+	    				if(data["state"] == "success"){
+	    					clearTable("form1");
+	    				}
+	    			}
+	    		});
+			}
+    	}
+    	
+    </script>
+</body>
+</html>

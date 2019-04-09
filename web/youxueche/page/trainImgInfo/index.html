@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>教练员授课情况查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			教练员授课情况查询<small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="请选择">请选择</option>
+				<option value="name">教练员名</option>
+				<option value="coachnum">教练员编号</option>
+			</select>
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="ids">ID</td>
+			<td name="coachnum">教练员编号</td>
+			<td name="name">教练员名</td>
+			<td name="schoolname">驾校名</td>
+			<td name="chezai">车载设备编号</td>
+			<td name="type">状态</td>
+			<td name="time">时间</td>
+			<td name="id" other="times">操作</td>
+		</tr>
+	</table>
+    <div class="pager">
+    </div>
+    
+     <!-- 详情-->
+     <div id="trainInfoDiv" style="display:none;" title="教练员授课情况查询">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+    <script type="text/javascript">
+    	searchPage(1,10);
+    	
+    	//分页查询
+    	function searchPage(pageNo,pageSize){
+    		$.ajax({
+    			url : "../../trainImgInfo/getDriverTrainImgs.ao",
+    			type : 'POST',
+    			data : {
+    				"pageNo" : pageNo,
+    				"pageSize" : pageSize,
+    				"query" : $("#query").val(),
+    				"keywords" : $("#keywords").val()
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					insertTr(data, 0);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//详情查询
+    	function look(id){
+			$("#trainInfoDiv").find("iframe").attr("src","info.html?id="+id);
+			$("#trainInfoDiv").dialog({
+				title : "详情查询",
+				resizable : false,
+				width : 750,
+				height : 450,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    </script>
+</body>
+</html>

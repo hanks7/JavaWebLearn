@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>设置有效时段</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			设置有效时段 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>城市:</td>
+					<td id="citys">
+					</td>
+					<td>地区:</td>
+					<td>
+						<select name="addEffectTime.area" id="areas" style="width: 90px;">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>实车教学有效时段起:</td>
+					<td>
+						<input type="text" id="ss14"  name="carTeachTimeS" />
+					</td>
+					<td>实车教学有效时段止:</td>
+					<td>
+						<input type="text" id="ss15" name="carTeachTimeE" />
+					</td>
+				</tr>
+				<tr>
+					<td>课堂和模拟教学有效时段起:</td>
+					<td>
+						<input type="text" id="ss16"  name="classTeachTimeS" />
+					</td>
+					<td>课堂和模拟教学有效时段止:</td>
+					<td>
+						<input type="text" id="ss17"  name="classTeachTimeE" />
+					</td>
+				</tr>
+				<tr>
+					<td>远程教学有效时段起:</td>
+					<td>
+						<input type="text" id="ss18"  name="onlineTimeS"  />
+					</td>
+					<td>远程教学有效时段止:</td>
+					<td>
+						<input type="text" id="ss19"  name="onlineTimeE" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" style="text-align: center;">
+						<button type="button" onclick="addEffectTime();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+		    var citys = storage.getItem("citys");//获取存在sessionStorage里的驾校数据
+		    if(citys != null){
+		    	var citysHtml;
+		    	citysHtml = '<select name="addEffectTime.city" id="city" style="width: 160px;"  onchange="changeCity();">';
+		    	citysHtml += citys;
+		    	citysHtml += '</select>';
+		    	$("#citys").html(citysHtml);
+		    }else{
+		    	var areas = storage.getItem("areas");//获取存在sessionStorage里的班级数据
+		    	if(areas != null){
+		    		$("#areas").html(areas);
+		    	}
+		    }
+		});
+		
+    //根据地区进行设置有效时间段
+	function addEffectTime(){
+		var flag = true;
+	    var	city = $("#city").val();
+	    var area = $("#areas").val();
+	    if(city ==0 || city == null || city == "" ){
+	    	flag = false;
+	    	alert("请选择城市!");
+	    }
+	   	if(area == 0 || area == null || area == ""){
+	   		flag = false;
+	   		alert("请选择地区!");
+	   	}
+	   	if(flag){
+	   		$.ajax({
+	   			url : "../../effectTime/add.ao?cityId="+city+"&areaId="+area,
+	   			type : "POST",
+	   			data : $("#form1").serialize(),
+	   			dataType : "json",
+	   			cache : false,
+	   			success : function(data){
+	   				if(data["state"]=="success"){
+	   					alert("设置有效时段成功!");
+	   					location.reload();
+	   				}else{
+	   					alert("设置有效时段失败");
+	   				}
+	   			}
+	   			
+	   		});
+	   	}
+	}
+    </script>
+</body>
+</html>

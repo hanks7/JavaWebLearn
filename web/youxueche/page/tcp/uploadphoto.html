@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>上传指定照片</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+<script type="text/javascript" src="../../js/public.js" ></script>
+<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../css/showLoading.css" rel="stylesheet" />
+</head>
+<body class="skin-blue">
+	<div class="right_mainH4">
+		<p>
+			上传指定照片
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td style="width: 120px">参数名称</td>
+				<td style="width: 120px">参数值</td>
+			</tr>
+			<tr>
+				<td>照片编号</td>
+				<td>
+					<input type="hidden" id="imageId" />
+					<select id="imagesize">
+						<option value="请选择">请选择</option>
+					</select>					
+				</td>
+			</tr>
+		</table>
+		<div style="text-align: center;">
+			<input type="button" class="btn btn-info" id="addbtn" value="开始上传" onclick="uploadphoto();" />
+		</div>
+	</div>
+	<script type="text/javascript">
+	
+	function getImageIds(){
+		
+		$.ajax({
+			url : host + "/tcpReq/getImageIds.ao",
+			type : 'POST',
+			data :'terminalphone='+TERMINAL_HPONE(),
+			beforeSend : function(){
+				$(".sr-only").showLoading();
+			},
+			complete : function(){
+				$(".sr-only").hideLoading();
+			},
+			cache : false,
+			dataType : "json",
+			success : function (data){
+				try{
+					
+					if ( data.root.retcode != 0 ) return ;
+					
+					$("#imageids").html('');
+					$.each(data.root.msgBody.imageIds,function(i,item){
+						var idhtml = "<li><a href='#' title='"+item+"'>"+item+"</a></li>";
+						$('#imageids').append(idhtml);		
+					});
+					
+					$(function() {
+						 //下拉列表框初始化
+						$(".dropdown-menu").find("a").each(function() {
+							$(this).bind("click",function() {
+								$(this).parent().parent().parent().find(".sr-only").html($(this).html());
+								$(this).parent().parent().parent().find("input[type='hidden']").val($(this).attr("title"));
+							});
+						});
+					});
+					
+					
+				}catch(err){
+				}
+			}
+		});		
+		
+
+	}
+		
+     function uploadphoto(){
+		$.ajax({
+			url : "../../tcpReq/uploadImage.ao",
+			type : 'POST',
+			data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						
+						var msg ="未知异常";
+						switch(data.root.msgBody.extMessage.result)
+						{
+						case 0:
+							msg="找到照片，稍候上传";
+							break;
+						case 1:
+							msg="没有该照片";
+							break;						
+						default:
+						}
+						alert(msg);
+					}
+
+				}catch(err){
+					alert("失败!");
+				}
+			}
+		});
+     }
+	</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>接单操作</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" id="orderDetailInfo">
+		<tr>
+			<td>订单ID:</td>
+			<td name="id"></td>
+			<td>订单编号:</td>
+			<td name="orderNumber"></td>
+		
+		<tr>
+			<td>学习学员:</td>
+			<td name="student">
+			</td>
+			<td>学员手机:</td>
+			<td name="stuMobile"></td>
+		</tr>
+		<tr>
+			<td>预约学习时间:</td>
+			<td name="yyStudyTime"></td>
+			<td>学习车型:</td>
+			<td name="traintype"></td>
+		</tr>
+		
+		<tr>
+			<td>学习科目:</td>
+			<td name="keMu"></td>
+			<td>学习内容:</td>
+			<td name="studyContent"></td>
+		</tr>
+		<tr>
+			<td>学习学时:</td>
+			<td name="xueShi"></td>
+			<td>教学教练:</td>
+			<td name="jsDriver"></td>
+			
+		</tr>
+		<tr>
+			<td>教练员手机号:</td>
+			<td name="driverMobile"></td>
+			<td>当前流程:</td>
+			<td name="flow"></td>
+		</tr>
+		<tr>
+			<td colspan="4" style="text-align: center;">
+				<button onclick="takeOrder();" style="color:#FFF;" class="btn btn-info">接单处理</button>
+			</td>
+		</tr>
+	</table>
+	
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var orderId = href[1];
+    	var driverName = "";
+    	var studentName = "";
+    	getOrderDetailById(orderId);
+    	
+    	//获取订单信息
+    	function getOrderDetailById(id){
+    		$.ajax({ 
+    			url : "../../orderDetail/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			cache : false,
+    			dataType : "json",
+    			success : function(data){
+    				if(data["state"] == "success"){
+    					$("table").find("td").each(function(){
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).html(data["result"][name]);
+    						}
+    					});
+    					driverName = data["result"]["jsDriver"];
+						studentName = data["result"]["student"];
+    				}else{
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+	 
+    	//接单操作
+    	function takeOrder(){
+    		if(confirm("确定替"+driverName+"教练员接学员"+studentName+"的订单?")){
+    			$.ajax({
+    				url : "../../orderDetail/takeOrder.ao",
+        			type : 'POST',
+        			data : {
+        				"id" : orderId
+        			},
+        			cache : false,
+        			dataType : "json",
+    				success : function(data){
+    					alert(data["result"]);
+    					if(data["state"] == "success"){
+    						window.parent.searchPage(1,10);
+    						window.parent.quit();
+    					}
+    				}
+    			});
+    		}
+    	}
+    </script>
+</body>
+</html>

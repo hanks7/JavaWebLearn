@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>审核参数配置</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+		<table class="table table-bordered .table-condensed">
+			<tr>
+				<td>审核方式</td>
+				<td>
+					<label><input type="radio" name="t8" value="1"/>自动审核</label>
+					<label><input type="radio" name="t8" value="2"/>手动审核</label>
+					<label><input type="radio" name="t8" value="3"/>自动审核+手动审核</label>
+				</td>
+			</tr>
+			<tr>
+				<td>分钟学时中发动机转速小于?分钟学时无效</td>
+				<td>
+					<input type="text" name="t1" />
+				</td>
+			</tr>
+			<tr>
+				<td>坐标是否在教学区域内,出区域的分钟学时（是否）为无效学时,PS：是为有效学时   否为无效学时</td>
+				<td>
+					<label><input type="radio" name="t2" value="0"/>否</label>
+					<label><input type="radio" name="t2" value="1"/>是</label>
+				</td>
+			</tr>
+			<tr>
+				<td>连续？分钟或以上分钟学时的里程为0,该？分钟或以上的分钟学时无效</td>
+				<td>
+					<input type="text" name="t3"/>
+				</td>
+			</tr>
+			<tr>
+				<td>连续？分钟或以上分钟学时中最大速度为0或行驶记录速度为0,该？分钟或以上的分钟学时无效</td>
+				<td>
+					<input type="text" name="t4" />
+				</td>
+			</tr>
+			<tr>
+				<td>一次 电子教学日志的总里程小于？米 ，该条教学日志对应的分钟学时均无效</td>
+				<td>
+					<input type="text" name="t5" value="100"/>
+				</td>
+			</tr>
+			<tr>
+				<td>照片缺失或无效时，该照片时间点前后？个分钟学时置为无效</td>
+				<td>
+					<input type="text" name="t6" />
+				</td>
+			</tr>
+			<tr>
+				<td>如果时间上连续的？张或以上照片缺失或无效时，则期间的所有学时应判定为无效</td>
+				<td>
+					<input type="text" name="t7" />
+				</td>
+			</tr>
+			<tr>
+				<td>每日认可学时（第一部分+第四部分、第二部分+第三部分）不能超过？分钟</td>
+				<td>
+					<input type="text" name="t9" />
+				</td>
+			</tr>
+			<tr>
+				<td>C1、科目二每条培训日志不能少于？分钟</td>
+				<td>
+					<input type="text" name="t10" />
+				</td>
+			</tr>
+			<tr>
+				<td>C1、科目三每条培训日志不能少于？分钟</td>
+				<td>
+					<input type="text" name="t11" />
+				</td>
+			</tr>
+			<tr>
+				<td>C2、科目二每条培训日志不能少于？分钟</td>
+				<td>
+					<input type="text" name="t12" />
+				</td>
+			</tr>
+			<tr>
+				<td>C2、科目三每条培训日志不能少于？分钟</td>
+				<td>
+					<input type="text" name="t13"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" style="text-align: center;">
+					<button type="button" onclick="updateShenHeSet();" class="btn btn-info">修改</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+    <script type="text/javascript">
+    var href = location.href.split("=");
+	var schoolId = href[1];
+	getShenHeSetBySchoolId(schoolId);
+	
+	function getShenHeSetBySchoolId(id){
+		$.ajax({
+			url : "../../shenHeSet/get.ao",
+			type : 'POST',
+			data : {
+				"schoolId" : schoolId
+			},
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if(data["state"] == "success"){
+					for(var i = 1 ; i < 14 ; i++){
+						var a = data["result"]["t"+i];
+						if(a == null || typeof(a) == "undefined"){
+							return;
+						}
+						if(i == 2 || i == 8){
+							$("input[name='t"+i+"']").each(function(){
+								if($(this).val() == a["val"]){
+									$(this).attr('checked','true');
+								}
+							});
+						}else{
+							$("input[name='t"+i+"']").val(a["val"]);
+						}
+					}
+				}else{
+					sAlert(data["result"]);
+				}
+			}
+		});
+	}
+	
+    //修改配置信息
+    function updateShenHeSet(){
+    	$.ajax({
+    		url : "../../shenHeSet/update.ao?schoolId="+schoolId,
+    		type : 'POST',
+    		data : $("#form1").serialize(),
+    		cache : false,
+    		dataType : "json",
+    		success : function(data){
+    			sAlert(data["result"]);
+    			if(data["state"] == "success"){
+    				location.reload();
+    			}
+    		}
+    	});
+    }
+    </script>
+</body>
+</html>

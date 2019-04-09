@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加评价信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<style>
+  	#appends{
+  		width:200px;
+        border-top:0;
+        display:none;
+        background:#FFFFFF;
+    }
+ 	#append{
+  		width:200px;
+        border-top:0;
+        display:none;
+        background:#FFFFFF;
+    }
+  	.item{
+        padding:3px 5px;
+        cursor:pointer;
+    }
+    .addbg{
+        background:#C4E1FF;
+        width:160px;
+    }
+</style>
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加评价信息 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>评价对象:</td>
+					<td>
+						<select name="type" id="type">
+							<option value="1">教练员</option>
+							<option value="2">培训机构</option>	
+						</select>
+					</td>
+					<td>具体评价对象:</td>
+					<td>
+						<input type="text" id="driverOrSchool" onkeyup="getDriverOrSchool(this.value);"/>
+						<input type="hidden" id="driverOrSchools" name="addEvaluate.driverOrSchool"/>
+					</td>
+				</tr>
+				<tr>
+					<td>评价人:</td>
+					<td>
+						<input type="text" id="student" onkeyup="getStudent(this.value);"/>
+						<input type="hidden" id="students" name="addEvaluate.student"/>
+					</td>
+					<td>满意度:</td>
+					<td>
+						<select name="overall" id="overall">
+							<option value="1">一星</option>
+							<option value="2">二星</option>
+							<option value="3">三星</option>
+							<option value="4">四星</option>
+							<option value="5">五星(最满意)</option>
+						</select>
+					</td>
+				</tr>
+				<tr>	
+					<td>评价内容:</td>
+					<td colspan="3">
+						<input type="text" name="teachlevel">
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="addEvaluate();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="append" style='position:absolute;left:1090px;top:95px;display='none'></div>
+	<div id="appends" style='position:absolute;left:240px;top:138px;display='none'></div>
+    <script type="text/javascript">
+		//获取教练员获取驾校信息
+    	function getDriverOrSchool(value){
+			var type = $("#type").val();
+			if(value != ""){
+				if(type == 1){//评价教练员
+					$.ajax({
+						url : "../../driver/getDriverByWhere.ao",
+						type : 'POST',
+						data : {
+							"driver" : value
+						},
+						cache : false,
+						dataType : "json",
+						success : function(data){
+							if(data["state"] == "success"){
+								var html = "";
+								if(data["result"].length > 0){
+									for(var i = 0; i < data["result"].length; i++){
+										html += "<div class='item' onmouseenter='getFocus(this)' onClick='getCont(this,"+i+");'>" +data["result"][i]["driver"]+"</div>";
+										html += "<input type=\"hidden\" id=\"ids"+i+"\" value =\""+data["result"][i]["id"]+"\"/>";
+									}
+									$("#append").show().html(html);
+								}else{
+									$("#append").hide().html("");
+								}
+							}else{
+								sAlert(data["result"]);
+							}
+						}
+					});
+				}else{//评价驾校
+					$.ajax({
+						url : "../../school/getSchoolByWhere.ao",
+						type : 'POST',
+						data : {
+							"school" : value
+						},
+						cache : false,
+						dataType : "json",
+						success : function(data){
+							if(data["state"] == "success"){
+								var html = "";
+								if(data["result"].length > 0){
+									for(var i = 0; i < data["result"].length; i++){
+										html += "<div class='item' onmouseenter='getFocus(this)' onClick='getCont(this,"+i+");'>" +data["result"][i]["school"]+"</div>";
+										html += "<input type=\"hidden\" id=\"ids"+i+"\" value =\""+data["result"][i]["id"]+"\"/>";
+									}
+									$("#append").show().html(html);
+								}else{
+									$("#append").hide().html("");
+								}
+							}else{
+								sAlert(data["result"]);
+							}
+						}
+					});
+				}
+			}else{
+				$("#append").hide().html("");
+			}	
+		}
+		//根据信息获取学员
+		function getStudent(value){
+			if(value != ""){
+				$.ajax({
+					url : "../../student/getStudentByWhere.ao",
+					type : 'POST',
+					data : {
+						"student" : value
+					},
+					cache : false,
+					dataType : "json",
+					success : function(data){
+						if(data["state"] == "success"){
+							var html = "";
+							if(data["result"].length > 0){
+								for(var i = 0; i < data["result"].length; i++){
+									html += "<div class='item' onmouseenter='getFocus(this)' onClick='getCon(this,"+i+");'>" +data["result"][i]["student"]+"</div>";
+									html += "<input type=\"hidden\" id=\"id"+i+"\" value =\""+data["result"][i]["id"]+"\"/>";
+								}                                   
+								$("#appends").show().html(html);
+							}else{
+								$("#appends").hide().html("");
+							}
+						}else{
+							sAlert(data["result"]);
+						}
+					}
+				});
+			}else{
+				$("#appends").hide().html("");
+			}	
+		}
+		
+		$("body").click(function(){
+			var driverOrSchool = $("#driverOrSchool").val();
+			if(driverOrSchool.length < 11){
+				$("#driverOrSchool").val("");
+			}
+			$("#append").hide().html("");
+			var student = $("#student").val();
+			if(student.length < 11){
+				$("#student").val("");
+			}
+			$("#appends").hide().html("");
+		});
+		
+		function getFocus(obj){
+		    $(".item").removeClass("addbg");
+		    $(obj).addClass("addbg");
+		}
+		
+		function getCont(obj,i){
+			var value = $(obj).text();
+		    $("#driverOrSchool").val(value);
+		    $("#driverOrSchools").val($("#ids"+i).val());
+		    $("#append").hide().html("");
+		}
+		function getCon(obj,i){
+		    var value = $(obj).text();
+		    $("#student").val(value);
+		    $("#students").val($("#id"+i).val());
+		    $("#appends").hide().html("");
+		   
+		}
+		
+    	//添加分支机构信息
+    	function addEvaluate(){
+    		$.ajax({
+    			url : "../../evaluate/add.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					clearTable("form1");
+    				}
+    			}
+    		});
+    	}
+ 
+    </script>
+</body>
+</html>

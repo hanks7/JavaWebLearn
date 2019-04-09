@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>分支机构信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>ID:</td>
+					<td colspan="3" id="id"></td>
+					
+				<tr>
+					<td>操作时间:</td>
+					<td id="createDate" colspan="3"></td>
+					
+				</tr> 
+				<tr>
+					<td>url:</td>
+					<td id="url" colspan="3" style="word-wrap:break-word;word-break:break-all;"></td>
+				</tr>
+				<tr>
+					<td>data:</td>
+					<td colspan="3" id="data" style="word-wrap:break-word;word-break:break-all;"></td>
+				</tr>
+				<tr>
+					<td>signData:</td>
+					<td id="signData" colspan="3" style="word-wrap:break-word;word-break:break-all;"></td>
+					
+				</tr>
+				<tr>
+					<td>allUrl:</td>
+					<td id="allUrl" colspan="3" style="word-wrap:break-word;word-break:break-all;"></td>
+				</tr>
+				<tr>
+				<td>备注:</td>
+				<td id="descs" colspan="3" style="word-wrap:break-word;word-break:break-all;"></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="quit();" class="btn btn-info">确定</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var httpLogId = href[1];
+		getHttpLog(httpLogId);
+	
+    	//查看http日志信息
+    	function getHttpLog(id){
+    		$.ajax({
+    			url : "../../httpLog/get.ao",
+    			type : 'POST',
+    			data :{
+    				"id" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							$(this).html(data["result"][id]);
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+
+    	function quit(){
+			window.parent.quit();
+    	}
+    </script>
+</body>
+</html>

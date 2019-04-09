@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加营业网点</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加营业网点 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>营业网点编号:</td>
+					<td></td>
+					<td>培训机构:</td>
+					<td id="schools"></td>
+				</tr>
+				<tr>
+					<td>分支机构:</td>
+					<td>
+						<select name="addWebsites.branches" id="branches" style="width: 90px;">
+						</select>
+					</td>
+					<td>营业网点名称:</td>
+					<td>
+						<input type="text" name="name"/>
+					</td>
+				</tr>
+				<tr>
+					<td>营业网点负责人:</td>
+					<td>
+						<input type="text" name="principal" />
+					</td>
+					<td>负责人联系电话:</td>
+					<td>						 
+						<input type="text" name="phone" />
+					</td>
+				<tr>
+					<td>营业网点地址:</td>
+					<td>
+						<input type="text" name="address" />
+					</td>
+					<td>营业网点分数:</td>
+					<td>
+						<input type="text" name="score" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="addWebsites();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+		    var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+		    if(schools != null){
+		    	var schoolHtml;
+		    	schoolHtml = '<select name="addWebsites.school" id="school" style="width: 160px;" onchange="changeSchool();">';
+		    	schoolHtml += schools;
+		    	schoolHtml += '</select>';
+		    	$("#schools").html(schoolHtml);
+		    }else{
+		    	var branches = storage.getItem("branches");//获取存在sessionStorage里的分支机构数据
+		    	if(branches != null){
+		    		$("#branches").html(branches);
+		    	}
+		    }
+		});
+		
+    	//添加分支机构信息
+    	function addWebsites(){
+    		$.ajax({
+    			url : "../../websites/add.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					clearTable("form1");
+    				}
+    			}
+    		});
+    	}
+ 
+    </script>
+</body>
+</html>

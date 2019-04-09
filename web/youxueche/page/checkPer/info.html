@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>考核员信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>ID:</td>
+					<td id="id"></td>
+					<td>编号:</td>
+					<td id="examnum">
+					</td>
+					<td rowspan="12" id="photoImg">
+						<div class="userface" id="touxiang" onclick="uploadTouxiang();"><span>上传头像</span></div>
+					</td>
+				</tr>
+				<tr>
+					<td>培训机构:</td>
+					<td id="school"></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>姓名:</td>
+					<td>						 
+						<input type="text" name="name" class="required maxlength:15"/>
+						<input type="hidden" name="id" class="required"/>
+					</td>
+					<td>性别:</td>
+					<td>
+						<select name="sex" id="sex" style="width: 90px;">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>身份证号:</td>
+					<td>
+						<input type="text" name="idcard" class="required conlength:18"/>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>政治面貌:</td>
+					<td>
+						<select name="politicStatus" style="width: 90px;">
+							<option value="1">群众</option>
+							<option value="2">共青团员</option>
+							<option value="3">中共党员</option>
+							<option value="4">民主党派成员</option>
+						</select>
+					</td>
+					<td>文化程度:</td>
+					<td>
+						<select name="degree" style="width: 90px;">
+							<option value="高中">高中</option>
+							<option value="文盲">文盲</option>
+							<option value="小学">小学</option>
+							<option value="初中">初中</option>
+							<option value="大专">大专</option>
+							<option value="本科">本科</option>
+							<option value="硕士">硕士</option>
+							<option value="博士">博士</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>资格等级:</td>
+					<td>
+						<select name="occupationlevel" id="occupationlevel" style="width: 90px;">
+							<option value="1">一级</option>
+							<option value="2">二级</option>
+							<option value="3">三级</option>
+							<option value="4">四级</option>
+						</select>
+					</td>
+					<td>驾驶证初领日期:</td>
+					<td>
+						<input type="text" name="fstdrilicdate" onClick="WdatePicker();" class="required date"/>
+					</td>
+				</tr>
+				<tr>
+					<td>准驾车型:</td>
+					<td>
+						<select name="dripermitted" style="width: 90px;">
+							<option value="A1">A1</option>
+							<option value="A2">A2</option>
+							<option value="A3">A3</option>
+							<option value="B1">B1</option>
+							<option value="B2">B2</option>
+							<option value="C1">C1</option>
+							<option value="C2">C2</option>
+							<option value="C3">C3</option>
+							<option value="C4">C4</option>
+							<option value="D">D</option>
+							<option value="E">E</option>
+							<option value="F">F</option>
+							<option value="N">N</option>
+							<option value="P">P</option>
+						</select>
+					</td>
+					<td>准教车型:</td>
+					<td>
+						<select name="teachpermitted" style="width: 90px;">
+							<option value="A1">A1</option>
+							<option value="A2">A2</option>
+							<option value="A3">A3</option>
+							<option value="B1">B1</option>
+							<option value="B2">B2</option>
+							<option value="C1">C1</option>
+							<option value="C2">C2</option>
+							<option value="C3">C3</option>
+							<option value="C4">C4</option>
+							<option value="D">D</option>
+							<option value="E">E</option>
+							<option value="F">F</option>
+							<option value="N">N</option>
+							<option value="P">P</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>驾驶证号:</td>
+					<td>
+						<input type="text" name="drilicence" class="required maxlength:25"/>
+					</td>
+					<td>资格证号:</td>
+					<td>
+						<input type="text" name="occupationno" class="required maxlength:25"/>
+					</td>
+				</tr>
+				<tr>
+					<td>住址:</td>
+					<td>
+						<input type="text" name="address" class="required maxlength:150"/>
+					</td>
+					<td>手机号:</td>
+					<td>
+						<input type="text" name="mobile" class="required phone"/>
+					</td>
+				</tr>
+				<tr>
+					<td>状态:</td>
+					<td>
+						<select name="employstatus" style="width: 90px;">
+							<option value="0">在职</option>
+							<option value="1">离职</option>
+						</select>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>入职日期:</td>
+					<td>
+						<input type="text" name="hiredate" onClick="WdatePicker();" class="required date"/>
+					</td>
+					<td>离职日期:</td>
+					<td>
+						<input type="text" name="leavedate" onClick="WdatePicker();" />
+					</td>
+				</tr>
+				<tr>
+					<td>备注:</td>
+					<td>
+						<input type="text" name="remark" />
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="5" style="text-align: center;" id="btnTd">
+						<button type="button" onclick="updateCheckPer();" class="btn btn-info">修改</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+     <!-- 上传考核员头像 -->
+     <div id="uploadImgDiv" style="display:none;" title="头像上传">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var checkPerId = href[1];
+		getCheckPer(checkPerId);
+		
+    	//查看考核员信息
+    	function getCheckPer(id){
+    		$.ajax({
+    			url : "../../checkPer/get.ao",
+    			type : 'POST',
+    			data :{
+    				"id" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					if(data["result"]["flowBa"] == 99){//添加删除备案按钮
+							var funPath = "..\\\\..\\\\http_checkPer\\\\deleteExaminerPutOnRecord.ao"; //删除备案
+    						var delBaBtn = '<button type="button" onclick="baAn(\''+funPath+'\','+id+');" class="btn btn-danger">删除备案</button>';
+    						$("#btnTd").append(delBaBtn);
+    					}
+    					
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							if(id == "photoImg"){
+    								$(this).html("<img style='width:102px;heigth:126px;' src='"+pickerProjectAdd+data["result"][id]+"' />");
+    							}else{
+    								$(this).html(data["result"][id]);
+    							}
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);//设置选中项
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//上传考核员头像
+    	function uploadTouxiang(){
+			$("#uploadImgDiv").find("iframe").attr("src","../upload/touxiangUpload.html?case=1");
+			$("#uploadImgDiv").dialog({
+				title : "头像上传",
+				resizable : false,
+				width : 850,
+				height : 600,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    	function setImg(path){
+    		$("#uploadImgDiv").dialog("close");
+    		$("input[name='photoImg']").val(path);
+    		$("div[class='userface']").html("<img src='" + pickerProjectAdd + path + "' />");
+    	}
+    	
+    	//修改考核员信息
+    	function updateCheckPer(){
+    		if(validata("form1")){
+        		$.ajax({
+        			url : "../../checkPer/update.ao",
+        			type : 'POST',
+        			data :$("#form1").serialize(),
+        			cache : false,
+        			beforeSend : ajaxstar,
+        			complete : ajaxend,
+        			dataType : "json",
+        			success : function(data) {
+    					sAlert(data["result"]);
+        				if(data["state"] == "success"){
+        					location.reload();
+        				}
+        			}
+        		});
+    		}
+    	}
+    </script>
+</body>
+</html>

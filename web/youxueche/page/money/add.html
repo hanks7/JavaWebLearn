@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>充值</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td style="width: 130px">学员编号：</td>
+					<td id="stunum"></td>
+				</tr>
+				<tr>
+					<td>姓名：</td>
+					<td id="name"></td>
+				</tr>
+				<tr>
+					<td>联系电话：</td>
+					<td id="phone"></td>
+				</tr>
+				<tr>
+					<td style="color: red;">充值方式：</td>
+					<td>
+						<select name="payType" id="payType">
+							<option value="4">现金充值</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="color: red;">充值金额(￥)：</td>
+					<td><input type="text" id="money" name="money"/></td>
+				</tr>
+			</table>
+			<div style="text-align: center;">
+				<a href="javascript:void(0);" onclick="recharge();" style="color: #FFF;" class="btn btn-info">充值</a>
+				<a href="javascript:void(0);" onclick="quit();" style="color: #FFF;" class="btn btn-success">取消</a>
+			</div>
+		</form>
+	</div>	
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+		var stuId = href[1];
+		getStu(stuId);
+		
+    	function getStu(id){
+    		$.ajax({
+	    		url : "../../student/get.ao",
+	    		type : 'POST',
+	    		data : {
+	    			"id" : id
+	    		},
+	    		cache : false,
+	    		dataType : "json",
+	    		success : function(data) {
+	    			if(data["state"] == "success"){
+	    				$("table").find("td").each(function(){
+	    					var id = $(this).attr("id");
+	    					if(id != null && typeof(id) != "undefined"){
+	    						$(this).html(data["result"][id]);
+	    					}
+	    				});
+	    			}else{
+	    				sAlert(data["result"]);
+	    			}
+	    		}
+    		});	
+    	}
+    	
+    	//充值操作
+    	function recharge(){
+    		$.ajax({
+    			url : "../../recharge/add.ao",
+    			type : 'POST',
+    			data :{
+    				"stuId" : stuId,
+    				"payType" : $("#payType").val(),
+    				"money" : $("#money").val()
+    			}, 
+    			cache : false,
+    			dataType : "json",
+    			success : function (data) {
+    				sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					location.reload();
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

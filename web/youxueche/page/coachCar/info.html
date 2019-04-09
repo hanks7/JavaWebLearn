@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>教练车信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+		<table class="table table-bordered .table-condensed">
+			<tr>
+				<td>ID:</td>
+				<td id="id"></td>
+				<td>教练车编号:</td>
+				<td id="carnum"></td>
+				<td rowspan="8" id="photoImg">
+					
+				</td>
+			</tr>
+			<tr>
+				<td>培训机构:</td>
+				<td id="school"></td>
+				<td>教练车品牌:</td>
+				<td>						 
+					<input type="text" id="brand" name="brand" class="required maxlength:20" />
+					<input type="hidden" name="id"/>
+				</td>
+			</tr>
+			<tr>
+				<td>车牌号:</td>
+				<td>
+					<input type="text" id="licnum" name="licnum" class="required carNum"/>
+				</td>
+				<td>教练车型号:</td>
+				<td>
+					<input type="text" id="model" name="model" class="required maxlength:20">
+				</td>
+			</tr>
+			<tr>
+				<td>培训车型:</td>
+				<td>
+					<select name="perdritype" id="perdritype" style="width: 90px;">
+						<option value="A1">A1</option>
+						<option value="A2">A2</option>
+						<option value="A3">A3</option>
+						<option value="B1">B1</option>
+						<option value="B2">B2</option>
+						<option value="C1">C1</option>
+						<option value="C2">C2</option>
+						<option value="C3">C3</option>
+						<option value="C4">C4</option>
+						<option value="C5">C5</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
+						<option value="F">F</option>
+						<option value="M">M</option>
+						<option value="N">N</option>
+						<option value="P">P</option>
+					</select>
+				</td>
+				<td>车牌颜色:</td>
+				<td>
+					<select name="platecolor" id="platecolor" style="width: 90px;">
+						<option value="2">黄色</option>
+						<option value="1">蓝色</option>
+						<option value="3">黑色</option>
+						<option value="4">白色</option>
+						<option value="5">绿色</option>
+						<option value="9">其他</option>
+					</select>
+				</td>
+			</tr>
+			<tr>	
+				<td>教练车年限:</td>
+				<td>
+					<input type="text" name="carYear" class="required onlyNum"/>
+				</td>
+				<td>载客量:</td>
+				<td>
+					<input type="text" name="carLoad" class="required onlyNum"/>
+				</td>
+			</tr>
+			<tr>
+				<td>准教科目:</td>
+				<td>
+					<label><input type="checkbox" id="keMu1" value="2" />科目二</label>
+					<label><input type="checkbox" id="keMu2" value="3"  />科目三</label>
+					<input type="hidden" name="keMu" class="required"/>
+				</td>
+				<td>生产厂家:</td>
+				<td>
+					<input type="text" name="manufacture" class="required maxlength:20"/>
+				</td>
+			</tr>
+			<tr>
+				<td>发动机号:</td>
+				<td>
+					<input type="text" name="engnum" class="required maxlength:32"/>
+				</td>
+				<td>车架号:</td>
+				<td>
+					<input type="text" name="franum" class="required maxlength:32"/>
+				</td>
+			</tr>
+			<tr>
+				<td>购买日期:</td>
+				<td>
+					<input type="text" name="buydate" onClick="WdatePicker();"  class="required date"/>
+				</td>
+				<td>教练车管理员:</td>
+				<td>
+					<input type="text" id="driver" readonly="readonly"/>
+					<button type="button" onclick="bindDriver();" id="btn" class="btn btn-danger">绑定管理员</button>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" style="text-align: center;" id="btnTd">
+					<button type="button" onclick="updateCar();" class="btn btn-info">修改</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	 <!-- 绑定管理员 -->
+	<div id="bindDriversDiv" style="display:none;" title="绑定管理员">
+		<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+	</div>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var carId = href[1];
+    	getCar(carId);
+    	var driverId = "";
+    	var schoolId = "";
+    	
+    	//获取教练车资料
+    	function getCar(id){
+    		$.ajax({
+    			url : "../../coachCar/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					if(data["result"]["flowBa"] == 99){//添加删除备案按钮
+							var funPath = "..\\\\..\\\\http_car\\\\deleteTrainingcarPutOnRecord.ao"; //删除备案
+    						var delBaBtn = '<button type="button" onclick="baAn(\''+funPath+'\','+id+');" class="btn btn-danger">删除备案</button>';
+    						$("#btnTd").append(delBaBtn);
+    					}
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							schoolId = data["result"]["schoolId"];
+    							driverId = data["result"]["driverId"];
+    							if(id == "photoImg"){
+    								$(this).html("<img style='width:102px;heigth:126px;' src='"+pickerProjectAdd+data["result"][id]+"' />");
+    							}else{
+    								$(this).html(data["result"][id]);
+    							}
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);
+    							$("#driver").val(data["result"]["driver"]);
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							if(name == "keMu"){//复选框选中
+    								var keMu = data["result"][name].split(",");
+    								for (var i = 0; i < keMu.length; i++) {
+    									$("input[value='" + keMu[i] + "']").parent().click();
+    								}
+    							}
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).val(data["result"][name]);//设置选中项
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改教练车信息
+    	function updateCar(){
+    		var keMu = "";
+    		$("#form1").find("input[id^='keMu']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				keMu += $(this).val()+",";
+    			}
+    		});
+    		keMu = keMu.substr(0,keMu.length-1);
+			$("input[name='keMu']").val(keMu);
+			
+			if(validata("form1")){
+	    		$.ajax({
+	    			url : "../../coachCar/update.ao?driverId="+driverId,
+	    			type : 'POST',
+	    			data :$("#form1").serialize(),
+	    			cache : false,
+	    			beforeSend : ajaxstar,
+	    			complete : ajaxend,
+	    			dataType : "json",
+	    			success : function(data) {
+						sAlert(data["result"]);
+	    				if(data["state"] == "success"){
+	    					location.reload();
+	    				}
+	    			}
+	    		});
+			}
+    	}
+    	//为教练车绑定教练员
+		function bindDriver(){
+			$("#bindDriversDiv").find("iframe").attr("src","bindDriver.html?id="+schoolId);
+			$("#bindDriversDiv").dialog({
+				title : "绑定管理员",
+				resizable : false,
+				width : 850,
+				height : 700,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+    	function quit(){
+    		$("#bindDriversDiv").dialog("close");
+    	}
+    	function setCarManage(id,name){
+    		driverId = id.replace(/\s+/g,"");//去除字符串中所有的空格
+    		$("#driver").val(name);
+    	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加培训机构信息公布信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加培训机构信息公布信息 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td colspan="5"><label class="badge bg-blue">公告栏</label></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>发布的驾校:</td>
+					<td id="schools"></td>
+				</tr>
+				<tr>
+					<td>公告:</td>
+					<td><input type="text" name="deliverinfo" /></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="add();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+     
+    <script type="text/javascript">
+	    $(function(){
+			var storage = window.sessionStorage;
+		    var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+		    if(schools != null){
+		    	var schoolHtml;
+		    	schoolHtml = '<select name="addDeliverInfo.school" id="school" style="width: 160px;">';
+		    	schoolHtml += schools;
+		    	schoolHtml += '</select>';
+		    	$("#schools").html(schoolHtml);
+		    }
+		});
+    	//添加城市信息
+    	function add(){
+    		$.ajax({
+    			url : "../../deliverInfo/add.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					clearTable("form1");
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

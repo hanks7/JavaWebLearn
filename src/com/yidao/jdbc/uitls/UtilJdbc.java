@@ -10,13 +10,7 @@ import java.util.List;
 /**
  * 如果要使用SQLServerDriver 驱动必须要到mysql-connector-java-5.1.34-bin.jar
  */
-public class UtilJdbcMySql {
-    private static String driver = "com.mysql.jdbc.Driver";
-    private static String dataBase = "tarena";
-    private static String USER = "root";
-    private static String PASS = "root";
-
-    private static final String URL = "jdbc:mysql://localhost:3306/";// 数据库连接字符串，这里的dataBase为数据库名
+public class UtilJdbc {
 
     static Connection conn = null;
     static PreparedStatement ps = null;
@@ -27,43 +21,90 @@ public class UtilJdbcMySql {
      * 链接数据库
      */
     public static void startMySQLConn() {
-        try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(URL, USER, PASS);// 输入链接地址 ,账号,密码
-            if (!conn.isClosed()) {
-                Ulog.i("链接到数据库!");
-            }
+        String driver = "com.mysql.jdbc.Driver";
+        String dataBase = "tarena";
+        String USER = "root";
+        String PASS = "root";
+        String URL = "jdbc:mysql://localhost:3306/";// 数据库连接字符串，这里的dataBase为数据库名
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        init(driver, USER, PASS, URL);
+    }
+
+    /**
+     * 链接数据库
+     */
+    public static void startSqlServerConn() {
+        String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String USER = "sa";
+        String PASS = "123qwe.com";
+        String URL = "jdbc:sqlserver://172.16.1.86;DatabaseName=MDS5";
+
+        init(driver, USER, PASS, URL);
     }
 
     /**
      * 关闭数据库
      */
     public static void stopMySQLConn() {
-        if (conn != null) {
-            try {
+
+        try {
+            if (conn != null) {
                 conn.close();
-                Ulog.i("关闭数据库链接 ");
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+            if (ps != null) {
+                ps.close();
+            }
+            Ulog.i("关闭数据库链接 ");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
      * 使用哪个数据库
      */
     public static void useDB() {
+        String dataBase = "tarena";
         String sql = "use " + dataBase + ";";
         try {
             ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
+            ps.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void init(String driver, String USER, String PASS, String URL) {
+        try {
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);// 输入链接地址 ,账号,密码
+            if (!conn.isClosed()) {
+                Ulog.i("打开数据库连接");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 从数据库中得到name为b的phone的值
+     *
+     * @return
+     */
+    public static ResultSet query(String sql, String... value) {
+        ResultSet resultSet = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            for (int i = 0; i < value.length; i++) {
+                ps.setString(i + 1, value[i]);
+            }
+            resultSet = ps.executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 
     /**
@@ -221,7 +262,7 @@ public class UtilJdbcMySql {
                 bean.setName(rs.getString(2));
                 bean.setPhone(rs.getString(3));
                 bean.setEmail(rs.getString(4));
-                Ulog.i("bean",bean.toString());
+                Ulog.i("bean", bean.toString());
 
                 list.add(bean);
             }
@@ -233,8 +274,32 @@ public class UtilJdbcMySql {
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
+//        mysql();
+
+        sqlServer();
+
+    }
+
+    private static void sqlServer()   {
+        startSqlServerConn();
+        ResultSet resultSet = query("SELECT  * FROM TA_Alert where Name like ? and TA_Alert.AlertID > ? and TA_Alert.AlertID < ? ",
+                "%上海市第%人民医院%",
+                "20170531000168",
+                "20170531000235");
+        try {
+            while (resultSet.next()) {
+                Ulog.i("rs.getString( Name )", resultSet.getString("Name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        stopMySQLConn();
+    }
+
+    private static void mysql() {
         startMySQLConn();// 启动数据库服务
         useDB();// 使用哪一个数据库
 //		 for(int i=0;i<20 ; i++){
@@ -245,7 +310,6 @@ public class UtilJdbcMySql {
 //        insertBatch();
 //        Ugson.toJson(setlect());
         setlect(10);
-
     }
 
 }

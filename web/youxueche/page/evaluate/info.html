@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>评价信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>评价者:</td>
+					<td id="student"></td>
+					<td>评价时间:</td>
+					<td id="createDate"></td>
+				<tr>
+					<td>评价对象:</td>
+					<td id="type"></td>
+					<td>具体评价对象:</td>
+					<td id="driverOrSchool"></td>
+				</tr>
+				<tr>
+					<td>培训部分</td>
+					<td id="part"></td>
+					<td>满意度:</td>
+					<td id="overall"></td>
+				</tr>
+				<tr>
+					<td>个性化评价:</td>
+					<td colspan="3" id="teachlevel"></td>
+				</tr>
+				
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="quit();" class="btn btn-info">确定</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var evaluateId = href[1];
+		getEvaluate(evaluateId);
+	
+    	//查看分支机构信息
+    	function getEvaluate(id){
+    		$.ajax({
+    			url : "../../evaluate/get.ao",
+    			type : 'POST',
+    			data :{
+    				"id" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							$(this).html(data["result"][id]);
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+
+    	function quit(){
+			window.parent.quit();
+    	}
+    </script>
+</body>
+</html>

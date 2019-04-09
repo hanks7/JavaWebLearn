@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>详情查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" id="trainInfoDiv">
+		<tr>
+			<td>教练员编号：</td>
+			<td	name="coachnum" ></td>
+			<td>教练员名称：</td>
+			<td	name="name"></td>
+		</tr>
+		<tr>
+			<td>驾校:</td>
+			<td name="school"></td>
+			<td>车载设备编号:</td>
+			<td name="chezai"></td>
+		</tr>
+		<tr>
+			<td>类型:</td>
+			<td name="type"></td>
+			<td>时间:</td>
+			<td name="time"></td>
+		</tr>
+		<tr>
+			<td colspan="4" style="text-align: center;">
+				<div id="imgInfos"></div>
+			</td>
+		</tr>
+	</table>
+	
+    <script type="text/javascript">
+	    var href = location.href.split("=");
+		var trainId = href[1];
+		getTrain(trainId);
+    	
+    	//获取订单信息
+    	function getTrain(id){
+    		$.ajax({ 
+    			url : "../../trainImgInfo/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			cache : false,
+    			dataType : "json",
+    			success : function(data){
+    				if(data["state"] == "success"){
+    					$("table").find("td").each(function(){//不更改的字段
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).html(data["result"][name]);
+    						}
+    					});
+    					if(data["result"]["photo"] != "undefined"){
+							var htmlStr = "";
+							
+							htmlStr += "<img style=\"width:200px;height:140px;\" src=\""+pickerProjectAdd + data["result"]["photo"]+"\"/>";
+							
+							$("#imgInfos").html(htmlStr);
+						}
+    				}else{
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

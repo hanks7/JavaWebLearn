@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>电子教学日志查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<style type="text/css">
+	#imgInfos{
+		border-top:1px solid #ddd;
+	}
+	#imgInfos div{
+		display:inline-block;
+		padding:2px 10px;
+		text-align:center;
+	}
+</style>
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" id="studyLogInfo">
+		<tr>
+			<td>订单ID：</td>
+			<td name="id">
+			</td>
+			<td>订单类型：</td>
+			<td name="studyType">
+		</tr>
+		<tr>
+			<td>学习学员：</td>
+			<td name="student">
+			</td>
+			<td>学员手机：</td>
+			<td name="stuMobile"></td>
+		</tr>
+		<tr>
+			<td>预约学习时间：</td>
+			<td name="yyStudyTime"></td>
+			<td>学习车型：</td>
+			<td name="traintype"></td>
+		</tr>
+		<tr>
+			<td>实际学习时间：</td>
+			<td colspan="3" name="studyTime"></td>
+		</tr>
+		<tr>
+			<td>学习科目：</td>
+			<td name="keMu"></td>
+			<td>学习内容：</td>
+			<td name="studyContent"></td>
+		</tr>
+		<tr>
+			<td>教学教练：</td>
+			<td name="jsDriver"></td>
+			<td>教练车：</td>
+			<td name="car"></td>
+		</tr>
+		<tr>
+			<td>培训学时(分钟)：</td>
+			<td name="duration"></td>
+			<td>培训里程(Km)：</td>
+			<td name="mileage"></td>
+		</tr>
+		<tr>
+			<td>培训平均速度(Km/h)：</td>
+			<td name="avevelocity"></td>
+			<td>计时终端：</td>
+			<td name="cheZai"></td>
+		</tr>
+	</table>
+
+	<div id="imgInfos">
+		
+	</div>
+	<div class="btn-group">	
+		<button class="btn btn-info" type="button" onclick="quanXuan();">全选/反选</button>
+	</div>
+	<div class="btn-group">	
+		<button type="button" class="btn btn-success" onclick="checkStudyLog(2);">审核</button>
+	</div>
+	<table class="table table-bordered .table-condensed" id="datas">
+		
+	</table>
+	<br/>
+	<br/>
+	<div style="text-align: center;" id="reasonDiv">
+	</div>
+	 <!-- 手动审核 -->
+   <div id="changeReasonDiv" style="display: none;" title="修改审核结果原因">
+		<form>
+			<table class="table table-bordered .table-condensed" style="width:550px">
+				<tr>
+				<td>原因:</td>
+				<td>
+					<textarea name="reason" id="reason" clos="60" rows="20" style="width: 550px; height: 115px"></textarea>
+				</td>
+				</tr>
+			</table>
+			<div style="text-align: center;" id="reasonDivs">
+				<input type="button" class="btn btn-info" id="quitbtn" value="合格" onclick="writeReason(1);" />
+				<input type="button" class="btn btn-danger" id="quitbtn" value="不合格" onclick="writeReason(-1);" />
+				<input type="button" class="btn btn-success" id="quitbtn" value="取消" onclick="writeReason();" />
+			</div>
+ 		</form> 
+	</div>
+    <script type="text/javascript">
+    var href = location.href;
+	href = href.split("=")[1];
+	var studyLogId = href.replace("#");
+	getStudyLogById(studyLogId);
+	searchPage(studyLogId);
+	
+	var html="";
+	html +="<div style=\"text-align: center;\"><input type=\"button\" class=\"btn btn-info\"  value=\"审核电子教学日志\" onclick=\"shouDong();\" /></div>";
+	$("#reasonDiv").html(html);
+	
+	function getStudyLogById(id) {
+		$.ajax({
+			url : "../../studyLog/getStudyLogById.ao",
+			type : 'POST',
+			cache : false,
+			data : {
+				'id' : id,
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					$("#studyLogInfo").find("td").each(function(){
+						var a = $(this).attr("name");
+						if (a == null || typeof (a) == "undefined") {
+							return;
+						}
+						if (data["result"][a] == null || typeof (data["result"][a]) == "undefined") {
+							return;
+						}
+						$(this).html(data["result"][a]);
+					});
+													
+					 if(typeof(data["imgInfos"]) != "undefined"){
+						var htmlStr = "";
+						for(var i = 0; i < data["imgInfos"].length; i++){
+							htmlStr += "<div>";
+							htmlStr += "<label>";
+							htmlStr += "<img style=\"width:200px;height:140px;\" src=\""+pickerProjectAdd + data["imgInfos"][i]["photoPath"]+"\"/>";
+							htmlStr += "<br/><br/>"+data["imgInfos"][i]["type"];
+							if(data["imgInfos"][i]["flow"] == 0){
+								htmlStr += " <span style=\"color:red;\">图片状态:<a href=\"javascript:beiAnImg('"+data["imgInfos"][i]["id"]+"');\" class=\"btn btn-success\">备案</a></span>";	
+							}else{
+								htmlStr += " <span style=\"color:#00FF00;\">图片状态:已备案</span>";
+							}
+							htmlStr += "</label>";
+							htmlStr += "</div>";
+						}
+						
+						$("#imgInfos").html(htmlStr);
+					}
+					 
+					 
+				} else {
+					alert("获取数据失败");
+				}
+			}
+		});
+	}
+	
+	//备案学习过程中图片
+	function beiAnImg(id){
+		$.ajax({
+			url : "../../putOnRecord/addTrainImgInfoPutOnRecord.ao",
+			type : 'POST',
+			data : {
+				"id" : id
+			},
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					alert(data["result"]);
+				} else {
+					alert(data["result"]);
+				}
+			}
+		})
+	}
+	
+	
+	//根据分页获取学员订单信息
+	function searchPage(orderDetailId) {
+		$.ajax({
+			url : "../../fenZhongLog/getFenZhongLogByStudyLog.ao",
+			type : 'POST',
+			data : {
+				'studyLogId' : studyLogId,
+			},
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					var  str ="";
+					  str = "<table class=\"table table-bordered .table-condensed\"><tr><td></td><td></td><td>记录时间</td><td>学员</td><td>教练员</td><td>科目</td><td>学习内容</td> <td>学习方式</td><td>发动机转速</td><td>行驶速度</td><td>行驶里程</td><td>1分钟行驶的最大速度</td><td>状态</td><td>计时平台审核</td><td>监管平台审核</td><td>备注</td><td>操作</td></tr>";
+					  if(data["result"].length>0){
+						  for(var i=0;i<data["result"].length;i++){
+							  str+="<tr>";
+							  if(data["result"][i]["wayss"] == 1){
+								str +="<td><label><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\"/></label></td>";
+
+							}else{
+								str +="<td><label><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\" /></label></td>";
+						    }
+							  str += "<td><input type=\"hidden\" id=\"id"+i+"\" value=\""+data["result"][i]["id"]+"\" /></td>";
+							  str +="<td>"+data["result"][i]["createDate"]+"</td>";
+							  str +="<td>"+data["result"][i]["student"]+"</td>";
+							  str +="<td>"+data["result"][i]["driver"]+"</td>";
+							  str +="<td>"+data["result"][i]["keMu"]+"</td>";
+							  str +="<td>"+data["result"][i]["kecheng"]+"</td>";
+							  str +="<td>"+data["result"][i]["rectype"]+"</td>";
+							  str +="<td>"+data["result"][i]["engineSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["runSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["mileage"]+"</td>";
+							  str +="<td>"+data["result"][i]["oneMinMaxSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["state"]+"</td>";
+							  if(data["result"][i]["jishiFlows"] == 0){
+								  str += "<td style=\"text-align:center\"></td>";
+							  }else if(data["result"][i]["jishiFlows"] == 1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"blue\">有效</font></div></td>";
+							  }else if(data["result"][i]["jishiFlows"] == -1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"red\">无效</font></div></td>";
+							  }
+							  if(data["result"][i]["jianFlows"] == 0){
+								  str += "<td style=\"text-align:center\"></td>";
+							  }else if(data["result"][i]["jianFlows"] == 1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"blue\">有效</font></div></td>";
+							  }else if(data["result"][i]["jianFlows"] == -1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"red\">无效</font></div></td>";
+							  }
+							  str +="<td>"+data["result"][i]["remark"]+"</td>";
+							  
+							  str +="<td>"
+							  if(data["result"][i]["img"] !=null &&typeof(data["result"][i]["img"])!="undefined"  && data["result"][i]["img"] !="" ){
+							  	str += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"lookPhoto('"+data["result"][i]["img"]+"');\">图片</a>&nbsp;&nbsp;";
+						      }
+							  if(data["result"][i]["wayss"] == 2 || data["result"][i]["wayss"] == 3){//手动审核或者自动+手动审核
+								  str += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"fenZhongLog('"+data["result"][i]["id"]+"');\">手动审核</a>";
+							  }
+							  str+="</td>";
+							  str+= "</tr>";
+						  }
+						  $("#datas").html(str);
+					  }else{
+						    str += "<tr>";
+							str += "<td colspan='14' style='text-align:center;color:blue;'>无搜索结果</td>";
+							str += "</tr>";
+							$("#datas").html(str);
+					  }
+
+				} else {
+					alert(data["result"]);
+				}
+			}
+		});
+	}
+	
+	//全选
+	function quanXuan(){
+		$("#datas").find("input[type='checkbox']").each(function(){
+			$(this).parent().click();
+		});		
+	}
+	var fenZhongLogId="";//便于单条审核时使用
+	function fenZhongLog(id){
+		fenZhongLogId = id;
+		checkFenZhongLog(1);//表示单条审核
+	}
+	//弹出审核的页面
+	function checkFenZhongLog(i){
+		var html="";
+		$("#reasonDivs").html("");
+		$("#reason").val("");
+		html += "<div>";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-info\" onclick=\"changeFenZhongLog('"+1+"','"+i+"');\">合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-danger\" onclick=\"changeFenZhongLog('"+(-1)+"','"+i+"');\">不合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"quit();\">取消</a>&nbsp;&nbsp;";
+		html += "</div>";
+		$("#reasonDivs").html(html); 
+		$("#changeReasonDiv").dialog({
+			title : "原因",
+			resizable : false,
+			width : 650,
+			height : 350,
+			resizable : true,
+			overflow:scroll,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	
+	
+	//显示分钟学时绑定的图片
+	function lookPhoto(path){
+		var html = "<div>";
+		html += "<a href='javascript:void(0);' rel='" +pickerProjectAdd+path+"?rand="+Math.random() +"' class='preview'><img src='"+pickerProjectAdd+path+"?rand="+Math.random()+"'/></a>";
+		html += "</div>";
+		$("#photos").html(html);
+		$("#studyLogPhoto").dialog({
+			title : "图片",
+			resizable : false,
+			width : 650,
+			height : 350,
+			resizable : true,
+			overflow:scroll,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	
+	//手动审核分钟学时
+	function handShenHe(id){
+		studyLogId=id;
+		var html="";
+		$("#reasonDivs").html("");
+		$("#reason").val("");
+		html += "<div>";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-info\" onclick=\"changeStudyLog('"+id+"','"+1+"');\">合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-danger\" onclick=\"changeStudyLog('"+id+"','"+(-1)+"');\">不合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"quit();\">取消</a>&nbsp;&nbsp;";
+		html += "</div>";
+		$("#reasonDivs").html(html); 
+		$("#changeReasonDiv").dialog({
+			title : "原因",
+			resizable : false,
+			width : 650,
+			height : 350,
+			resizable : true,
+			overflow:scroll,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	//对选择的分钟学时进行手动审核
+	function changeFenZhongLog(flow,m){
+		var array="";
+		if(m==2){//多条分钟学时一起审核
+			for( var i=0;i<amount;i++){
+				if($("#checkbox"+i).length>0){
+					var flag =  document.getElementById("checkbox"+i).checked;
+					if(flag){
+						array += $("#id"+i).val()+",";
+					}
+				}
+			}
+		}
+		if(m == 1){//单条分钟学时进行审核
+			array += fenZhongLogId+",";
+		}
+		if(array.length>0){
+			var reason = $("#reason").val();
+			if(reason == null || reason == ""){
+				alert("请填写修改的原因");
+				return;
+			}
+			if(confirm("确定此审核结果吗?")){
+				$.ajax({
+					url : "../../fenZhongLog/addChangeReason.ao",
+					type : 'POST',
+					data : {
+						'array' : array,
+						'flow' : flow,
+						'changeReason': reason
+					},
+					cache : false,
+					dataType : "json",
+					success : function(data){
+						if(data["state"] == "success"){
+							alert("修改成功");
+							quit();
+							searchPage(href);
+						}else{
+							alert(data["result"]);
+							quit();
+							searchPage(href);
+						}
+					}
+				});
+			}
+		}
+	}
+	//取消
+	function quit(){
+		$("#changeReasonDiv").dialog("close");
+	}
+	//手动审核订单
+	function shouDong(){
+		 var html="";
+		$("#reasonDivs").html("");
+		$("#reason").val("");
+		html += "<div>";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-info\" onclick=\"changeOrderDetail('"+href+"','"+(1)+"');\">合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-danger\" onclick=\"changeOrderDetail('"+href+"','"+(-1)+"');\">不合格</a>&nbsp;&nbsp;";
+		html += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"quit();\">取消</a>&nbsp;&nbsp;";
+		html += "</div>";
+		$("#reasonDivs").html(html);
+		
+		$("#changeReasonDiv").dialog({
+			title : "明细",
+			resizable : false,
+			width : 650,
+			height : 350,
+			resizable : true,
+			overflow:scroll,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	
+	//添加改变审核结果的原因
+	function changeOrderDetail(orderDetailId,i){
+		var reason = $("#reason").val();
+		if(reason == null || reason == ""){
+			alert("请填写修改的原因");
+			return;
+		}
+		if(confirm("确定此审核结果吗?")){
+			$.ajax({
+				url : "../../studyLog/writeReason.do",
+				type : 'POST',
+				data : {
+					'id' : orderDetailId,
+					'status' : i,
+					'reason': reason
+				},
+				cache : false,
+				dataType : "json",
+				success : function(data){
+					if(data["state"] == "success"){
+						alert("修改成功");
+						quit();
+						searchPage(href);
+					}else{
+						alert(data["result"]);
+						quit();
+						searchPage(href);
+					}
+				}
+			});
+		}
+	}
+    </script>
+</body>
+</html>

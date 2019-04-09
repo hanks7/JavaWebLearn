@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>车辆保险过期管理</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			车辆保险过期管理 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="licnum">车牌号</option>
+			</select>
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+	
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="school">所属培训机构</td>
+			<td name="licnum">教练车牌号</td>
+			<td name="insStime">保险缴纳日期</td>
+			<td name="insEtime">保险过期日期</td>
+			<td name="insurance">保险种类</td>
+			<td name="day">过期天数</td>
+		</tr>
+	</table>
+	
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+    
+    <script type="text/javascript">
+    	searchPage(1,10);
+    	
+    	//分页查询
+    	function searchPage(pageNo,pageSize){
+    		$.ajax({
+    			url : "../../coachCarInsurance/getCarInsuranceExpired.ao",
+    			type : 'POST',
+    			data : {
+    				"pageNo" : pageNo,
+    				"pageSize" : pageSize,
+    				"query" : $("#query").val(),
+    				"keywords" : $("#keywords").val()
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					insertTr(data, 0);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    </script>
+</body>
+</html>

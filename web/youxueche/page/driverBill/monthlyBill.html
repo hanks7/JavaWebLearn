@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>教练员月账单</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<!-- 柱状图用js -->
+<script type="text/javascript" src="../../js/highcharts.js"></script>
+<script type="text/javascript" src="../../js/exporting.js"></script>
+</head>
+<body>
+
+	<div class="right_mainH4">
+		<p>
+			教练员月账单 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>城市</span>
+			<span id="citys"></span>
+			<span style="width:90px;">地区</span>
+			<select id="areas" style="width: 90px;" onchange="changeArea();">
+				<option value="请选择">请选择</option>
+			</select>
+			<span>驾校</span>
+			<select id="schools" style="width: 90px;">
+				<option value="请选择">请选择</option>
+			</select>
+			<span>年份</span>
+			<input type="text" id="year"  style="width:120px;"/>
+			<button type="button" onclick="searchPage(1,3);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	<div class="pq-cont">
+		<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	</div>
+
+	<!-- 教练员的订单表 -->
+	<table class="table table-bordered .table-condensed" id="datas">
+	 	<tr>
+			<td name="ids">教练员的ID号</td>
+			<td name="name">教练员名</td>
+			<td name="sum">总计(￥)</td>
+			<td name="date">日期</td>
+			<td name="id" other="dailyBill">操作</td>
+		</tr> 
+	</table>
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+    
+     <!-- 订单详情 -->
+     <div id="orderDetailInfoDiv" style="display:none;" title="订单详情">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		var storage = window.sessionStorage;
+	    var citys = storage.getItem("citys");//获取存在sessionStorage里的驾校数据
+	    if(citys != null){
+	    	var cityHtml;
+	    	cityHtml = '<select name="addSchool.city" id="city" style="width: 90px;" onchange="changeCity();">';
+	    	cityHtml += citys;
+	    	cityHtml += '</select>';
+	    	$("#citys").html(cityHtml);
+	    }else{
+	        var areas = storage.getItem("areas");//获取存在sessionStorage里的驾校数据
+	        if(areas != null){
+	        	$("#areas").html(areas);
+	        }else{
+	            var schools = storage.getItem("schools");//获取存在sessionStorage里的驾校数据
+	            if(schools != null){
+	            	$("#schools").html(schools);
+	            }
+	        }
+	    }
+		searchPage(1,3);
+	});
+	function searchPage(pageNo, pageSize){
+		$.ajax({
+			url : "../../driverBill/getDriverMonthlyBill.ao",
+			type : 'POST',
+			data : {
+				"year" : $("#year").val(),
+				"pageNo" : pageNo,
+				"pageSize" : pageSize,
+				"city" : $("#city").val(),
+				"area" : $("#areas").val(),
+				"school" : $("#schools").val()
+			},
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					insertTr(data,0);
+					getTotalPrice(data["categories"], data["series"]);
+				}else{
+					sAlert(data["result"]);
+				}
+			}
+		});
+	}
+
+	function getTotalPrice(time, data) {
+		$('#container').highcharts({
+			chart : {
+				type : 'column'
+			},
+			title : {
+				text : '教练员月账单'
+			},
+			subtitle : {
+				text : 'Source: www.ahjtpx.com'
+			},
+			xAxis : {
+				categories : time
+			},
+			yAxis : {
+				min : 0,
+				title : {
+					text : 'Rainfall (mm)'
+				}
+			},
+			tooltip : {
+				headerFormat : '<span style="font-size:10px">{point.key}</span><table>',
+				pointFormat : '<tr><td style="color:{series.color};padding:0">{series.name}: </td>'
+						+ '<td style="padding:0"><b>{point.y}</b></td></tr>',
+				footerFormat : '</table>',
+				shared : true,
+				useHTML : true
+			},
+			plotOptions : {
+				column : {
+					pointPadding : 0.2,
+					borderWidth : 0
+				}
+			},
+			series : data
+		});
+	}
+
+	function look(id,date){
+		$("#orderDetailInfoDiv").find("iframe").attr("src","dailyBillInfo.html?id="+id+"=date="+date);
+		$("#orderDetailInfoDiv").dialog({
+			title : "订单详情",
+			resizable : false,
+			width : '100%',
+			height : 600,
+			resizable : true,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	//点击取消按钮退出
+	function quitDriverTime() {
+		$("#Account").dialog("close");
+	}
+</script>
+</html>

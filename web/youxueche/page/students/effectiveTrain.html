@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>有效培训过程查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			有效培训过程查询 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="name">姓名</option>
+				<option value="idcard">身份证号</option>
+				<option value="phone">手机号</option>
+			</select>
+			
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+			
+			<span>计时平台审核</span>
+			<select id="jishiFlow" style="width: 90px;">
+				<option value="请选择">请选择</option>
+				<option value="1">有效</option>
+				<option value="-1">无效</option>
+			</select>
+			<span>监管平台审核</span>
+			<select id="jianFlow" style="width: 90px;">
+				<option value="请选择">请选择</option>
+				<option value="1">有效</option>
+				<option value="-1">无效</option>
+			</select>
+	
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="school">培训机构</td>
+			<td name="student">学员</td>
+			<td name="driver">教练员</td>
+			<td name="keMu">培训部分</td>
+			<td name="day">培训日期</td>
+			<td name="duration">培训学时(min)</td>
+			<td name="qualifiedTime">合格学时(min)</td>
+			<td name="jishiFlow">计时平台审核</td>
+			<td name="jianFlow">监管平台审核</td>
+			<td name="id" other="effectiveTrain">操作</td>
+		</tr>
+	</table>
+	
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+    
+     <!-- 学员信息 -->
+     <div id="stuStudyLogInfoDiv" style="display:none;" title="学员信息">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+    <script type="text/javascript">
+    	searchPage(1,10);
+    	
+    	//分页查询
+    	function searchPage(pageNo,pageSize){
+    		$.ajax({
+    			url : "../../studyLog/find.ao",
+    			type : 'POST',
+    			data : {
+    				"pageNo" : pageNo,
+    				"pageSize" : pageSize,
+    				"query" : $("#query").val(),
+    				"keywords" : $("#keywords").val(),
+    				"jishiFlow" : $("#jishiFlow").val(),
+    				"jianFlow" : $("#jianFlow").val(),
+    				"effectiveTrain" : "effectTrain"
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					insertTr(data, 0);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//查看明细
+    	function look(id){
+			$("#stuStudyLogInfoDiv").find("iframe").attr("src","../fenZhongLog/index.html?id="+id);
+			$("#stuStudyLogInfoDiv").dialog({
+				title : "电子教学日志详情",
+				resizable : false,
+				width : 1050,
+				height : 600,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    	//删除
+    	function del(id){
+    		if (confirm("你确定删除吗?")) {
+    			$.ajax({
+        			url : "../../student/del.ao",
+        			type : 'POST',
+        			data : {
+        				"id" : id
+        			},
+        			beforeSend : ajaxstar,
+        			complete : ajaxend,
+        			cache : false,
+        			dataType : "json",
+        			success : function(data) {
+    					sAlert(data["result"]);
+        				if (data["state"] == "success") {
+        					location.reload();
+        				}
+        			}
+        		});
+    		}else{
+    			return;
+    		}
+    	}
+    </script>
+</body>
+</html>

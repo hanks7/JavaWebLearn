@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>教练员时段信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<style type="text/css">
+.fontRed {
+	background: #C4E1FF;
+}
+
+</style>
+</head>
+<body>
+	<table id="table" class="table table-bordered .table-condensed" style="width:800px">
+		
+	</table>
+		
+	<form id="form" name="updateForm" method="post"></form>
+			
+			
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var driverId = href[1];
+    	var isHave = "";//用于判断是发布还是修改教练员时间段信息
+    	get7DayDate();
+    	
+    	//获取当前及未来六天的日期
+    	function get7DayDate(){
+    		$.ajax({
+    			url : "../../drivingSchoolTime/get7DayDate.ao",
+    			type : 'POST',
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					var str = "<tr>";
+    					for(var i = 0; i < data["result"].length; i++){
+    						if (i == 0) {
+								getCoachTime(data["result"][i]["date"], i);
+								str += "<td id=\"day"+i+"\">"
+										+ "<a class=\"fontRed\" href=\"javascript:getCoachTime('"
+										+ data["result"][i]["date"]
+										+ "'," + i + ");\">"
+										+ data["result"][i]["date"]
+										+ "</td>";
+							} else {
+								str += "<td  id=\"day"+i+"\">"
+										+ "<a href=\"javascript:getCoachTime('"
+										+ data["result"][i]["date"]
+										+ "'," + i + ");\">"
+										+ data["result"][i]["date"]
+										+ "</td>";
+							}
+    						//str += "<td>"+data["result"][i]["date"]+"</td>";
+    					}
+    				  	str += "</tr>";
+    					$("#table").html(str);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		}); 
+    	}
+    	
+	    function getCoachTime(day,iC){
+	    	$("a[class='fontRed']").removeClass("fontRed");
+			$("#day" + iC).find("a").addClass("fontRed");
+			$("#form").html("");
+			
+			$.ajax({
+				url : "../../drivingSchoolTime/getDriverTimeByDate.ao",
+				type : 'POST',
+				data : {
+					"day" : day,
+					"driverId" : driverId
+				},
+				cache : false,
+				dataType : "json",
+				success : function(data){
+					if(data["state"] == "success"){
+						var str = "";
+						str += "<table class=\"table table-bordered .table-condensed\"><tr style=\"background-color:#ccc;\"><td>时间段</td><td>价格</td><td>可预约</td><td>可授课人数</td><td></td><td>时间段</td><td>价格</td><td>可预约</td><td>可授课人数</td><td></td><tr>";
+						for(var i = 0; i < data["result"]["list"].length; i++){
+							if(i%2 == 0){
+								str += "</tr>";
+								str += "<tr>";
+							}
+							str += "<td id=\"time"+i+"\">"+data["result"]["list"][i]["time"]+"</td>";
+							str += "<td><input type=\"text\" id=\"price" + i + "\" style=\"width : 90px\"  value=\""
+									+ data["result"]["list"][i]["price"]
+									+ "\" onchange=\"change('" + data["result"]["list"][i]["day"] + "','"
+									+ data["result"]["list"][i]["isUse"] + "','" + i + "','" + data["result"]["list"][i]["id"]
+									+ "')\"/></td>";
+							var isUse = data["result"]["list"][i]["isUse"];
+							if (isUse == 0) {//可预约
+								str += "<td>";
+								str += "<label onclick=\"change('" + data["result"]["list"][i]["day"] + "','" + 1 + "','"
+										+ i + "','" + data["result"]["list"][i]["id"]
+										+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\" checked />可预约</label>";
+								str += "</td>";
+							} else {
+								str += "<td>";
+								str += "<label onclick=\"change('" + data["result"]["list"][i]["day"] + "','" + 0 + "','" + i + "','"
+										+ data["result"]["list"][i]["id"]
+										+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\" />可预约</label>";
+								str += "</td>";
+							}
+							str +="<td><input type=\"text\" id=\"count"+i+"\" style=\"width : 90px\" onchange=\"change('" + data["result"]["list"][i]["day"] + "','"
+									+ data["result"]["list"][i]["isUse"] + "','" + i + "','" + data["result"]["list"][i]["id"]+ "')\" value=\""+data["result"]["list"][i]["count"]+"\"></td>"
+							str += "<td>";
+							str += "<input type=\"hidden\" id=\"datePrice"+i+"\" value=\""+data["result"]["list"][i]["day"]+"_"+data["result"]["list"][i]["time"]+"_"+data["result"]["list"][i]["price"]+"_"+data["result"]["list"][i]["isUse"]+"_"+data["result"]["list"][i]["id"]+"_"+data["result"]["list"][i]["count"]+"\"/>"
+							str += "</td>";
+						
+							if(data["result"]["list"].length % 2 == 1){
+								if(i == data["result"]["list"].length - 1){
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "<td></td>";
+									str +"</tr>";
+								}else{
+									str += "<td id=\"time"+(i+1)+"\">"+data["result"]["list"][i+1]["time"]+"</td>";
+									str += "<td><input type=\"text\" id=\"price" + (i+1) + "\" style=\"width : 90px\"  value=\""
+											+ data["result"]["list"][i+1]["price"]
+											+ "\" onchange=\"change('" + data["result"]["list"][i+1]["day"] + "','"
+											+ data["result"]["list"][i+1]["isUse"] + "','" + (i+1) + "','" + data["result"]["list"][i+1]["id"]
+											+ "')\"/></td>";
+									var isUse = data["result"]["list"][i+1]["isUse"];
+									if (isUse == 0) {//可预约
+										str += "<td>";
+										str += "<label onclick=\"change('" + data["result"]["list"][i+1]["day"] + "','" + 1 + "','"
+												+ (i+1) + "','" + data["result"]["list"][(i+1)]["id"]
+												+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+(i+1)+"\" checked />可预约</label>";
+										str += "</td>";
+									} else {
+										str += "<td>";
+										str += "<label onclick=\"change('" + data["result"]["list"][i+1]["day"] + "','" + 0 + "','" + (i+1) + "','"
+												+ data["result"]["list"][i+1]["id"]
+												+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+(i+1)+"\" />可预约</label>";
+										str += "</td>";
+									}
+									str +="<td><input type=\"text\" id=\"count"+(i+1)+"\" style=\"width : 90px\" onchange=\"change('" + data["result"]["list"][i+1]["day"] + "','"
+											+ data["result"]["list"][i+1]["isUse"] + "','" + (i+1) + "','" + data["result"]["list"][i+1]["id"]+ "')\" value=\""+data["result"]["list"][i+1]["count"]+"\"></td>"
+									str += "<td>";
+									str += "<input type=\"hidden\" id=\"datePrice"+(i+1)+"\" value=\""+data["result"]["list"][i+1]["day"]+"_"+data["result"]["list"][i+1]["time"]+"_"+data["result"]["list"][i+1]["price"]+"_"+data["result"]["list"][i+1]["isUse"]+"_"+data["result"]["list"][i+1]["id"]+"_"+data["result"]["list"][i+1]["count"]+"\"/>"
+									str += "</td>";
+									i++;
+								}	
+							}else{
+								str += "<td id=\"time"+(i+1)+"\">"+data["result"]["list"][i+1]["time"]+"</td>";
+								str += "<td><input type=\"text\" id=\"price" + (i+1) + "\"  value=\""
+										+ data["result"]["list"][i+1]["price"]
+										+ "\" style=\"width : 90px\" onchange=\"change('" + data["result"]["list"][i+1]["day"] + "','"
+										+ data["result"]["list"][i+1]["isUse"] + "','" + (i+1) + "','" + data["result"]["list"][i+1]["id"]
+										+ "')\"/></td>";
+								var isUse = data["result"]["list"][i+1]["isUse"];
+								if (isUse == 0) {//可预约
+									str += "<td>";
+									str += "<label onclick=\"change('" + data["result"]["list"][i+1]["day"] + "','" + 1 + "','"
+											+ (i+1) + "','" + data["result"]["list"][(i+1)]["id"]
+											+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+(i+1)+"\" checked />可预约</label>";
+									str += "</td>";
+								} else {
+									str += "<td>";
+									str += "<label onclick=\"change('" + data["result"]["list"][i+1]["day"] + "','" + 0 + "','" + (i+1) + "','"
+											+ data["result"]["list"][i+1]["id"]
+											+ "')\" class=\"test\"><input name=\"chk\" type=\"checkbox\" id=\"checkbox"+(i+1)+"\" />可预约</label>";
+									str += "</td>";
+								}
+								str +="<td><input type=\"text\" id=\"count"+(i+1)+"\" style=\"width : 90px\" onchange=\"change('" + data["result"]["list"][i+1]["day"] + "','"
+										+ data["result"]["list"][i+1]["isUse"] + "','" + (i+1) + "','" + data["result"]["list"][i+1]["id"]+ "')\" value=\""+data["result"]["list"][i+1]["count"]+"\"></td>"
+								str += "<td>";
+								str += "<input type=\"hidden\" id=\"datePrice"+(i+1)+"\" value=\""+data["result"]["list"][i+1]["day"]+"_"+data["result"]["list"][i+1]["time"]+"_"+data["result"]["list"][i+1]["price"]+"_"+data["result"]["list"][i+1]["isUse"]+"_"+data["result"]["list"][i+1]["id"]+"_"+data["result"]["list"][i+1]["count"]+"\"/>"
+								str += "</td>";
+								i++;
+							}
+						}
+						str += "<tr>";
+						str +="<td colspan=\"10\" style=\"text-align: center;\">";
+						isHave = data["result"]["isHave"];
+						if(isHave == 0){
+							str += "<button type=\"button\" onclick=\"updateOrSubmit();\" class=\"btn btn-info\">发布</button></td>"
+						}else{
+							str += "<button type=\"button\" onclick=\"updateOrSubmit();\" class=\"btn btn-info\">修改</button></td>"
+						}
+						str += "</tr>";
+						str += "<table>";
+						$("#form").html(str);
+					}else{
+						sAlert(data["result"]);
+						//window.parent.quit();
+					}
+				}
+			});
+	    }
+		
+		//修改价格或者修改可授课人数后触发的方法
+		function change(day, isUse, i, id) {
+		  	var time = $("#time" + i).val();
+		  	var price = $("#price" + i).val();
+		  	var count = $("#count" + i).val();
+			document.getElementById("datePrice" + i).value = day + "_" + time
+					+ "_" + price + "_" + isUse + "_" + id+"_"+count;
+		}
+	
+	 	//发布或者修改教练员时间信息
+	 	function updateOrSubmit(){
+	 		var str = "";
+			$("#form").find("input[id^='datePrice']").each(function() {
+				str += $(this).val() + ";";
+			});
+			if(isHave == 0){
+				if(confirm("是否发布该教练员的时间表?")){
+					$.ajax({
+						url : "../../drivingSchoolTime/updateTimeData.ao",
+						type : 'POST',
+						cache : false,
+						dataType : "json",
+						data : {
+							'datePriceStrs' : str,
+							'driverId' : driverId,
+							"isHave" : isHave
+						},
+						success : function(data) {
+							if (data["state"] == "success") {
+								alert(data["result"]);
+								location.reload("../../page/times/index.html")
+							} else {
+								alert(data["result"]);
+							}
+						}
+					});
+				}
+			}else{
+				if(confirm("确定修改该教练员的时间表?")){
+					$.ajax({
+						url : "../../drivingSchoolTime/updateTimeData.ao",
+						type : 'POST',
+						cache : false,
+						dataType : "json",
+						data : {
+							'datePriceStrs' : str,
+							'driverId' : driverId,
+							"isHave" : isHave
+						},
+						success : function(data) {
+							if (data["state"] == "success") {
+								alert(data["result"]);
+								location.reload("../../page/times/index.html")
+							} else {
+								alert(data["result"]);
+							}
+						}
+					});
+				}
+			}
+	 	}
+    </script>
+</body>
+</html>

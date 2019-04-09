@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>查询照片</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+<script type="text/javascript" src="../../js/public.js" ></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../css/showLoading.css" rel="stylesheet" />
+</head> 
+<body class="skin-blue">
+	<div class="right_mainH4">
+		<p>
+			查询照片 
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td style="width: 120px">参数名称</td>
+				<td style="width: 120px">参数值</td>
+			</tr>
+			<tr>
+				<td>查询方式</td>
+				<td>
+					<select id="querytype">
+						<option value="请选择">请选择</option>
+						<option value="1">按时间查询</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>查询起始时间</td>
+				<td><input type="text" id="begintime"  onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
+			</tr>
+			<tr>
+				<td>查询终止时间</td>
+				<td><input type="text" id="endtime"  onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
+			</tr>
+		</table>
+		<div style="text-align: center;">
+			<input type="button" class="btn btn-info" id="addbtn" value="开始查询照片" onclick="searchphoto();" />
+		</div>
+	</div>
+	<script type="text/javascript">
+	function searchphoto(){
+		$.ajax({
+			url : "../../tcpReq/queryImage.ao",
+			type : 'POST',
+			data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						
+						var msg ="未知异常";
+						switch(data.root.msgBody.extMessage.result)
+						{
+						case 1:
+							msg="终端开始开始查询";
+							break;
+						case 2:
+							msg="执行失败";
+							break;						
+						default:
+						}
+						alert(msg);
+					}
+					 
+					
+				}catch(err){
+					alert("失败!");
+				}
+			}
+		});
+	}
+	</script>
+</body>
+</html>

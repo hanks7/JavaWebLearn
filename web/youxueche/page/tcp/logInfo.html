@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>tcp日志查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" id="orderDetailInfo">
+		<tr>
+			<td colspan="2"><label class="badge bg-blue">TCP日志查询</label></td>
+		</tr>
+		<tr>
+			<td>ID:</td>
+			<td name="id" /></td>
+		</tr>
+		<tr>
+			<td>操作时间:</td>
+			<td name="createDate"></td>
+		</tr>
+		<tr>
+			<td>终端手机号:</td>
+			<td name="mobile" /></td>
+		</tr>
+		<tr>
+			<td >消息ID:</td>
+			<td name="msgid"></td>
+		</tr>
+		<tr>
+			<td >完整消息内容:</td>
+			<td name="msgbody"style="word-wrap:break-word;word-break:break-all;"></td>
+		</tr>
+		<tr>
+			<td >备注:</td>
+			<td name="descs"></td>
+		</tr>
+	</table>
+	
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var orderId = href[1];
+    	getOrderDetailById(orderId);
+    	
+    	//获取订单信息
+    	function getOrderDetailById(id){
+    		$.ajax({ 
+    			url : "../../tcpLog/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			cache : false,
+    			dataType : "json",
+    			success : function(data){
+    				if(data["state"] == "success"){
+    					$("table").find("td").each(function(){
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							$(this).html(data["result"][name]);
+    						}
+    					});
+    				}else{
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

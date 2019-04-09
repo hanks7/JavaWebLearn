@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>角色管理</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			角色管理 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<button class="btn btn-success" onclick="addRole();">添加角色</button>
+	</div>
+	</br>
+	<table class="table table-bordered .table-condensed" id="datas">
+		<tr>
+			<td name="name">角色</td>
+			<td name="description">角色描述</td>
+			<td name="id" other="role">操作</td>
+		</tr>
+	</table>
+	
+	<div class="pager">
+	</div>
+	
+	<div id="roleInfoDiv" style="display: none;" title="角色信息">
+ 	    <iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+	</div>
+	
+	<script type="text/javascript">
+		$(function() {
+			searchPage(1, 10);
+		});
+		var authority = "";//登录人员的权限
+		var schoolId = "";//所属驾校
+		//分页获取角色
+		function searchPage(pageNo, pageSize) {
+			$.ajax({
+				url : "../../role/find.ao",
+				type : 'POST',
+				data : {
+					'pageNo' : pageNo,
+					'pageSize' : pageSize
+				},
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function(data) {
+					if (data["state"] == "success") {
+						insertTr(data, 0);
+						authority = data["authority"];
+						if(authority == 4 ){
+							schoolId = data["schoolId"];
+						}
+					} else {
+						alert(data["result"]);
+					}
+				}
+			});
+		}
+
+		//查看角色详情
+		function look(id){
+			$("#roleInfoDiv").find("iframe").attr("src","info.jsp?id=" + id);
+			$("#roleInfoDiv").dialog({
+				title : "角色信息修改",
+				resizable : false,
+				width : 900,
+				height : 650,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		//添加角色
+		function addRole(){
+			$("#roleInfoDiv").find("iframe").attr("src","add.jsp");
+			$("#roleInfoDiv").dialog({
+				title : "添加角色信息",
+				resizable : false,
+				width : 900,
+				height : 650,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		//删除角色
+		function del(id){
+			if(confirm("确定要删除吗?")){
+				$.ajax({
+					url : "../../role/del.ao",
+					type : 'POST',
+					data : {
+						'id' : id
+					},
+					cache : false,
+					dataType : "json",
+					success : function(data){
+						sAlert(data["result"]);
+						if(data["state"] == "success"){
+							searchPage(1,10);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</body>
+</html>

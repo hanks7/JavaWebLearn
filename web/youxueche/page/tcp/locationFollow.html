@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>临时位置跟踪控制</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/http.js"></script>
+	<script type="text/javascript" src="../../js/alert.js"></script>
+	<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+	<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+	<script type="text/javascript" src="../../js/public.js" ></script>
+	<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../css/showLoading.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			临时位置跟踪控制
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td name="name">参数名称</td>
+				<td name="value">参数值</td>
+			</tr>
+			<tr>
+				<td>时间间隔(秒)</td>
+				<td ><input type="text" id="interval" /></td>
+			</tr>
+			<tr>
+				<td>位置跟踪有效期(秒)</td>
+				<td ><input type="text" id="validTime" /></td>
+			</tr>
+		
+		</table>
+	</div>
+      <div style="text-align: center;">
+		<input type="button" class="btn btn-info" value="确定" onclick="controlLocation();" />
+	</div>
+	
+	<script type="text/javascript">
+		//查询指定参数
+		function controlLocation(){
+			$.ajax({
+				url : "../../tcpReq/controlLocation.ao",
+				type : 'POST',
+				data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function (data){
+					try{
+						var retCode = data.root.retcode;
+						if( retCode != "0" )
+						{
+							alert( data.root.retmsg);
+							return ;
+						}else {
+							
+							if( data.root.msgBody.result == 0 ) 
+							{
+								alert( '成功！');
+							}else {
+								alert( '失败！');
+							}
+							
+							
+						}
+						  
+					}catch(err){
+						alert("失败!");
+					}
+				}
+			});
+		}
+		
+	
+	</script>
+</body>
+</html>

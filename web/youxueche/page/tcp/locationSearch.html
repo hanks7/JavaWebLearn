@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>位置信息查询</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+<script type="text/javascript" src="../../js/public.js" ></script>
+<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../css/showLoading.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			位置信息查询
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td style="width: 120px">参数名称</td>
+				<td style="width: 120px">参数值</td>
+			</tr>
+			<tr>
+				<td>报警标识</td>
+				 <td ><input type="hidden" id="gnssPackage.alarmFlagBytesStr"  />
+			<div style="overflow:auto; text-align:left;">
+			<input type="checkbox" id="alarmFlag0" value="0" class="minimal-red"  />紧急报警触动报警开关后触发
+			<input type="checkbox" id="alarmFlag1" value="1" class="minimal-red"  />超速报警
+			<input type="checkbox" id="alarmFlag2" value="2" class="minimal-red"  />疲劳驾驶
+			<input type="checkbox" id="alarmFlag3" value="3" class="minimal-red"  />预警
+			<input type="checkbox" id="alarmFlag4" value="4" class="minimal-red"  />GNSS模块发生故障
+			<input type="checkbox" id="alarmFlag5" value="5" class="minimal-red"  />GNSS天线未接或被剪断
+			<input type="checkbox" id="alarmFlag6" value="6" class="minimal-red"  />GNSS天线短路
+			<input type="checkbox" id="alarmFlag7" value="7" class="minimal-red"  />终端主电源欠压
+			<input type="checkbox" id="alarmFlag8" value="8" class="minimal-red"  />终端主电源掉电
+			<input type="checkbox" id="alarmFlag9" value="9" class="minimal-red"  />终端LCD或显示器故障
+			<input type="checkbox" id="alarmFlag10" value="10" class="minimal-red"  />TTS模块故障
+			<input type="checkbox" id="alarmFlag11" value="11" class="minimal-red"  />摄像头故障
+			<input type="checkbox" id="alarmFlag18" value="18" class="minimal-red"  />当天累计驾驶超时
+			<input type="checkbox" id="alarmFlag19" value="19" class="minimal-red"  />超时停车
+			<input type="checkbox" id="alarmFlag20" value="20" class="minimal-red"  />进出区域
+			<input type="checkbox" id="alarmFlag21" value="21" class="minimal-red"  />进出路线
+			<input type="checkbox" id="alarmFlag22" value="22" class="minimal-red"  />路段行驶时间不足/过长
+			<input type="checkbox" id="alarmFlag23" value="23" class="minimal-red"  />路线偏离报警
+			<input type="checkbox" id="alarmFlag24" value="24" class="minimal-red"  />车辆VSS故障
+			<input type="checkbox" id="alarmFlag25" value="25" class="minimal-red"  />车辆油量异常
+			<input type="checkbox" id="alarmFlag26" value="26" class="minimal-red"  />车辆被盗(通过车辆防盗器)
+			<input type="checkbox" id="alarmFlag27" value="27" class="minimal-red"  />车辆非法点火
+			<input type="checkbox" id="alarmFlag28" value="28" class="minimal-red"  />车辆非法位移
+    	</div>
+				 </td>
+			</tr>
+			<tr>
+				<td>状态</td>
+				 <td ><input type="hidden" id="gnssPackage.statusStr"  />
+				<input type="checkbox" id="status0" value="0" class="minimal-red"  />ACC开
+				<input type="checkbox" id="status1" value="1" class="minimal-red"  />定位
+				<input type="checkbox" id="status2" value="2" class="minimal-red"  />南纬
+				<input type="checkbox" id="status3" value="3" class="minimal-red"  />西经
+				<input type="checkbox" id="status4" value="4" class="minimal-red"  />停运状态
+				<input type="checkbox" id="status5" value="5" class="minimal-red"  />经纬度已经保密插件加密
+				<input type="checkbox" id="status10" value="10" class="minimal-red"  />车辆油路断开
+				<input type="checkbox" id="status11" value="11" class="minimal-red"  />车辆电路断开
+				<input type="checkbox" id="status12" value="12" class="minimal-red"  />车门加锁
+				 </td>
+			</tr>
+			<tr>
+				<td>纬度</td>
+				<td ><input type="text" readonly id="gnssPackage.latitude" /></td>
+			</tr>
+			<tr>
+				<td>经度</td>
+				<td ><input type="text" readonly id="gnssPackage.longitude" /></td>
+			</tr>
+			<tr>
+				<td>行车记录速度(km/h)</td>
+				<td ><input type="text" readonly id="gnssPackage.driveSpeed" /></td>
+			</tr>
+			<tr>
+				<td>卫星定位速度(km/h)</td>
+				<td ><input type="text" readonly id="gnssPackage.moonSpeed" /></td>
+			</tr>
+			<tr>
+				<td>方向</td>
+				<td ><input type="text" readonly id="gnssPackage.direction" /></td>
+			</tr>
+			<tr>
+				<td>时间</td>
+				<td ><input type="text" readonly id="gnssPackage.time" /></td>
+			</tr>
+			<tr>
+				<td>里程(km)</td>
+				<td ><input type="text" readonly id="mileaddgnssPackage.addMsg" /></td>
+			</tr>
+			<tr>
+				<td>油量(L)</td>
+				<td ><input type="text" readonly id="oiladdgnssPackage.addMsg" /></td>
+			</tr>
+			<tr>
+				<td>海拔高度(m)</td>
+				<td ><input type="text" readonly id="altitudeaddgnssPackage.addMsg" /></td>
+			</tr>
+			<tr>
+				<td>发动机转速</td>
+				<td ><input type="text" readonly id="engineaddgnssPackage.addMsg" /></td>
+			</tr>
+		</table>
+	</div>
+	<div style="text-align: center;">
+		<input type="button" class="btn btn-info" value="开始查询" onclick="search();" />
+		<input type="button" class="btn btn-danger" value="重置" onclick="reset();" />
+	</div>
+ 
+<script type="text/javascript">
+	function search(){
+		reset();
+		$.ajax({
+			url : "../../tcpReq/queryLocation.ao",
+			type : 'POST',
+			data:'terminalphone='+TERMINAL_HPONE(),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){	
+				try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}
+	 
+ 					$.each(data.root.msgBody.gnssPackage,function(name,value) {
+						
+						var edit = $("[id='gnssPackage."+name+"']")
+						if( typeof(edit) == 'undefined' || edit.length == 0 ) return true;
+						
+						var valueNew = value;
+						if( name == 'driveSpeed' || name == 'moonSpeed') 
+							valueNew = valueNew/10;
+						else if (name == 'latitude' || name == 'longitude' )
+							valueNew = valueNew/1000000;
+						
+						else if ( name == 'alarmFlagBytesStr'){
+							fmtAlarmFlagBytesStr('alarmFlag',valueNew);
+						}else if ( name == 'statusStr'){
+							fmtAlarmFlagBytesStr('status',valueNew);
+						}
+							
+						$("[id='gnssPackage."+name+"']").val(valueNew);
+						
+					}); 
+ 					
+ 					
+ 					$("[id='mileaddgnssPackage.addMsg']").val(data.root.msgBody.mileaddgnssPackage.addMsg/10);
+ 					$("[id='oiladdgnssPackage.addMsg']").val(data.root.msgBody.oiladdgnssPackage.addMsg/10);
+ 					$("[id='altitudeaddgnssPackage.addMsg']").val(data.root.msgBody.altitudeaddgnssPackage.addMsg);
+ 					$("[id='engineaddgnssPackage.addMsg']").val(data.root.msgBody.engineaddgnssPackage.addMsg);
+					  
+				}catch(err){
+					alert("查询出错!");
+				}
+			}	
+		});				 
+	}
+	
+	function fmtAlarmFlagBytesStr(name,alarmFlagBytesStr){
+		
+		
+		var bytAry = alarmFlagBytesStr.split("").reverse();
+		for(var i = 0 ; i< bytAry.length ;i++){
+			
+			if( bytAry[i] == 1 )
+				$("#"+name+i).prop('checked',true);
+			
+		}
+		
+		 
+	}
+	function reset(){
+		$("#datas input").val('');
+		$("#datas input[type='checkbox']").prop('checked',false);
+		 
+	}
+ 
+ 
+</script>
+</body>
+</html>

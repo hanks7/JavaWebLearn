@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>审核参数配置</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			审核参数配置 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="name">名称</option>
+				<option value="phone">联系电话</option>
+				<option value="licnum">经营许可证编号</option>
+			</select>
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+	
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="cityOrArea">行政区划</td>
+			<td name="name">培训机构名称</td>
+			<td name="contact">联系人</td>
+			<td name="phone">联系电话</td>
+			<td name="busiscope">经营范围 </td>
+			<td name="licnum">经营许可证编号</td>
+			<td name="licetime">经营许可时间</td>
+			<td name="address">地址</td>
+			<td name="id" other="shenHeSet">操作</td>
+		</tr>
+	</table>
+	
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+    
+     <!-- 绑定配置-->
+     <div id="addshenHeSetInfoDiv" style="display:none;" title="绑定配置">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+     <!-- 查看配置信息-->
+     <div id="shenHeSetInfoDiv" style="display:none;" title="查看配置信息">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+    <script type="text/javascript">
+    	searchPage(1,10);
+    	
+    	//分页查询
+    	function searchPage(pageNo,pageSize){
+    		$.ajax({
+    			url : "../../school/find.ao",
+    			type : 'POST',
+    			data : {
+    				"pageNo" : pageNo,
+    				"pageSize" : pageSize,
+    				"query" : $("#query").val(),
+    				"keywords" : $("#keywords").val()
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					insertTr(data, 0);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//绑定配置操作
+    	function add(id){
+    		$("#addshenHeSetInfoDiv").find("iframe").attr("src","add.html?id="+id);
+			$("#addshenHeSetInfoDiv").dialog({
+				title : "配置信息",
+				resizable : false,
+				width : 850,
+				height : 700,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    	//查看配置信息
+    	function look(id){
+			$("#shenHeSetInfoDiv").find("iframe").attr("src","info.html?id="+id);
+			$("#shenHeSetInfoDiv").dialog({
+				title : "配置信息",
+				resizable : false,
+				width : 850,
+				height : 700,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    </script>
+</body>
+</html>

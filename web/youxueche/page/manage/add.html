@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加账号</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>编号:</td>
+					<td>
+					</td>
+					<td>角色:</td>
+					<td id="role">
+					</td>
+					
+				<tr>
+					<td>账号名称:</td>
+					<td>
+						<input type="text" id="userId" name="userId"/>
+					</td>
+					<td>密码:</td>
+					<td>
+						<input type="password" id="password" name="password" onkeyup="checkManage();"/>						 
+					</td>
+					
+				</tr>
+				<tr>
+					<td>所属人:</td>
+					<td>
+						<input type="text" name="realName"/>
+						<input type="hidden" id="school" name="addManage.school"/>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="addManage();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	
+    <script type="text/javascript">
+		var href = location.href.split("=");
+		var schoolId = href[1];
+		$("#school").val(schoolId);
+		getRoleBySchoolId(schoolId);
+	
+    	//获取该教学所有的角色信息
+    	function getRoleBySchoolId(id){
+    		$.ajax({
+    			url : "../../role/getRoleBySchoolId.ao",
+    			type : 'POST',
+    			data :{
+    				"schoolId" : id
+    			},
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					var html = "";
+    					if(data["result"].length > 0){
+    						html += "<select name=\"addManage.role\">";
+    						for(var i = 0; i < data["result"].length; i++){
+    							html += "<option value=\""+data["result"][i]["id"]+"\">"+data["result"][i]["name"]+"</option>";
+    						}
+    						html += "</select>";
+    					}
+    					$("#role").html(html);
+    				} else {
+    					alert(data["result"]);
+        				window.parent.quit();
+    				}
+    			}
+    		});
+    	}
+
+    	//获取该账号是否存在
+    	function checkManage(){
+    		var userId = $("#userId").val();
+    		var password = $("#password").val();
+    		$.ajax({
+    			url : "../../manage/checkManage.ao",
+    			type : 'POST',
+    			data : {
+    				"userId" : userId,
+    				"password" : password
+    			},
+    			cache : false,
+    			dataType : "json",
+    			success : function(data){
+    				if(data["state"] == "error"){//账号已存在
+    					
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改省平台通知信息
+    	function addManage(){
+    		$.ajax({
+    			url : "../../manage/add.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					alert(data["result"]);
+    				if(data["state"] == "success"){
+    					window.parent.quit();
+    					window.parent.searchPage(1, 10);
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

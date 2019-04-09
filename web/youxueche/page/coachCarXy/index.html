@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html{padding:10px;width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{height:90%;width:80%;float:right;}
+		#selectLeft{height:90%;width:17%;float:left;}
+		#r-result{width:100%;}
+		#menu{  
+	        width:225px;
+	        background-color:RGB(216,216,216);  
+	        padding:0px;  
+	        margin:0px;  
+	        overflow: hidden;
+	    }  
+	    /*去掉列表前的圆点*/  
+	    #menu ul{  
+	        width:225px;  
+	        list-style-type:none;  
+	        padding:0px;  
+	        margin:0px; /*消除左侧间隙*/  
+	    }  
+	    #menu ul li{  
+	        width:225px;/*填充满整个边栏*/  
+	        /* 
+	        margin:0px; 
+	        padding:0px; 
+	        */  
+	    }  
+	    #menu ul li a{  
+	        display:block;  /*先转化成块级元素*/  
+	        color:Gray;  
+	        text-align:left;  
+	        text-decoration:none;  
+	        padding:10px 0px 10px 30px;/*设置距离左侧的边栏和上边距*/  
+	        font-size:14px;  
+	    }  
+	    #menu ul li a:hover {  
+	        color:Orange;  
+	        text-align:left;  
+	        text-decoration:none;  
+	        padding:10px 0px 10px 30px;  
+	        font-size:14px;  
+	    }  
+	    /*设置子菜单的样式*/  
+	    #menu ul li ul{  
+	        list-style-type:none;  
+	        /* 
+	        padding:0px; 
+	        margin:0px; 
+	        */  
+	    }  
+	    #menu ul li ul li{  
+	        width:225px;    /*通过设置宽度来填充*/  
+	    }  
+	    #menu ul li ul li a{  
+	        display:block;  
+	        /*此处可以通过设置来调整相关的样式*/  
+	        padding:6px 0px 6px 60px;  
+	        text-align:left;  
+	        text-decoration:none;  
+	        font-size:12px;  
+	    }  
+	    #menu ul li ul li a:hover{  
+	        padding:6px 0px 6px 60px;  
+	        text-align:left;  
+	        text-decoration:none;  
+	        font-size:12px;  
+	        color:Black;
+        	background-color:#CD2626;  
+	    }
+	    .fontRed {
+			background: #33ccff;
+		}
+	</style>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../js/public.js"></script>
+	<script type="text/javascript" src="../../js/http.js"></script>
+	<script type="text/javascript" src="../../js/alert.js"></script>
+	<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZCXPWxfUzpReuZYnZWXeXbvq725yGo1I"></script>
+	<title>教练车车辆定位</title>
+</head>
+<body>
+	<div class="right_mainH4">
+	   <p>教练车车辆定位<small>Control panel</small></p>
+	</div>
+	
+	<div id="selectLeft">
+		<div id="menu">  
+			<ul id="menuUl">
+			</ul>  
+		</div>
+	</div>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	var dResult;//车子坐标信息
+	
+	$(function(){
+		 forGetCarXy();   //每间隔30秒获取一次车子的坐标
+		
+		searchLeftMenu();
+	});
+	   
+	 /*点击按钮是触发的事件*/  
+     function Show(tagId) {
+		 if(tagId.indexOf("school") > -1){
+			 $("#menuUl").find("ul[id^='school']").each(function(){
+	    		 $(this).attr("style","display:none;");
+	    		 $(this).parent().attr("style","background:RGB(216,216,216);");
+	    	 });
+			 
+	    	 $("ul[id='"+tagId+"']").parent().attr("style","background:RGB(237,237,237);");
+	    	 $("ul[id='"+tagId+"']").attr("style","display:block;padding:0 0 0 20px;");
+		 }else if(tagId.indexOf("area") > -1){
+			 $("#menuUl").find("ul[id^='area']").each(function(){
+	    		 $(this).attr("style","display:none;");
+	    		 $(this).parent().attr("style","background:RGB(216,216,216);");
+	    	 });
+			 
+	    	 $("ul[id='"+tagId+"']").parent().attr("style","background:RGB(237,237,237);");
+	    	 $("ul[id='"+tagId+"']").attr("style","display:block;padding:0 0 0 20px;");
+		 }else{
+	    	 $("#menuUl").find("ul").each(function(){
+	    		 $(this).attr("style","display:none;");
+	    		 $(this).parent().attr("style","background:RGB(216,216,216);");
+	    	 });
+
+	    	 $("ul[id='"+tagId+"']").parent().attr("style","background:RGB(237,237,237);");
+	    	 $("ul[id='"+tagId+"']").attr("style","display:block;");
+		 }
+     } 
+	
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");// 创建Map实例
+	//根据坐标确定中心点 等有驾校训练场坐标后 以训练场坐标为中心点
+	var point = new BMap.Point(117.238829,31.818636);
+	
+	map.centerAndZoom(point, 19);	// 初始化地图,用坐标点设置地图中心点
+	map.enableScrollWheelZoom(true);	//允许缩放地图
+
+	var polygon2 = new BMap.Polygon([
+   		new BMap.Point(117.238829,31.818636),
+   		new BMap.Point(117.238798,31.820711),
+   		new BMap.Point(117.238928,31.820784),
+   		new BMap.Point(117.241695,31.820857),
+   		new BMap.Point(117.241789,31.818544),
+   		new BMap.Point(117.239108,31.818482),
+   		new BMap.Point(117.238825,31.818621)
+   	], {strokeColor:"red", strokeWeight:3, strokeOpacity:0.5});  //创建多边形 覆盖物
+	
+
+	var polygon3 = new BMap.Polygon([
+   		new BMap.Point(117.238857,31.818324),
+   		new BMap.Point(117.239064,31.818424),
+   		new BMap.Point(117.241103,31.818424),
+   		new BMap.Point(117.241732,31.818431),
+   		new BMap.Point(117.241768,31.816652),
+   		new BMap.Point(117.241741,31.815731),
+   		new BMap.Point(117.241624,31.815655),
+   		new BMap.Point(117.239324,31.815455),
+   		new BMap.Point(117.239091,31.815532),
+   		new BMap.Point(117.238974,31.815693),
+   		new BMap.Point(117.238893,31.816675)
+   	], {strokeColor:"red", strokeWeight:3, strokeOpacity:0.5});  //创建多边形 覆盖物
+	
+  	//添加覆盖物
+	map.addOverlay(polygon2);  //增加多边形覆盖物(电子围栏)
+	map.addOverlay(polygon3);
+   	
+	
+	//清除覆盖物
+	function remove_overlay(){
+		map.clearOverlays();
+	}
+	
+	//获取左边的导航栏
+	function searchLeftMenu(){
+		var jiaxiao=$("#jiaxiao").val();
+		var city=$("#city").val();
+		var area=$("#area").val(); 
+		$.ajax({
+			url : "../../coachCar/getAllCarByFun.ao",
+			type : 'POST',
+			data : {
+				'jiaxiao':jiaxiao,
+				'city':city,
+				'area':area
+			},
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					var liStr = "";
+					liStr += "<li><a href=\"javascript:void(0);\" onclick=\"javascript:void(0);\">查看全部</a></li>";
+					if(data["manage"] == 1 || data["manage"] == 2){//权限1,2可以共用，因为在数据库中已绑定不同schoolId
+						for(var i = 0; i < data["result"].length; i++){
+							liStr += "<li><a href=\"javascript:void(0);\" onclick=\"Show('"+data["result"][i]["cityId"]+"');\">"+data["result"][i]["city"]+"</a>";
+							if(typeof(data["result"][i]["list"]) != "undefined"){
+								liStr += "<ul style=\"display:none;\" id=\""+data["result"][i]["cityId"]+"\">";
+								for(var j = 0; j < data["result"][i]["list"].length; j++){
+									if(typeof(data["result"][i]["list"][j]["list"]) != "undefined" ){
+										liStr += "<li><a href=\"javascript:void(0);\" onclick=\"Show('area"+data["result"][i]["list"][j]["areaId"]+"');\">"+data["result"][i]["list"][j]["area"]+"</a>";
+										liStr += "<ul id=\"area"+data["result"][i]["list"][j]["areaId"]+"\">";
+										for(var k = 0; k < data["result"][i]["list"][j]["list"].length; k++){
+											liStr += "<li><a onclick=\"Show('school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"');\" href=\"javascript:void(0);\" \">"+data["result"][i]["list"][j]["list"][k]["school"]+"</a>";
+											liStr += "<ul id=\"school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"\">";
+											for(var a = 0; a < data["result"][i]["list"][j]["list"][k]["list"].length; a++){
+												liStr += "<li><a onclick=\"lookToCar("+data["result"][i]["list"][j]["list"][k]["list"][a]["carId"]+");\" href=\"javascript:void(0);\" >"+data["result"][i]["list"][j]["list"][k]["list"][a]["carNumber"]+"</a>";
+											}  
+											liStr += "</ul>";
+											liStr += "</li>";
+										}
+										liStr += "</ul>";
+										liStr += "</li>"; 
+									}
+								}
+								liStr += "</ul>"
+							}
+							liStr += "</li>";
+						}
+					}else if(data["manage"] == 3){
+						for(var i = 0; i < data["result"].length; i++){
+							for(var j = 0; j < data["result"][i]["list"].length; j++){
+								if(typeof(data["result"][i]["list"][j]["list"]) != "undefined" ){
+									liStr += "<li><a href=\"javascript:void(0);\" onclick=\"Show('area"+data["result"][i]["list"][j]["areaId"]+"');\">"+data["result"][i]["list"][j]["area"]+"</a>";
+									liStr += "<ul id=\"area"+data["result"][i]["list"][j]["areaId"]+"\">";
+									for(var k = 0; k < data["result"][i]["list"][j]["list"].length; k++){
+										liStr += "<li><a onclick=\"Show('school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"');\" href=\"javascript:void(0);\" \">"+data["result"][i]["list"][j]["list"][k]["school"]+"</a>";
+										liStr += "<ul id=\"school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"\">";
+										for(var a = 0; a < data["result"][i]["list"][j]["list"][k]["list"].length; a++){
+											liStr += "<li><a onclick=\"lookToCar("+data["result"][i]["list"][j]["list"][k]["list"][a]["carId"]+");\" href=\"javascript:void(0);\" >"+data["result"][i]["list"][j]["list"][k]["list"][a]["carNumber"]+"</a>";
+										}  
+										liStr += "</ul>";
+										liStr += "</li>";
+									}
+									liStr += "</ul>";
+									liStr += "</li>"; 
+								}
+							}
+						}
+					}else if(data["manage"] == 4){
+						for(var i = 0; i < data["result"].length; i++){
+							for(var j = 0; j < data["result"][i]["list"].length; j++){
+								for(var k = 0; k < data["result"][i]["list"][j]["list"].length; k++){
+									liStr += "<li><a onclick=\"Show('school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"');\" href=\"javascript:void(0);\" \">"+data["result"][i]["list"][j]["list"][k]["school"]+"</a>";
+									liStr += "<ul id=\"school"+data["result"][i]["list"][j]["list"][k]["schoolId"]+"\">";
+									for(var a = 0; a < data["result"][i]["list"][j]["list"][k]["list"].length; a++){
+										liStr += "<li><a onclick=\"lookToCar("+data["result"][i]["list"][j]["list"][k]["list"][a]["carId"]+");\" href=\"javascript:void(0);\" >"+data["result"][i]["list"][j]["list"][k]["list"][a]["carNumber"]+"</a>";
+									}  
+									liStr += "</ul>";
+									liStr += "</li>";
+								}
+							}
+						}
+					}
+					$("#menuUl").html(liStr);
+				} else {
+					alert(data["result"]);
+				}
+			}
+		});
+	}
+
+	//查询教练车信息
+	function lookToCar(id,a){
+		$("a[class='fontRed']").removeClass("fontRed");//去除之前颜色
+		$("#li" + a).find("a").addClass("fontRed");//添加#li颜色
+		var carId;
+		for(var i = 0; i < dResult.length; i++){
+			carId = dResult[i]["carId"];
+			if(id == carId){
+				var pt = new BMap.Point(dResult[i]["longitude"],dResult[i]["latitude"]);
+				map.centerAndZoom(pt, 19);	// 初始化地图,用坐标点设置地图中心点
+				break;
+			}
+			if((i+1) == dResult.length){
+				alert("未查询到该教练车!");
+			}
+		}
+	}
+	
+	//查询教练车行车轨迹
+	function forGetCarXy(){
+		function searchAllCarXy() {
+			var jiaxiao=$("#jiaxiao").val();
+			var city=$("#city").val();
+			var area=$("#area").val();
+			$.ajax({
+				url : "../../carXy/getAllCarXy.ao",
+				type : 'POST',
+				data : {
+					'jiaxiao':jiaxiao,
+					'city':city,
+					'area':area
+				},
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function(data) {
+					if (data["state"] == "success") {
+						remove_overlay();
+						map.addOverlay(polygon2);  //增加多边形覆盖物(电子围栏)
+						map.addOverlay(polygon3);  //增加多边形覆盖物(电子围栏)
+						var pt,myIcon,markerCar,label,sContent;
+						dResult = data["result"];
+						
+						for(var i = 0; i < data["result"].length; i++){
+							 if(data["result"][i]["status"] == "ok"){
+								sContent = "";
+								sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>明细</h4>" +
+								"<div>" +
+								"<label>教练员:"+data["result"][i]["driverName"]+"</label>" +
+								"<label>学员:"+data["result"][i]["stuName"]+"</label>" +
+								"<label>车牌号:"+data["result"][i]["carNumber"]+"</label>" + 
+								"<label>所属驾校:"+data["result"][i]["schoolName"]+"</label>" +
+								"<label>更新时间:"+data["result"][i]["updateTime"]+"</label>" +
+								"<img id='imgDemo' src='../../../images/map/realDriverCar.jpg'  width='139' height='104' />" +
+								"</div>";
+
+								//创建小车子标注  标注文字
+								pt = new BMap.Point(data["result"][i]["longitude"],data["result"][i]["latitude"]);
+								
+								myIcon = new BMap.Icon("../../../images/map/near_coach_icon.png", new BMap.Size(20,20));
+								markerCar = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+								map.addOverlay(markerCar);              // 将标注添加到地图中
+							  
+							  	label = new BMap.Label(data["result"][i]["carNumber"],{offset:new BMap.Size(-20,-20)});//添加标注文字
+							  	markerCar.setLabel(label);//将标注文字添加到地图中
+							  	addClickHandler(sContent,markerCar);//给多点添加信息窗口
+							}else if(data["result"][i]["status"] == "ng"){
+								sContent = "";
+								sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>明细</h4>" +
+								"<div>" +
+								"<label>车牌号:"+data["result"][i]["carNumber"]+"</label>" + 
+								"<label>所属驾校:"+data["result"][i]["schoolName"]+"</label>" +
+								"<label>更新时间:"+data["result"][i]["updateTime"]+"</label>" +
+								"<img id='imgDemo' src='../../../images/map/realDriverCar.jpg'  width='139' height='104' />" +
+								"</div>";
+
+								//创建小车子标注  标注文字
+								pt = new BMap.Point(data["result"][i]["longitude"],data["result"][i]["latitude"]);
+								myIcon = new BMap.Icon("../../../images/map/near_coach_iconf.png", new BMap.Size(20,20));
+								markerCar = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+								map.addOverlay(markerCar);              // 将标注添加到地图中
+							  
+							  	label = new BMap.Label(data["result"][i]["carNumber"],{offset:new BMap.Size(-20,-20)});//添加标注文字
+							  	markerCar.setLabel(label);//将标注文字添加到地图中
+							  	addClickHandler(sContent,markerCar);//给多点添加信息窗口
+							}else if(data["result"][i]["status"] == "out"){ 
+								sContent = "";
+								sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>明细</h4>" +
+								"<div>" +
+								"<label>车牌号:"+data["result"][i]["carNumber"]+"</label>" + 
+								"<label>所属驾校:"+data["result"][i]["schoolName"]+"</label>" +
+								"<label>更新时间:"+data["result"][i]["updateTime"]+"</label>" +
+								"<img id='imgDemo' src='../../../images/map/realDriverCar.jpg'  width='139' height='104' />" +
+								"</div>";
+
+								//创建小车子标注  标注文字
+								pt = new BMap.Point(data["result"][i]["longitude"],data["result"][i]["latitude"]);
+								myIcon = new BMap.Icon("../../../images/map/near_coach_icons.png", new BMap.Size(20,20));
+								markerCar = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+								map.addOverlay(markerCar);              // 将标注添加到地图中
+							  
+							  	label = new BMap.Label(data["result"][i]["carNumber"],{offset:new BMap.Size(-20,-20)});//添加标注文字
+							  	markerCar.setLabel(label);//将标注文字添加到地图中
+							  	addClickHandler(sContent,markerCar);//给多点添加信息窗口
+							}   
+						}
+					} else { 
+						alert(data["result"]);
+					}
+				}
+			});
+		}
+		searchAllCarXy();
+		setInterval(searchAllCarXy,20000);
+	}
+	//给多点添加信息窗口
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	//弹出信息窗口
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+</script>

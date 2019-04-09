@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加城市</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加城市 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>国家:</td>
+					<td id="nations">
+					</td>
+					<td>省份:</td>
+					<td>
+						<select name="addCity.province" id="province" style="width: 90px;">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>城市名:</td>
+					<td>						 
+						<input type="text" name="name" />
+					</td>
+					<td>城市编码:</td>
+					<td>						 
+						<input type="text" name="number" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<button type="button" onclick="addCity();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+     
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+	    	var nations = storage.getItem("nations");//获取存在sessionStorage里的国家数据
+	    	if(nations != null){
+		    	var nationsHtml;
+		    	nationsHtml = '<select  style="width: 160px;" id="nation" onchange="changeNation();">';
+		    	nationsHtml += nations;
+		    	nationsHtml += '</select>';
+		    	$("#nations").html(nationsHtml);
+		    }else{
+		    	var provinces = storage.getItem("provinces");//获取存在sessionStorage里的班级数据
+		    	if(provinces != null){
+		    		$("#province").html(provinces);
+		    	}
+		    }
+		});
+    	//添加城市信息
+    	function addCity(){
+    		$.ajax({
+    			url : "../../city/add.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					clearTable("form1");
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

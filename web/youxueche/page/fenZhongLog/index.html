@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>预约信息管理</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<!-- 图片预览放大 -->
+<script src="../../../js/imgPreview.js" type="text/javascript"></script>
+
+<style>
+	li{margin:0;padding:0;list-style-type:none;}
+	img,a{border:0;}
+	.piccon{height:auto;margin:100px 0 0 50px;padding: 0 50px 20px 20px;}
+	#preview{position:absolute;border:1px solid #ccc;background:#333;padding:5px;display:none;color:#fff;}
+	.piccon div{display:inline-block;text-align:center;padding:0px 3px;}
+	.piccon div span{display:block;}
+	#imgTable div img{
+		max-height: 100px;
+		max-width: 100px;
+	}
+</style>
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" id="studentDiv">
+		<tr>
+			<td>培训机构</td>
+			<td colspan="3" id="school"></td>
+			<td rowspan="4" id="img"></td>
+		</tr>
+		<tr>
+			<td>学员</td>
+			<td id="student"></td>
+			<td>身份证号</td>
+			<td id="idcard"></td>
+		</tr>
+		<tr>
+			<td>全国统一编号</td>
+			<td id="stunum"></td>
+			<td>教练员</td>
+			<td id="driver"></td>
+		</tr>
+		<tr>
+			<td>培训时间</td>
+			<td id="isdate"></td>
+			<td>培训时段</td>
+			<td id="studyTime"></td>
+		</tr>
+		<tr>
+			<td>教练车</td>
+			<td id="coachCar"></td>
+			<td>培训车型</td>
+			<td id="traintype" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>总累计里程</td>
+			<td id="totalMileage"></td>
+			<td>总累计学时</td>
+			<td id="totalXueShi" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>本次培训内容</td>
+			<td id="studyContent"></td>
+			<td>本次培训学时</td>
+			<td id="studyXueShi" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>本次培训行驶里程</td>
+			<td id="studyMileage"></td>
+			<td>本次培训平均速度</td>
+			<td id="studySpeed" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>第一部分累计学时</td>
+			<td id="keMu1TotalXueShi"></td>
+			<td>第二部分累计学时</td>
+			<td id="keMu2TotalXueShi" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>第三部分累计学时</td>
+			<td id="keMu3TotalXueShi"></td>
+			<td>第四部分累计学时</td>
+			<td id="keMu4TotalXueShi" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>第二部分驾驶总里程</td>
+			<td id="keMu2TotalMileage"></td>
+			<td>第三部分驾驶总里程</td>
+			<td id="keMu3TotalMileage" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>时速等于0km/h的数量</td>
+			<td id="eq0Count"></td>
+			<td>时速大于5km/h的数量</td>
+			<td id="gt5Count" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>时速在0~5km/h的数量</td>
+			<td id="ba5Count"></td>
+			<td>日志编号</td>
+			<td id="xueShiNum" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td>合格学时</td>
+			<td id="qualifiedTime"></td>
+			<td>不合格学时</td>
+			<td id="unqualifiedTime" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>认可学时</td>
+			<td id="recognizedTime"></td>
+			<td>审核后学时</td>
+			<td id="shqualifiedTime" colspan="2"></td>
+		</tr>
+	</table>
+	<div id = "buttonDiv" style="padding: 0 0 10px 10px;">
+	</div>
+	<!-- <table style="text-align: center;">
+		<tr id="imgTable"></tr>
+	</table> -->
+	<div>
+		<table>
+			<tr>
+				<td id="imgTable" class="piccon">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn-group">	
+		<button type="button" class="btn"  onclick="quanXuan();">全选/反选</button>
+	</div>
+	<div class="btn-group">	
+		<a href="javascript:void(0);" class="btn btn-success" onclick="checkFenzhongLog(2);">审核</a>
+	</div>
+	<br></br>
+	<table class="table table-bordered .table-condensed" id="datas">
+		<!-- <tr>
+			<td name="createDate">记录时间</td>
+			<td name="student">学员</td>
+			<td name="driver">教练员</td>
+			<td name="keMu">科目</td>
+			<td name="kecheng">学习内容</td>
+			
+			<td name="rectype">学习方式</td>
+			<td name="engineSpeed">发动机转速</td>
+			<td name="runSpeed">行驶速度</td>
+			<td name="mileage">行驶里程</td>
+			
+			<td name="oneMinMaxSpeed">1分钟行驶的最大速度</td>
+			<td name="state">状态</td>
+			
+			<td name="flow">当前流程</td>
+			<td name="jishiFlows">计时平台审核</td>
+			<td name="jianFlows">监管平台审核</td>
+			<td name="remark">备注</td>
+			<td name="id" other="studyLog">操作</td> 
+		</tr> -->
+	</table>
+	<br/>
+	<div style="text-align: center;" id="reasonDiv">
+	</div>
+	 <!-- 手动审核 -->
+   <div id="changeReasonDiv" style="display: none;" title="修改审核结果原因">
+		<form>
+			<table class="table table-bordered .table-condensed" style="width:550px">
+				<tr>
+				<td>原因:</td>
+				<td>
+					<textarea name="reason" id="reason" clos="60" rows="20" style="width: 550px; height: 115px"></textarea>
+				</td>
+				</tr>
+			</table>
+			<div style="text-align: center;" id="reasonDivs">
+				<input type="button" class="btn btn-info" id="quitbtn" value="合格" onclick="writeReason(1);" />
+				<input type="button" class="btn btn-danger" id="quitbtn" value="不合格" onclick="writeReason(-1);" />
+				<input type="button" class="btn btn-success" id="quitbtn" value="取消" onclick="writeReason();" />
+			</div>
+ 		</form> 
+	</div>
+	
+	<div id="studyLogPhoto" style="display: none;" title="图片">
+		<div id="photos"></div>
+	</div>
+	
+	<div id="liKePaiZhaoDiv" style="display: none;" title="立即拍照">
+		<iframe src="" style="width:100%;height: 100%"  frameborder="no" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+	</div>
+	
+	
+	<script type="text/javascript">
+		var href = location.href;
+		href = href.split("=")[1];
+		searchPage(href);
+		var amount="";//用于记录分钟学时的数量
+		var status = "";//订单审核的结果
+		
+		//根据分页获取学员订单信息
+		function searchPage(studyLogId) {
+			$.ajax({
+				url : "../../fenZhongLog/getFenZhongLogByStudyLog.ao",
+				type : 'POST',
+				data : {
+					'studyLogId' : studyLogId,
+				},
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function(data) {
+					if (data["state"] == "success") {
+						if(data["student"]["ways"] == 2 || data["student"]["ways"] == 3){//电子教学日志的审核方式
+							var html="";
+							html +="<div style=\"text-align: center;\"><input type=\"button\" class=\"btn btn-info\"  value=\"审核电子教学日志\" onclick=\"shouDong();\" /></div>";
+							$("#reasonDiv").html(html);
+						}
+						status = data["student"]["status"];
+						//填充学员基本资料
+						$("#studentDiv").find("td").each(function(){
+							var tdId = $(this).attr("id");
+							if(tdId == null || tdId == "" || typeof(tdId) == "undefined"){
+								
+							}else{
+								$("#" + tdId).html(data["student"][tdId]);
+							}
+						});
+						
+						//填充每科目学习的情况
+						for(var i = 1; i < 5; i++){
+							$("#keMu"+i+"TotalXueShi").html(data["keMu"+i]["duration"]);
+							if(i == 2 || i == 3){
+								$("#keMu"+i+"TotalMileage").html(data["keMu"+i]["mileage"]);
+							}
+						}
+
+						 var html = "";
+						if(data["imgList"] != null && data["imgList"].length > 0){
+							for(var i = 0; i < data["imgList"].length; i++){
+								html += "<div>";
+								html += "<a href='javascript:void(0);' rel='" +pickerProjectAdd+data["imgList"][i]["path"]+"?rand="+Math.random() +"' class='preview'><img src='"+pickerProjectAdd+data["imgList"][i]["path"]+"?rand="+Math.random()+"'/></a>";
+
+								html += "<span>"+data["imgList"][i]["remark"]+"</span>";
+								html += "<span>"+data["imgList"][i]["createDate"]+"</span>";
+								html += "</div>";
+							}
+						}
+						$("#imgTable").html(html); 
+
+						//imagePreview();
+						//头像
+						$("#img").html("<img style='max-width:102;max-height:126;' src='"+pickerProjectAdd+data["student"]["img"]+"?rand="+Math.random()+"'/>");
+						var  str ="";
+					  str = "<table class=\"table table-bordered .table-condensed\"><tr><td></td><td></td><td>记录时间</td><td>学员</td><td>教练员</td><td>培训部分</td><td>学习内容</td><td>学习方式</td><td>发动机转速</td><td>行驶速度</td><td>1分钟行驶里程</td><td>1分钟行驶的最大速度</td><td>记录状态</td><td>计时平台审核</td><td>监管平台审核</td><td>备注</td>";
+					  if(data["student"]["ways"] == 1){
+						  str += "<td>操作</td></tr>";
+					  }else{
+						  str += "<td>修改审核结果原因</td><td>操作</td></tr>";
+					  }
+					  if(data["result"].length>0){
+						  amount = data["result"].length;
+						  for(var i=0;i<data["result"].length;i++){
+							  str+="<tr>";
+							  if(data["result"][i]["wayss"] == 1){
+								str +="<td><label><input class=\"minimal-red\" name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\"/></label></td>";
+
+							  }else{
+								  	str +="<td><label><input class=\"minimal-red\" name=\"chk\" type=\"checkbox\" id=\"checkbox"+i+"\" /></label></td>";
+							  }
+							  str += "<td><input type=\"hidden\" id=\"id"+i+"\" value=\""+data["result"][i]["id"]+"\" /></td>";
+							  str +="<td>"+data["result"][i]["createDate"]+"</td>";
+							  str +="<td>"+data["result"][i]["student"]+"</td>";
+							  str +="<td>"+data["result"][i]["driver"]+"</td>";
+							  str +="<td>"+data["result"][i]["keMu"]+"</td>";
+							  str +="<td>"+data["result"][i]["kecheng"]+"</td>";
+							  str +="<td>"+data["result"][i]["rectype"]+"</td>";
+							  str +="<td>"+data["result"][i]["engineSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["runSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["oneMinMileage"]+"</td>";
+							  str +="<td>"+data["result"][i]["oneMinMaxSpeed"]+"</td>";
+							  str +="<td>"+data["result"][i]["state"]+"</td>";
+							  if(data["result"][i]["jishiFlows"] == 0){
+								  str += "<td style=\"text-align:center\"></td>";
+							  }else if(data["result"][i]["jishiFlows"] == 1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"blue\">有效</font></div></td>";
+							  }else if(data["result"][i]["jishiFlows"] == -1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"red\">无效</font></div></td>";
+							  }
+							  if(data["result"][i]["jianFlows"] == 0){
+								  str += "<td style=\"text-align:center\"></td>";
+							  }else if(data["result"][i]["jianFlows"] == 1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"blue\">有效</font></div></td>";
+							  }else if(data["result"][i]["jianFlows"] == -1){
+								  str +="<td style=\"text-align:center\"><div><font color=\"red\">无效</font></div></td>";
+							  }
+							  str +="<td>"+data["result"][i]["remark"]+"</td>";
+							  if(data["result"][i]["wayss"] == 2 || data["result"][i]["wayss"] == 3){
+								  str += "<td>"+data["result"][i]["reason"]+"</td>";
+							  }
+							  str +="<td>"
+							  if(data["result"][i]["img"] !=null &&typeof(data["result"][i]["img"])!="undefined"  && data["result"][i]["img"] !="" ){
+							  	str += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"lookPhoto('"+data["result"][i]["img"]+"');\">图片</a>&nbsp;&nbsp;";
+						      }
+							  if(data["result"][i]["wayss"] == 2 || data["result"][i]["wayss"] == 3){//手动审核或者自动+手动审核
+								  str += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"studyLog('"+data["result"][i]["id"]+"');\">手动审核</a>";
+							  }
+							  str+="</td>";
+							  str+= "</tr>";
+						  }
+						 
+						  $("#datas").html(str);
+					  }else{
+						    str += "<tr>";
+						    if(data["student"]["ways"] == 1){
+								str += "<td colspan='17' style='text-align:center;color:blue;'>无搜索结果</td>";
+							  }else{
+								str += "<td colspan='18' style='text-align:center;color:blue;'>无搜索结果</td>";
+							  }
+							str += "</tr>";
+							$("#datas").html(str);
+					  }
+
+					if(data["student"]["studyTime"].indexOf("学习中") != -1){
+						var btnHtml = '';
+						btnHtml = '<a href="javascript:void(0);" class="btn btn-info" onclick="liKePaiZhao();">立即拍照</a>';
+						
+						$("#buttonDiv").html(btnHtml);
+					}else{
+						$("#buttonDiv").html("");
+					}
+					
+					} else {
+						alert(data["result"]);
+					}
+				}
+			});
+		}
+		
+		function liKePaiZhao(){
+			$("#liKePaiZhaoDiv").find("iframe").attr("src","../tcp/takephoto2.html");
+			
+			$("#liKePaiZhaoDiv").dialog({
+				title : "立即拍照",
+				resizable : false,
+				width : 600,
+				height : 500,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+	
+			});
+		}
+		
+		//全选
+		function quanXuan(){
+			$("#datas").find("input[type='checkbox']").each(function(){
+				$(this).parent().click();
+			});		
+		}
+		var studyLogId="";//便于单条审核时使用
+		function studyLog(id){
+			studyLogId = id;
+			checkFenZhongLog(1);//表示单条审核
+		}
+		//弹出审核的页面
+		function checkFenZhongLog(i){
+			var html="";
+			$("#reasonDivs").html("");
+			$("#reason").val("");
+			html += "<div>";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-info\" onclick=\"changeFenZhong('"+1+"','"+i+"');\">合格</a>&nbsp;&nbsp;";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-danger\" onclick=\"changeFenZhong('"+(-1)+"','"+i+"');\">不合格</a>&nbsp;&nbsp;";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"quit();\">取消</a>&nbsp;&nbsp;";
+			html += "</div>";
+			$("#reasonDivs").html(html); 
+			$("#changeReasonDiv").dialog({
+				title : "原因",
+				resizable : false,
+				width : 650,
+				height : 350,
+				resizable : true,
+				overflow:scroll,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		
+		//显示分钟学时绑定的图片
+		function lookPhoto(path){
+			var html = "<div>";
+			html += "<a href='javascript:void(0);' rel='" +pickerProjectAdd+path+"?rand="+Math.random() +"' class='preview'><img src='"+pickerProjectAdd+path+"?rand="+Math.random()+"'/></a>";
+			html += "</div>";
+			$("#photos").html(html);
+			$("#studyLogPhoto").dialog({
+				title : "图片",
+				resizable : false,
+				width : 650,
+				height : 350,
+				resizable : true,
+				overflow:scroll,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		//对选择的分钟学时进行手动审核
+		function changeFenZhong(flow,m){
+			var array="";
+			if(m==2){//多条分钟学时一起审核
+				for( var i=0;i<amount;i++){
+					if($("#checkbox"+i).length>0){
+						var flag =  document.getElementById("checkbox"+i).checked;
+						if(flag){
+							array += $("#id"+i).val()+",";
+						}
+					}
+				}
+			}
+			if(m == 1){//单条分钟学时进行审核
+				array += studyLogId+",";
+			}
+			if(array.length>0){
+				var reason = $("#reason").val();
+				if(reason == null || reason == ""){
+					alert("请填写修改的原因");
+					return;
+				}
+				if(confirm("确定此审核结果吗?")){
+					$.ajax({
+						url : "../../fenZhongLog/addChangeReason.ao",
+						type : 'POST',
+						data : {
+							'array' : array,
+							'flow' : flow,
+							'changeReason': reason
+						},
+						cache : false,
+						dataType : "json",
+						success : function(data){
+							alert(data["result"]);
+							if(data["state"] == "success"){
+								quit();
+								searchPage(href);
+							}
+						}
+					});
+				}
+			}
+		}
+		//取消
+		function quit(){
+			$("#changeReasonDiv").dialog("close");
+		}
+		//手动审核订单
+		function shouDong(){
+			 var html="";
+			$("#reasonDivs").html("");
+			$("#reason").val("");
+			html += "<div>";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-info\" onclick=\"changeStudyLog('"+href+"','"+(1)+"');\">合格</a>&nbsp;&nbsp;";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-danger\" onclick=\"changeStudyLog('"+href+"','"+(-1)+"');\">不合格</a>&nbsp;&nbsp;";
+			html += "<a href=\"javascript:void(0);\" class=\"btn btn-success\" onclick=\"quit();\">取消</a>&nbsp;&nbsp;";
+			html += "</div>";
+			$("#reasonDivs").html(html);
+			
+			$("#changeReasonDiv").dialog({
+				title : "明细",
+				resizable : false,
+				width : 650,
+				height : 350,
+				resizable : true,
+				overflow:scroll,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		
+		//添加改变审核结果的原因
+		function changeStudyLog(studyLogId,i){
+			var reason = $("#reason").val();
+			if(reason == null || reason == ""){
+				alert("请填写修改的原因");
+				return;
+			}
+			if(confirm("确定此审核结果吗?")){
+				$.ajax({
+					url : "../../studyLog/writeReason.ao",
+					type : 'POST',
+					data : {
+						'id' : studyLogId,
+						'status' : i,
+						'reason': reason
+					},
+					cache : false,
+					dataType : "json",
+					success : function(data){
+						alert(data["result"]);
+						if(data["state"] == "success"){
+							quit();
+							searchPage(href);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</body>
+</html>

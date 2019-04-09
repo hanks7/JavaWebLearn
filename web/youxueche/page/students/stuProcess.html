@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>培训全流程查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<style type="text/css">
+label {
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			培训全流程查询 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form role="form" style="padding: 10px 0 10px 20px;">
+			<span>查询</span>
+			<select id="query" style="width: 90px;">
+				<option value="请选择">-请选择-</option>
+				<option value="name">姓名</option>
+				<option value="idcard">身份证号</option>
+				<option value="phone">手机号</option>
+				<option value="stunum">学员编号</option>
+			</select>
+			<input type="text" id="keywords" placeholder="Key" style="width:120px;">
+	
+			<button type="button" onclick="searchPage(1,10);" class="btn btn-success">查询</button>
+		</form>
+	</div>
+	<table class="table table-bordered" id="datas">
+		<tr>
+			<td name="name">学员名</td>
+			<td name="stunum">学员编号</td>
+			<td name="school">所属驾校</td>
+			<td name="idcard">证件号</td>
+			<td name="sex">性别</td>
+			<td name="phone">手机号</td>
+			<td name="traintype">学车类型</td>
+			<td name="id" other="stuProcess">操作</td>
+		</tr>
+	</table>
+
+	<!-- 分页控件 -->
+    <div class="pager">
+    </div>
+	
+	<div id="stuProDiv" style="display: none;" title="培训记录详情">
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">学员信息</a></li>
+				<li><a href="#tabs-2">考试信息</a></li>
+			</ul>
+			<div id="tabs-1">
+				<form id="updateStuForm">
+					<table class="table table-bordered .table-condensed">
+						<tr>
+							<td colspan="5"><label class="badge bg-blue">学员信息</label></td>
+						</tr>
+						<tr>
+							<td style="width: 100px">ID:</td>
+							<td style="width: 200px" name="id">
+							</td>
+							<td style="width: 100px">学员编号:</td>
+							<td style="width: 200px" name="stunum">
+							<td rowspan="9" name=" simg" style="width: 120px">
+								<div id="uploadImage" ></div>
+							</td>
+						</tr>
+						<tr>
+							<td>姓名:</td>
+							<td name="name">
+							</td>
+							<td>性别:</td>
+							<td name="sex"></td>
+						</tr>
+						<tr>
+							<td>国籍:</td>
+							<td name="nationality" ></td>
+							<td>驾校:</td>
+							<td name="school" ></td>
+						</tr>
+						<tr>
+						<tr>
+							<td>证件类型:</td>
+							<td name="cardtype"></td>
+							<td>证件号:</td>
+							<td name="idcard"></td>
+						</tr>
+						<tr>
+							<td>家庭住址:</td>
+							<td name="address"></td>
+							<td>手机号码:</td>
+							<td name="phone"></td>
+						</tr>
+						<tr>
+							<td>学习班级:</td>
+							<td name="grade"></td>
+							<td>学习车型:</td>
+							<td name="traintype"></td>
+						</tr>
+						<tr>
+							<td>业务类型:</td>
+							<td name="busitype"></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>流程：</td>
+							<td name="flowBa"></td>
+							<td>流程备注:</td>
+							<td name="flowRemark"></td>
+						</tr>
+					</table>
+					<table class="table table-bordered .table-condensed">
+						<tr>
+							<td colspan="5"><label class="badge bg-blue">学员报名信息</label></td>
+						</tr>
+						<tr>
+							<td>报名人:</td>
+							<td name="isname"></td>
+							<td>报名时间:</td>
+							<td name="applydate"></td>
+						</tr>
+					</table>
+					<div id="imgInfos">
+					</div>
+				</form>
+			</div>
+			<div id="tabs-2">
+				<form id="stuDetailForm">
+					<table class="table table-bordered .table-condensed">
+						<tr>
+							<td  style="width: 140px">科目一开始时间:</td>
+							<td name="keMu1S"  style="width: 160px"></td>
+							<td  style="width: 140px">科目一结束时间:</td>
+							<td name="keMu1E"  style="width: 160px"></td>
+							<td  style="width: 150px">科目一考试通过时间:</td>
+							<td name="keMu1T"  style="width: 150px"></td>
+						</tr>
+						<tr>
+							<td>科目二开始时间:</td>
+							<td name="keMu2S"></td>
+							<td>科目二结束时间:</td>
+							<td name="keMu2E"></td>
+							<td>科目二考试通过时间:</td>
+							<td name="keMu2T"></td>
+						</tr>
+						<tr>
+							<td>科目三开始时间:</td>
+							<td name="keMu3S"></td>
+							<td>科目三结束时间:</td>
+							<td name="keMu3E"></td>
+							<td>科目三考试通过时间:</td>
+							<td name="keMu3T"></td>
+						</tr>
+						<tr>
+							<td>科目四开始时间:</td>
+							<td name="keMu4S"></td>
+							<td>科目四结束时间:</td>
+							<td name="keMu4E"></td>
+							<td>科目四考试通过时间:</td>
+							<td name="keMu4T"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function() {
+		searchPage(1, 10);
+		$("#tabs").tabs();
+	});
+	
+	//分页查询学员
+	function searchPage(pageNo, pageSize) {
+		var idcard = $("#idcard").val();
+		var name = $("#name").val();
+		var stunum = $("#stunum").val();
+		$.ajax({
+			url : "../../student/find.ao",
+			type : 'POST',
+			data : {
+				'pageNo' : pageNo,
+				'pageSize' : pageSize,
+				'query' : $("#query").val(),
+				'keywords' : $("#keywords").val()
+			},
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if (data["state"] == "success") {
+					insertTr(data, 0);
+				} else {
+					alert(data["result"]);
+				}
+			}
+		});
+	}
+	//查看学员信息
+	function look(id) {
+		$.ajax({
+			url :"../../student/get.ao",
+			type : 'POST',
+			data : {
+				"id" : id
+			},
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if(data["state"]=="success"){
+	 				$("#updateStuForm").find("td").each(function(){
+	 					$(this).parent().find("div").html("");
+	 					var a = $(this).attr("name");//获得Input文本框的name值，这个ID值 对应着Json数据中对象的值（PS：一个是大写一个小写 ） 
+	 					if(a == null || typeof(a) == "undefined"){
+	 						return;
+	 					}
+	 					if(data["result"][a] == null || typeof(data["result"][a]) == "undefined"){
+	 						return;
+	 					}
+	 					 $(this).html(data["result"][a]);
+	 					if(a == "simg"){
+	 						$(this).html("<img src=\""+pickerProjectAdd+data["result"][a]+"\"/>");//显示图片
+	 					}
+	 					if(a == "sex"){
+	 						if(data["result"][a] == 1){
+	 							$(this).html("男");
+	 						}else if(data["result"][a] == 2){
+	 							$(this).html("女");
+	 						}
+	 					} 
+	 					if(a == "cardtype"){
+	 						if(data["result"][a] == 1){
+	 							$(this).html("身份证");
+	 						}else if(data["result"][a] == 2){
+	 							$(this).html("护照");
+	 						}else if(data["result"][a] == 3){
+	 							$(this).html("军官证");
+	 						}else if(data["result"][a] == 4){
+	 							$(this).html("其他");
+	 						}
+	 					}
+	 					if(a == "busitype"){
+	 						if(data["result"][a] == 0){
+	 							$(this).html("初领");
+	 						}else if(data["result"][a] == 1){
+	 							$(this).html("增领");
+	 						}else if(data["result"][a] == 2){
+	 							$(this).html("其他");
+	 						}
+	 					}
+					});
+				} else {
+					alert(data["result"]);
+				}
+			}
+		});
+		$.ajax({
+			url :"../../student/getStuProcessById.ao",
+			type : 'POST',
+			data : {
+				"id" : id
+			},
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if(data["state"]=="success"){
+					$("#stuDetailForm").find("td[name^='keMu']").html("");
+					$("#stuDetailForm").find("td").each(function(){
+	 					$(this).parent().find("div").html("");
+	 					var a = $(this).attr("name");//获得Input文本框的name值，这个ID值 对应着Json数据中对象的值（PS：一个是大写一个小写 ） 
+	 					if(a == null || typeof(a) == "undefined"){
+	 						return;
+	 					}
+	 					if(data["result"][a] == null || typeof(data["result"][a]) == "undefined"){
+	 						return;
+	 					}
+	 					 $(this).html(data["result"][a]);
+					});
+	 				
+	 				if(data.result.kaoShiResult.length > 0){
+						for(var i = 0; i < data.result.kaoShiResult.length; i++){
+			 				$("td[name='keMu"+data["result"]["kaoShiResult"][i]["keMu"]+"T']").html(data["result"]["kaoShiResult"][i]["time"]);
+						}
+	 				}
+				} else {
+					alert(data["result"]);
+				}
+			}
+		});
+		//弹出修改框
+		$("#stuProDiv").dialog({
+			title : "学员详情",
+			resizable : false,
+			width :1000,
+			height : 560,
+			resizable : true,
+			modal : true,
+			buttons : {
+				"关闭" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+	
+	
+	
+</script>
+</html>

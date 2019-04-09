@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加学员考试成绩信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+		<table class="table table-bordered .table-condensed">
+			<tr>
+				<td>培训部分:</td>
+				<td>
+					<select name="keMu" id="keMu" class="required">
+						<option value="请选择">请选择</option>
+						<option value="1">第一部分</option>
+						<option value="2">第二部分</option>
+						<option value="3">第三部分</option>
+						<option value="4">第四部分</option>
+					</select>
+				</td>
+				<td>考试成绩:</td>
+				<td>
+					<input type="text" name="score"  class="required maxlength:3"/>
+				</td>
+			</tr>
+			<tr>
+				<td>考试时间:</td>
+				<td>
+					<input type="text" name="time" onClick="WdatePicker();" class="required"/>
+				</td>
+				<td>考试地点:</td>
+				<td>
+					<input type="text" name="place" class="required"/>
+				</td>			
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align: center;">
+					<button type="button" onclick="addResult();" class="btn btn-info">添加</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var stuId = href[1];
+    	
+    	//添加学员考试成绩
+    	function addResult(){
+    		if(validata("form1")){
+	    		$.ajax({
+	    			url : "../../keMuResult/add.ao?studentId="+stuId,
+	    			type : 'POST',
+	    			data : $("#form1").serialize(),
+	    			beforeSend : ajaxstar,
+	    			complete : ajaxend,
+	    			cache : false,
+	    			dataType : "json",
+	    			success : function(data) {
+	    				sAlert(data["result"]);
+	    				if(data["state"] == "success"){
+	    					clearTable("form1");
+	    					window.parent.searchPage(1,10);
+	    				}	
+	    			}
+	    		});
+    		}
+    	}
+    	
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>教练员时间模板信息</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<table class="table table-bordered .table-condensed" style="width:800px">
+		<tr>
+			<td>培训开始时间</td>
+			<td>
+				<select id="sTime">
+					<option value="05:00">05:00</option>
+					<option value="06:00">06:00</option>
+					<option value="07:00">07:00</option>
+					<option value="08:00">08:00</option>
+					<option value="09:00">09:00</option>
+					<option value="10:00">10:00</option>
+					<option value="11:00">11:00</option>
+					<option value="12:00">12:00</option>
+					<option value="13:00">13:00</option>
+					<option value="14:00">14:00</option>
+					<option value="15:00">15:00</option>
+					<option value="16:00">16:00</option>
+					<option value="17:00">17:00</option>
+					<option value="18:00">18:00</option>
+					<option value="19:00">19:00</option>
+					<option value="20:00">20:00</option>
+					<option value="21:00">21:00</option>
+					<option value="22:00">22:00</option>
+				</select>
+			</td>
+			<td>培训结束时间</td>
+			<td>
+				<select id="eTime">
+					<option value="22:00">22:00</option>
+					<option value="21:00">21:00</option>
+					<option value="20:00">20:00</option>
+					<option value="19:00">19:00</option>
+					<option value="18:00">18:00</option>
+					<option value="17:00">17:00</option>
+					<option value="16:00">16:00</option>
+					<option value="15:00">15:00</option>
+					<option value="14:00">14:00</option>
+					<option value="13:00">13:00</option>
+					<option value="12:00">12:00</option>
+					<option value="11:00">11:00</option>
+					<option value="10:00">10:00</option>
+					<option value="09:00">09:00</option>
+					<option value="08:00">08:00</option>
+					<option value="07:00">07:00</option>
+					<option value="06:00">06:00</option>
+					<option value="05:00">05:00</option>
+				</select>
+			</td>
+			<td>培训时间</td>
+			<td>
+				<select id="time">
+					<option value="60">60分钟</option>
+					<option value="45">45分钟</option>
+					<option value="30">30分钟</option>
+				</select>
+			</td>
+			
+		    <td>
+			    <button type="button" onclick="getTimes();" class="btn btn-success">查询</button>
+			</td>
+		</tr>	
+	</table>
+		
+	<form id="t1" name="updateForm" method="post"></form>
+			
+			
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var driverId = href[1];
+    	var amount = "";//时间模板数量
+    	getTimesByDriver(driverId);
+    	
+    	//获取教练员绑定的时间模板
+    	function getTimesByDriver(driverId){
+    		$.ajax({
+    			url : "../../driverTime/getTimesByDriverId.ao",
+    			type : 'POST',
+    			data : {
+    				"driverId" : driverId
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					var str = "";
+    					str += "<table class=\"table table-bordered .table-condensed\"><tr style=\"background-color:#ccc;\"><td></td><td>时间段</td><td>价格</td><td>可授课人数</td><td></td><td>时间段</td><td>价格</td><td>可授课人数</td>";
+    					for(var i=0;i<data["result"].length;i++){
+    						amount = data["recordTotalCount"];
+    						if(i % 2 == 0){
+    							str += "</tr>";
+    							str += "<tr>"; 
+    						}
+    						str += "<td><input type=\"hidden\" id=\"ids"+i+"\" value=\""+data["result"][i]["id"]+"\" /></td>"; 
+    						str += "<td id=\"times"+i+"\">"+data["result"][i]["times"]+"</td>";
+							str += "<td><input type=\"text\" style=\" width:120px;\" id=\"prices"+i+"\" value=\""+data["result"][i]["price"]+"\"/></td>";
+							str += "<td><input type=\"text\" style=\" width:120px;\" id=\"jsCounts"+i+"\" value=\""+data["result"][i]["jsCount"]+"\" /></td>";
+							if(data["result"].length % 2 == 1){
+								if(i == data["result"].length-1){
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "</tr>";
+								}else{
+		    						str += "<td><input type=\"hidden\" id=\"ids"+(i+1)+"\" value=\""+data["result"][i+1]["id"]+"\" /></td>"; 
+									str += "<td id=\"times"+(i+1)+"\">"+data["result"][i+1]["times"]+"</td>";
+									str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"prices"+(i+1)+"\" value=\""+data["result"][i+1]["price"]+"\"/></td>";
+									str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"jsCounts"+(i+1)+"\" value=\""+data["result"][i+1]["jsCount"]+"\" /></td>";
+									i++;
+								}
+							}else{
+	    						str += "<td><input type=\"hidden\" id=\"ids"+(i+1)+"\" value=\""+data["result"][i+1]["id"]+"\" /></td>"; 
+								str += "<td id=\"times"+(i+1)+"\">"+data["result"][i+1]["times"]+"</td>";
+								str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"prices"+(i+1)+"\" value=\""+data["result"][i+1]["price"]+"\"/></td>";
+								str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"jsCounts"+(i+1)+"\" value=\""+data["result"][i+1]["jsCount"]+"\" /></td>";
+								i++;
+							} 
+    					}
+    					
+    					str += "<tr>";
+						str += "<td colspan='8' style='text-align: center;'>";
+						str += "<button type='button' onclick='updateTimes();' class='btn btn-danger'>修改时间模板</button>";
+						str += "</td>";
+						str += "</tr>";
+    					str += "</table>";
+    				  
+    					$("#t1").html(str);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		}); 
+    	}
+    	
+    	//修改时间模板中价格和人数信息
+    	function updateTimes(){
+    		var price = "";
+    		var id = "";
+    		var count="";
+    		var flag = true;
+    		for (var i = 0; i < amount; i++) {
+    			var sid = $("#ids" + i).val();
+    			var sprice = $("#prices" + i).val();
+    			var scount = $("#jsCounts"+i).val();
+				
+    			/* if(checkNumber(sprice) != "success"){
+    				flag = false;
+    				alert("价格必须是不以0为开头的数字!");
+    			}
+    			var scount = document.getElementById("jsCount"+i).value;
+    			if(checkNumber(scount) != "success"){
+    				flag = false;
+    				alert("可授课人数必须是不以0为开头的数字!");
+    			} */
+    			id += sid + ",";
+    			price += sprice + ",";
+    			count += scount + ",";
+    		}
+    		if(flag == true){
+    			if (!confirm("确定修改该教练员的时间模板吗?")) {
+    				return false;
+    			} else {
+    				$.ajax({
+    					url : "../../driverTime/updateTimesData.ao",
+    					type : 'POST',
+    					data : {
+    						"id" : id,
+    						"price" : price,
+    						"jsCount" : count
+    					},
+    					beforeSend : ajaxstar,
+    	    			complete : ajaxend,
+    	    			cache : false,
+    	    			dataType : "json",
+    	    			success : function(data){
+    	    				sAlert(data["result"]);
+    	    				if(data["state"] == "success"){
+        						location.reload();
+    	    				}
+    	    			}
+    				});
+    			}
+    		}	
+    	}
+    	
+    	//自定义时间模板
+    	function getTimes(){
+    		$.ajax({
+    			url : "../../driverTime/customTime.ao",
+    			type : 'POST',
+    			data : {
+    				"sTime" : $("#sTime").val(),
+    				"eTime" : $("#eTime").val(),
+    				"time" : $("#time").val()
+    				
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					var str = "";
+    					str += "<table class=\"table table-bordered .table-condensed\"><tr style=\"background-color:#ccc;\"><td>时间段</td><td>价格</td><td>可授课人数</td><td>时间段</td><td>价格</td><td>可授课人数</td><tr>";
+    					for(var i=0;i<data["result"].length;i++){
+    						amount = data["result"].length;
+    						if(i % 2 == 0){
+    							str += "</tr>";
+    							str += "<tr>"; 
+    						}
+    						str += "<td id=\"time"+i+"\">"+data["result"][i]["times"]+"</td>";
+							str += "<td><input type=\"text\" style=\" width:120px;\" id=\"price"+i+"\" value=\""+data["result"][i]["price"]+"\"/></td>";
+							str += "<td><input type=\"text\" style=\" width:120px;\" id=\"jsCount"+i+"\" value='1' /></td>";
+							if(data["result"].length % 2 == 1){
+								if(i == data["result"].length-1){
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "<td></td>";
+									str += "</tr>";
+								}else{
+									str += "<td id=\"time"+(i+1)+"\">"+data["result"][i+1]["times"]+"</td>";
+									str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"price"+(i+1)+"\" value=\""+data["result"][i+1]["price"]+"\"/></td>";
+									str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"jsCount"+(i+1)+"\" value='1' /></td>";
+									i++;
+								}
+							}else{
+								str += "<td id=\"time"+(i+1)+"\">"+data["result"][i+1]["times"]+"</td>";
+								str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"price"+(i+1)+"\" value=\""+data["result"][i+1]["price"]+"\"/></td>";
+								str += "<td><input type=\"text\" style=\" width:120px;\"  id=\"jsCount"+(i+1)+"\" value='1' /></td>";
+								i++;
+							} 
+    					}
+    					
+    					str += "<tr>";
+						str += "<td colspan='6' style='text-align: center;'>";
+						str += "<button type='button' onclick='bindTimes();' class='btn btn-danger'>绑定时间模板</button>";
+						str += "</td>";
+						str += "</tr>";
+    					str += "</table>";
+    				  
+    					$("#t1").html(str);
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//为教练员重新绑定时间模板
+    	function bindTimes() {
+    		var price = "";
+    		var time = "";
+    		var count="";
+    		var flag = true;
+    		for (var i = 0; i < amount; i++) {
+    			var stime = $("#time" + i).html();
+    			var sprice = $("#price" + i).val();
+    			var scount = $("#jsCount"+i).val();
+				
+    			/* if(checkNumber(sprice) != "success"){
+    				flag = false;
+    				alert("价格必须是不以0为开头的数字!");
+    			}
+    			var scount = document.getElementById("jsCount"+i).value;
+    			if(checkNumber(scount) != "success"){
+    				flag = false;
+    				alert("可授课人数必须是不以0为开头的数字!");
+    			} */
+    			time += stime + ",";
+    			price += sprice + ",";
+    			count += scount + ",";
+    		} 
+    		if(flag == true){
+    			if (!confirm("是否为该教练员绑定此时间模板?")) {
+    				return false;
+    			} else {
+    				$.ajax({
+    					url : "../../driverTime/bindTime.ao",
+    					type : 'POST',
+    					data : {
+    						'driverId' : driverId,
+    						'time' : time,
+    						'price' : price,
+    						'count' : count
+    					},
+    					beforeSend : ajaxstar,
+    					complete : ajaxend,
+    					cache : false,
+    					dataType : "json",
+    					success : function(data) {
+    						sAlert(data["result"]);
+    						if (data["state"] == "success") {
+        						location.reload();
+        						//window.parent.quit();
+    						} 
+    					}
+    				});
+    			}
+    		}	
+    	}
+    	
+    	
+    </script>
+</body>
+</html>

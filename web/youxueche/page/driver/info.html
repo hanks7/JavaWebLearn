@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>驾驶员信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+	<table class="table table-bordered .table-condensed">
+		<tr>
+			<td>ID:</td>
+			<td id="id"></td>
+			<td>编号:</td>
+			<td id="coachnum"></td>
+			<td rowspan="14" id="infopic">
+			</td>
+		</tr>
+		<tr>
+			<td>教练员名称:</td>
+			<td>
+				<input type="text" name="name" />
+				<input type="hidden" name="id"/>
+			</td>
+			<td>培训机构:</td>
+			<td id="school"></td>
+		</tr>
+		<tr>
+			<td>教龄:</td>
+			<td>						 
+				<input type="text" name="teachAge" />
+			</td>
+			<td>政治面貌:</td>
+			<td>
+				<select name="politicStatus" id="politicStatus" style="width: 90px;">
+					<option value="1">群众</option>
+					<option value="2">共青团员 </option>
+					<option value="3">中共党员</option>
+					<option value="4">民主党派成员</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>文化程度:</td>
+			<td>
+				<select name="degree" style="width: 90px;">
+					<option value="高中">高中</option>
+					<option value="文盲">文盲</option>
+					<option value="小学">小学</option>
+					<option value="初中">初中</option>
+					<option value="大专">大专</option>
+					<option value="本科">本科</option>
+					<option value="硕士">硕士</option>
+					<option value="博士">博士</option>
+				</select>
+			</td>
+			<td>性别:</td>
+			<td>
+				<select name="sex">
+					<option value="1">男</option>
+					<option value="2">女</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>身份证号:</td>
+			<td colspan="3">
+				<input type="text" name="idcard" />
+			</td>
+		</tr>
+		<tr>
+			<td>手机号:</td>
+			<td>
+				<input type="text" name="mobile" />
+			</td>
+			<td>从业资格证有效期:</td>
+			<td>
+				<input type="text" onClick="WdatePicker();" name="inDate"/>
+			</td>
+		</tr>
+		<tr>
+			<td>籍贯:</td>
+			<td>
+				<input type="text" name="nativePlace"/>
+			</td>
+			<td>准教科目:</td>
+			<td>
+				<label><input type="checkbox" id="zjKeMu1" value="2" class="minimal-red" />科目二</label>
+				<label><input type="checkbox" id="zjKeMu2" value="3" class="minimal-red" />科目三</label>
+				<input type="hidden" name="zjKeMu" />
+			</td>
+		</tr>
+		<tr>
+			<td>住址:</td>
+			<td colspan="3">
+				<input type="text" name="address"/>
+			</td>
+		</tr>
+		<tr>
+			<td>入职日期:</td>
+			<td>
+				<input type="text" onClick="WdatePicker();" name="hiredate" />
+			</td>
+			<td>离职日期:</td>
+			<td>
+				<input type="text" onClick="WdatePicker();" name="leavedate" />
+			</td>
+		</tr>
+		<tr>
+			<td>驾驶证号:</td>
+			<td>
+				<input type="text" name="drilicence" />
+			</td>
+			<td>驾驶证初领日期:</td>
+			<td>
+				<input type="text" onClick="WdatePicker();" name="fstdrilicdate" />
+			</td>
+		</tr>
+		<tr>
+			<td>从业资格证号:</td>
+			<td>
+				<input type="text" name="occupationno" />
+			</td>
+			<td>职业资格等级:</td>
+			<td>
+				<select name="occupationlevel" id="occupationlevel" style="width: 90px;">
+					<option value="1">一级</option>
+					<option value="2">二级 </option>
+					<option value="3">三级</option>
+					<option value="4">四级</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>准驾车型 :</td>
+			<td>
+				<select name="dripermitted" id="dripermitted" style="width: 90px;">
+					<option value="C1">C1</option>
+					<option value="C2">C2</option>
+					<option value="A1">A1</option>
+					<option value="A2">A2</option>
+					<option value="A3">A3</option>
+					<option value="B1">B1</option>
+					<option value="B2">B2</option>
+					<option value="C3">C3</option>
+					<option value="C4">C4</option>
+					<option value="D">D</option>
+					<option value="E">E</option>
+					<option value="M">F</option>
+					<option value="N">N</option>
+					<option value="P">P</option>
+				</select>
+			</td>
+			<td>准教车型 :</td>
+			<td>
+				<select name="teachpermitted" id="teachpermitted" style="width: 90px;">
+					<option value="C1">C1</option>
+					<option value="C2">C2 </option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>供职状态:</td>
+			<td>
+				<select name="employstatus" id="employstatus" style="width: 90px;">
+					<option value="0">在职</option>
+					<option value="1">离职 </option>
+				</select>
+			</td>
+			<td>简介:</td>
+			<td>
+				<input type="text" name="summary">
+			</td> 
+		</tr>
+		<tr>
+			<td>备案流程:</td>
+			<td id="flowBa"></td>
+			<td>流程备注:</td>
+			<td id="flowRemark"></td>
+		</tr>
+		<tr>
+			<td colspan="5" style="text-align: center;" id="btnTd">
+				<button type="button" onclick="updateDriv();" class="btn btn-info">修改</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var drivId = href[1];
+    	getDriv(drivId);
+    	
+    	//获取驾驶员资料
+    	function getDriv(id){
+    		$("input[type='checkbox']:checked").each(function(){
+    			$(this).parent().click();
+    		});
+    		$.ajax({
+    			url : "../../driver/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					if(data["result"]["flowBa"] == 99){//添加删除备案按钮
+							var funPath = "..\\\\..\\\\http_coach\\\\deleteCoachPutOnRecord.ao"; //删除备案
+    						var delBaBtn = '<button type="button" onclick="baAn(\''+funPath+'\','+id+');" class="btn btn-danger">删除备案</button>';
+    						$("#btnTd").append(delBaBtn);
+    					}
+    					
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							if(id == "infopic"){
+    								$(this).html("<img style='width:102px;heigth:126px;' src='"+pickerProjectAdd+data["result"][id]+"' />");
+    							}else{
+    								$(this).html(data["result"][id]);
+    							}
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							if(name == "zjKeMu"){//复选框选中
+    								var zjKeMus = data["result"][name].split(",");
+    								for (var i = 0; i < zjKeMus.length; i++) {
+    									$("input[value='" + zjKeMus[i] + "']").parent().click();
+    								}
+    							}
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改学员信息
+    	function updateDriv(){
+    		var zjKeMu="";
+    		$("#form1").find("input[id^='zjKeMu']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				zjKeMu += $(this).val()+",";
+    			}
+    		});
+    		zjKeMu = zjKeMu.substr(0,zjKeMu.length-1);
+			$("input[name='zjKeMu']").val(zjKeMu);
+    		$.ajax({
+    			url : "../../driver/update.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					location.reload();
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>计时终端应用参数</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../css/showLoading.css" rel="stylesheet" />
+</head>
+<body class="skin-blue">
+	<div class="right_mainH4">
+		<p>
+			计时终端应用参数
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td style="width: 120px">参数名称</td>
+				<td style="width: 120px">参数类型</td>
+				<td style="width: 120px">参数值</td>
+			</tr>
+			<tr>
+				<td>参数编号</td>
+				<td>BYTE</td>
+				<td>
+					<select id="paraNo">
+							<option value="请选择">请选择</option>
+							<option value="0">设置所有已定义的参数</option>
+							<option value="1"  tid='interval'>定时拍照时间间隔</option>
+							<option value="2"  tid='uploadset'>照片上传设置</option>
+							<option value="3"  tid='isadd'>是否报读附加消息</option>
+							<option value="4"  tid='stoptimedelayed'>熄火后停止学时计时的延时时间</option>
+							<option value="5"  tid='uploadinterval'>熄火后GNSS数据包上报间隔</option>							
+							<option value="6"  tid='logoutdelayed'>熄火后教练自动登出的延时时间</option>
+							<option value="7"  tid='verifytime'>重新验证身份时间间隔隔</option>																				
+					</select>
+				</td>
+			</tr>
+			<tr trid='interval'>
+				<td>定时拍照时间间隔（min）</td>
+				<td>BYTE</td>
+				<td><input type="text" id="interval" value="15" /></td>
+			</tr>
+			<tr trid='uploadset' >
+				<td>照片上传设置</td>
+				<td>BYTE</td>
+				<td >
+					<select id="uploadset">
+						<option value="请选择">请选择</option>
+						<option value="0">不自动请求上传</option>
+						<option value="1">自动请求上传</option>
+					</select>
+				</td>
+			</tr>
+			<tr trid='isadd'>
+				<td>是否报读附加消息</td>
+				<td>BYTE</td>
+				<td>
+					<select id="isadd">
+						<option value="请选择">请选择</option>
+						<option value="1">自动报读</option>
+						<option value="2">不报读</option>
+					</select>
+				</td>
+			</tr>
+			<tr trid='stoptimedelayed'>
+				<td>熄火后停止学时计时的延时时间（min）</td>
+				<td>BYTE</td>
+				<td><input type="text" id="stoptimedelayed" /></td>
+			</tr>
+			<tr trid='uploadinterval'>
+				<td>熄火后GNSS数据包上传间隔（s）</td>
+				<td>WORD</td>
+				<td><input type="text" id="uploadinterval" value="3600" /></td>
+			</tr>
+			<tr trid='logoutdelayed'>
+				<td>熄火后教练自动登出的延时时间（min）</td>
+				<td>WORD</td>
+				<td><input type="text" id="logoutdelayed" value="150" /></td>
+			</tr>
+			<tr trid='verifytime'>
+				<td>重新验证身份时间（min）</td>
+				<td>BYTE</td>
+				<td><input type="text" id="verifytime" value="30" /></td>
+			</tr>
+			<tr>
+				<td>教练跨校教学</td>
+				<td>BYTE</td>
+				<td>
+					<select id="allowcrossteach" value="2">
+						<option value="1">允许</option>
+						<option value="2">禁止</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>学员跨校学习</td>
+				<td>BYTE</td>
+				<td>
+					<select id="allowcrosslearn" value="1">
+						<option value="1">允许</option>
+						<option value="2">禁止</option>
+						
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>响应平台同类消息时间间隔</td>
+				<td>WORD</td>
+				<td><input type="text" id="responseinterval" /></td>
+			</tr>
+		</table>
+		<div style="text-align: center;">
+			<input type="button" class="btn btn-info" value="查询计时终端应用参数" onclick="query();" />
+			<input type="button" class="btn btn-info" value="设置计时终端应用参数" onclick="setting();" />
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+		function setting(){
+			$.ajax({
+				url : "../../tcpReq/setTerminalAppParam.ao",
+				type : 'POST',
+				data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function (data){
+					try{
+						var retCode = data.root.retcode;
+						if( retCode != "0" )
+						{
+							alert( data.root.retmsg);
+							return ;
+						}else {
+							
+							var msg ="未知异常";
+							switch(data.root.msgBody.extMessage.result)
+							{
+							case 1:
+								msg="设置成功";
+								break;
+							case 2:
+								msg="设置失败";
+								break;						
+							default:
+							}
+							alert(msg);
+						}
+
+					}catch(err){
+						alert("失败!");
+					}
+				}
+			});
+		}
+		function query(){
+			
+			$("#datas input").val('');
+			$.ajax({
+				url : host+"/tcpReq/queryTerminalAppParam.ao",
+				type : 'POST',
+				data:'terminalphone='+TERMINAL_HPONE(),
+				beforeSend : ajaxstar,
+				complete : ajaxend,
+				cache : false,
+				dataType : "json",
+				success : function (data){	
+					try{
+						var retCode = data.root.retcode;
+						if( retCode != "0" )
+						{
+							alert( data.root.retmsg);
+							return ;
+						}
+						
+						if(data.root.msgBody.extMessage.result != 0 )
+						{
+							alert( '查询失败！');
+							return ;
+						}
+		 
+	 					$.each(data.root.msgBody.extMessage,function(name,value) {
+							
+							var edit = $("#"+name);
+							if( typeof(edit) == 'undefined' || edit.length == 0 ) return true;
+								
+							 $("#"+name).val(value);
+							 
+							 if( name == 'uploadset' || name == 'allowcrosslearn'
+									 || name == 'allowcrossteach' || name=='isadd' || name=='uploadset'  )
+								 
+							 		$("#"+name).parent().find("a[title='"+value+"']").click();
+							 
+							
+						}); 
+	 
+						  
+					}catch(err){
+						alert("查询出错!");
+					}
+				}	
+			});				 			 
+		}
+	</script>
+</body>
+</html>

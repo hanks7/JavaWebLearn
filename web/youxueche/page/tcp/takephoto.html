@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>立即拍照</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/http.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
+<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
+<script type="text/javascript" src="../../js/public.js" ></script>
+<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../css/showLoading.css" rel="stylesheet" />
+<body class="skin-blue">
+	<div class="right_mainH4">
+		<p>
+			立即拍照
+		</p>
+	</div>
+	<div>
+		<table class="table table-bordered .table-condensed" id="datas">
+			<tr>
+				<td style="width: 120px">参数名称</td>
+				<td style="width: 120px">参数值</td>
+			</tr>
+			<tr>
+				<td>上传模式</td>
+				<td>
+					<select id="uploadtype">
+						<option value="请选择">请选择</option>
+						<option value="1">自动请求上传</option>
+						<option value="2">停止拍摄并上传图片</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>摄像头通道号(0:自动 1~255:表示通道号)</td>
+				<td><input type="text" id="camerachannel" /></td>
+			</tr>
+			<tr>
+				<td>图片尺寸</td>
+				<td>
+					<select id="imagesize">
+						<option value="请选择">请选择</option>
+						<option value="1">320x240</option>
+						<option value="2">640x480</option>
+						<option value="3">800x600</option>
+						<option value="4">1024x768<option>
+						<option value="5">176x144[Qcif]</option>
+						<option value="6">352x288[Cif]</option>
+						<option value="7">704x288[HALF D1]</option>
+						<option value="7">704x576[D1]</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<div style="text-align: center;">
+			<input type="button" class="btn btn-info" id="addbtn" value="立即拍照" onclick="takePhoto();" />
+		</div>
+	</div>
+	<script type="text/javascript">
+	//立即拍照
+	function takePhoto(){
+		$.ajax({
+			url : "../../tcpReq/takePhoto.ao",
+			type : 'POST',
+			data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
+			beforeSend : ajaxstar,
+			complete : ajaxend,
+			cache : false,
+			dataType : "json",
+			success : function (data){
+				 try{
+					var retCode = data.root.retcode;
+					if( retCode != "0" )
+					{
+						alert( data.root.retmsg);
+						return ;
+					}else {
+						
+						var msg ="未知异常";
+						switch(data.root.msgBody.extMessage.result)
+						{
+						case 1:
+							msg="可以拍摄";
+							break;
+						case 2:
+							msg="拍照失败";
+							break;
+						case 3:
+							msg="SD卡故障";
+							break;
+						case 4:
+							msg="正在拍照，不能执行";
+							break;
+						case 5:
+							msg="重新连接摄像头，不能保证拍照";
+							break;
+						case 6:
+							msg="正在上传查询照片，不能执行";
+							break;							
+						default:
+						}
+						alert(msg);
+					}
+					 
+					
+				}catch(err){
+					alert("失败!");
+				} 
+			}
+		});
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>培训机构信息查询</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<form id="form1">
+	<table class="table table-bordered .table-condensed">
+		<tr>
+			<td>ID:</td>
+			<td id="id"></td>
+			<td>编号:</td>
+			<td id="inscode"></td>
+			<td rowspan="15" id="infopic">
+			</td>
+		</tr>
+		<tr>
+			<td>驾校全称:</td>
+			<td>
+				<input type="text" name="name"/>
+			</td>
+			<td>驾校简称:</td>
+			<td>
+				<input type="text" name="shortname"/>
+				<input type="hidden" name="id"/>
+			</td>
+		</tr>
+		<tr>
+			<td>城市:</td>
+			<td id="city"></td>
+			<td>地区:</td>
+			<td id="area"></td>
+		</tr>
+		<tr>
+			<td>经营许可证编号:</td>
+			<td>
+				<input type="text" name="licnum"/>
+			</td>
+			<td>经营许可日期:</td>
+			<td>
+				<input type="text" name="licetime" onClick="WdatePicker();" />
+			</td>
+		</tr>
+		<tr>
+			<td>营业执照注册号:</td>
+			<td>
+				<input type="text" name="business" />
+			</td>
+			<td>统一社会信用代码:</td>
+			<td>
+				<input type="text" name="creditcode" />
+			</td>
+		</tr>
+		<tr>
+			<td>驾校地址:</td>
+			<td colspan="3">
+				<input type="text" name="address"/>
+			</td>
+		</tr>
+		<tr>
+			<td>联系人:</td>
+			<td>
+				<input type="text" name="contact"/>
+			</td>
+			<td>联系电话:</td>
+			<td>
+				<input type="text" name="phone" />
+			</td>
+		</tr>
+		<tr>
+			<td>邮政编码:</td>
+			<td>
+				<input type="text" name="postcode" />
+			</td>
+			<td>法人代表:</td>
+			<td>
+				<input type="text" name="legal"/>
+			</td>
+		</tr>
+		<tr>
+			<td>经营范围:</td>
+			<td colspan="3">
+				<label><input type="checkbox" id="busiscope1" value="A1" class="minimal-red" />A1</label>
+				<label><input type="checkbox" id="busiscope2" value="A2" class="minimal-red" />A2</label>
+				<label><input type="checkbox" id="busiscope3" value="A3" class="minimal-red" />A3</label>
+				<label><input type="checkbox" id="busiscope4" value="B1" class="minimal-red" />B1</label>
+				<label><input type="checkbox" id="busiscope5" value="B2" class="minimal-red" />B2</label>
+				<label><input type="checkbox" id="busiscope6" value="C1" class="minimal-red" />C1</label>
+				<label><input type="checkbox" id="busiscope7" value="C2" class="minimal-red" />C2</label>
+				<label><input type="checkbox" id="busiscope8" value="C3" class="minimal-red" />C3</label>
+				<label><input type="checkbox" id="busiscope9" value="C4" class="minimal-red" />C4</label>
+				<label><input type="checkbox" id="busiscope10" value="C5" class="minimal-red" />C5</label>
+				<label><input type="checkbox" id="busiscope11" value="D" class="minimal-red" />D</label>
+				<label><input type="checkbox" id="busiscope12" value="E" class="minimal-red" />E</label>
+				<label><input type="checkbox" id="busiscope13" value="F" class="minimal-red" />F</label>
+				<label><input type="checkbox" id="busiscope14" value="M" class="minimal-red" />M</label>
+				<label><input type="checkbox" id="busiscope15" value="N" class="minimal-red" />N</label>
+				<label><input type="checkbox" id="busiscope16" value="P" class="minimal-red" />P</label>
+				<input type="hidden" name="busiscope" />
+			</td>
+		</tr>
+		<tr>
+			<td>经营状态:</td>
+			<td>
+				<select name="busistatus"  style="width: 90px;">
+					<option value="1">营业</option>
+					<option value="2">停业</option>
+					<option value="3">整改</option>
+					<option value="4">停业整顿</option>
+					<option value="5">歇业</option>
+					<option value="6">注销</option>
+					<option value="9">其他</option>
+				</select>
+			</td>
+			<td>驾校等级:</td>
+			<td>
+				<select name="level" style="width:90px">
+					<option value="1">一级资质</option>
+					<option value="2">二级资质</option>
+					<option value="3">三级资质</option>
+				</select>
+			</td>
+		<tr>
+		<tr>
+			<td>考核员总数:</td>
+			<td>
+				<input type="text" name="grasupvnum"/>
+			</td>
+			<td>安全员总数:</td>
+			<td>
+				<input type="text" name="safmngnum"/>
+			</td>
+		</tr>
+		<tr>
+			<td>教练员总数:</td>
+			<td>
+				<input type="text" name="coachnumber"/>
+			</td>
+			<td>教练车总数:</td>
+			<td>
+				<input type="text" name="tracarnum">
+			</td>
+		</tr>
+		<tr>
+			<td>教室总面积(㎡):</td>
+			<td>
+				<input type="text" name="classroom"/>
+			</td>
+			<td>理论教室总面积(㎡):</td>
+			<td>
+				<input type="text" name="thclassroom"/>
+			</td>
+		</tr>
+		<tr>
+			<td>教练场总面积(㎡):</td>
+			<td>
+				<input type="text" name="praticefield"/>
+			</td>
+			<td>是否开启语音播报:</td>
+			<td>
+				<select name="isYuYinBoBao">
+					<option value="0">否</option>
+					<option value="1">是</option>
+				</select>
+			</td>
+				
+		</tr>
+		<tr>
+			<td>驾校简介:</td>
+			<td>
+				<input type="text" name="profile"/>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="5" style="text-align: center;">
+				<button type="button" onclick="updateSchool();" class="btn btn-info">修改</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+    <script type="text/javascript">
+    	var href = location.href.split("=");
+    	var schoolId = href[1];
+    	getSchool(schoolId);
+    	
+    	//获取驾校资料
+    	function getSchool(id){
+    		$("input[type='checkbox']:checked").each(function(){ 
+        		$(this).parent().click();
+        	});
+    		$.ajax({
+    			url : "../../school/get.ao",
+    			type : 'POST',
+    			data : {
+    				"id" : id
+    			},
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			cache : false,
+    			dataType : "json",
+    			success : function(data) {
+    				if (data["state"] == "success") {
+    					$("table").find("td").each(function(){//不更改的字段
+    						var id = $(this).attr("id");
+    						if(id != null && typeof(id) != "undefined"){
+    							if(id == "infopic"){
+    								$(this).html("<img style='width:102px;heigth:126px;' src='"+pickerProjectAdd+data["result"][id]+"' />");
+    							}else{
+    								$(this).html(data["result"][id]);
+    							}
+    						}
+    					});
+    					$("table").find("input").each(function(){//文本框内容
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+    							if(name == "busiscope"){
+    								var busiscopes = data["result"][name].split(",");
+    								for(var i = 0; i < busiscopes.length; i++){
+    									
+    									$("input[value = '"+busiscopes[i]+"']").parent().click();
+    								}
+    							}
+    							$(this).val(data["result"][name]);
+    						}
+    					});
+    					$("table").find("select").each(function(){//下拉列表框
+    						var name = $(this).attr("name");
+    						if(name != null && typeof(name) != "undefined"){
+        						$(this).val(data["result"][name]);
+    						}
+    					});
+    				} else {
+    					sAlert(data["result"]);
+    				}
+    			}
+    		});
+    	}
+    	
+    	//修改驾校信息
+    	function updateSchool(){
+    		var busiscope = "";
+    		$("#form1").find("input[id^='busiscope']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				busiscope += $(this).val() + ",";
+    			}
+    		});
+    		busiscope = busiscope.substr(0,busiscope.length-1);
+    		$("input[name='busiscope']").val(busiscope);
+    		
+    		$.ajax({
+    			url : "../../school/update.ao",
+    			type : 'POST',
+    			data :$("#form1").serialize(),
+    			cache : false,
+    			beforeSend : ajaxstar,
+    			complete : ajaxend,
+    			dataType : "json",
+    			success : function(data) {
+					sAlert(data["result"]);
+    				if(data["state"] == "success"){
+    					location.reload();
+    				}
+    			}
+    		});
+    	}
+    </script>
+</body>
+</html>

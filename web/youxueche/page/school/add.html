@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<title>添加培训机构</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.pagination.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../js/validata.js"></script>
+<script type="text/javascript" src="../../js/alert.js"></script>
+<script type="text/javascript" src="../../js/loadSchoolGrade.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+<!-- WdatePicker -->
+<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+</head>
+<body>
+	<div class="right_mainH4">
+		<p>
+			添加培训机构 <small>Control panel</small>
+		</p>
+	</div>
+	<div>
+		<form id="form1">
+			<table class="table table-bordered .table-condensed">
+				<tr>
+					<td>驾校全称:</td>
+					<td>
+						<input type="text" name="name" class="required maxlength:15"/>
+					</td>
+					<td>驾校简称:</td>
+					<td>
+						<input type="text" name="shortname" class="required"/>
+					</td>
+					<td rowspan="15" id="infopic">
+						<div class="userface" id="touxiang" onclick="uploadTouxiang();"><span>上传照片</span></div>
+						<input type="hidden" name="infopic" />
+					</td>
+				</tr>
+				<tr>
+					<td>城市:</td>
+					<td id="citys">
+						
+					</td>
+					<td>地区:</td>
+					<td>
+						<select name="addSchool.area" id="areas" style="width: 90px;" class="required">
+							<option value="请选择">请选择</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>经营许可证编号:</td>
+					<td>						 
+						<input type="text" name="licnum" class="required onlyNum conlength:12"/>
+					</td>
+					<td>经营许可日期:</td>
+					<td>
+						<input type="text" name="licetime" onClick="WdatePicker();" class="required date" />
+					</td>
+				</tr>
+				<tr>
+					<td>营业执照注册号:</td>
+					<td>
+						<input type="text" name="business" class="required onlyNum conlength:15"/>
+					</td>
+					<td>统一社会信用代码:</td>
+					<td>
+						<input type="text" name="creditcode" class="required onlyNum conlength:18"/>
+					</td>
+				</tr>
+				<tr>
+					<td>驾校地址:</td>
+					<td colspan="3">
+						<input type="text" name="address" class="required" />
+					</td>
+				</tr>
+				<tr>
+					<td>联系人:</td>
+					<td>
+						<input type="text" name="contact" class="required"/>
+					</td>
+					<td>联系电话:</td>
+					<td>
+						<input type="text" name="phone" class="required phone"/>
+					</td>
+				</tr>
+				<tr>
+					<td>邮政编码:</td>
+					<td>
+						<input type="text" name="postcode" class="required onlyNum conlength:6"/>
+					</td>
+					<td>法人代表:</td>
+					<td>
+						<input type="text" name="legal" class="required" />
+					</td>
+				</tr>
+				<tr>
+					<td>经营范围:</td>
+					<td colspan="3">						 
+						<label><input type="checkbox" id="busiscope1" value="A1" class="minimal-red" />A1</label>
+						<label><input type="checkbox" id="busiscope2" value="A2" class="minimal-red" />A2</label>
+						<label><input type="checkbox" id="busiscope3" value="A3" class="minimal-red" />A3</label>
+						<label><input type="checkbox" id="busiscope4" value="B1" class="minimal-red" />B1</label>
+						<label><input type="checkbox" id="busiscope5" value="B2" class="minimal-red" />B2</label>
+						<label><input type="checkbox" id="busiscope6" value="C1" class="minimal-red" />C1</label>
+						<label><input type="checkbox" id="busiscope7" value="C2" class="minimal-red" />C2</label>
+						<label><input type="checkbox" id="busiscope8" value="C3" class="minimal-red" />C3</label>
+						<label><input type="checkbox" id="busiscope9" value="C4" class="minimal-red" />C4</label>
+						<label><input type="checkbox" id="busiscope10" value="C5" class="minimal-red" />C5</label>
+						<label><input type="checkbox" id="busiscope11" value="D" class="minimal-red" />D</label>
+						<label><input type="checkbox" id="busiscope12" value="E" class="minimal-red" />E</label>
+						<label><input type="checkbox" id="busiscope13" value="F" class="minimal-red" />F</label>
+						<label><input type="checkbox" id="busiscope14" value="M" class="minimal-red" />M</label>
+						<label><input type="checkbox" id="busiscope15" value="N" class="minimal-red" />N</label>
+						<label><input type="checkbox" id="busiscope16" value="P" class="minimal-red" />P</label>
+						<input type="hidden" name="busiscope" class="required"/>
+					</td>
+				</tr>
+				<tr>
+					<td>经营状态:</td>
+					<td>
+						<select name="busistatus"  style="width: 90px;" class="required">
+							<option value="1">营业</option>
+							<option value="2">停业</option>
+							<option value="3">整改</option>
+							<option value="4">停业整顿</option>
+							<option value="5">歇业</option>
+							<option value="6">注销</option>
+							<option value="9">其他</option>
+						</select>
+					</td>
+					<td>驾校等级:</td>
+					<td>
+						<select name="level" style="width:90px" class="required">
+							<option value="1">一级资质</option>
+							<option value="2">二级资质</option>
+							<option value="3">三级资质</option>
+						</select>
+					</td>
+				<tr>
+				<tr>
+					<td>考核员总数:</td>
+					<td>
+						<input type="text" name="grasupvnum" class="required onlyNum" />
+					</td>
+					<td>安全员总数:</td>
+					<td>
+						<input type="text" name="safmngnum" class="required onlyNum" />
+					</td>
+				</tr>
+				<tr>
+					<td>教练员总数:</td>
+					<td>
+						<input type="text" name="coachnumber" class="required onlyNum"/>
+					</td>
+					<td>教练车总数:</td>
+					<td>
+						<input type="text" name="tracarnum" class="required onlyNum"/>
+					</td>
+				</tr>
+				<tr>
+					<td>教室总面积(㎡):</td>
+					<td>
+						<input type="text" name="classroom" class="required onlyNum"/>
+					</td>
+					<td>理论教室总面积(㎡):</td>
+					<td>
+						<input type="text" name="thclassroom" class="required onlyNum"/>
+					</td>
+				</tr>
+				<tr>
+					<td>教练场总面积(㎡):</td>
+					<td>
+						<input type="text" name="praticefield" class="required onlyNum"/>
+					</td>
+					<td>是否开启语音播报:</td>
+					<td>
+						<select name="isYuYinBoBao" class="required">
+							<option value="0">否</option>
+							<option value="1">是</option>
+						</select>
+					</td>
+						
+				</tr>
+				<tr>
+					<td>驾校简介:</td>
+					<td>
+						<input type="text" name="profile" class="required"/>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="5" style="text-align: center;">
+						<button type="button" onclick="addSchool();" class="btn btn-info">添加</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+     <!-- 上传驾校图片 -->
+     <div id="uploadImgDiv" style="display:none;" title="头像上传">
+     	<iframe src="" style="width:100%;height: 100%" frameborder="no" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+     </div>
+     
+    <script type="text/javascript">
+		$(function(){
+			var storage = window.sessionStorage;
+		    var citys = storage.getItem("citys");//获取存在sessionStorage里的驾校数据
+		    if(citys != null){
+		    	var cityHtml;
+		    	cityHtml = '<select name="addSchool.city" id="city" style="width: 160px;" onchange="changeCity();">';
+		    	cityHtml += citys;
+		    	cityHtml += '</select>';
+		    	$("#citys").html(cityHtml);
+		    }else{
+		    	var areas = storage.getItem("areas");//获取存在sessionStorage里的班级数据
+		    	if(areas != null){
+		    		$("#areas").html(areas);
+		    	}
+		    }  
+		});
+		
+    	//添加驾校信息
+    	function addSchool(){
+    		var busiscope="";
+    		$("#form1").find("input[id^='busiscope']").each(function(){
+    			var check = $(this).prop("checked");
+    			if(check == true){
+    				busiscope += $(this).val()+",";
+    			}
+    		});
+    		busiscope = busiscope.substr(0,busiscope.length-1);
+			$("input[name='busiscope']").val(busiscope);
+
+    		var imgPath = $("input[name='infopic']").val();
+    		if(!isNull(imgPath)){
+    			sAlert("请上传照片!");	
+    			return;
+    		}
+    		
+    		if(validata("form1")){
+        		$.ajax({
+        			url : "../../school/add.ao",
+        			type : 'POST',
+        			data :$("#form1").serialize(),
+        			cache : false,
+        			beforeSend : ajaxstar,
+        			complete : ajaxend,
+        			dataType : "json",
+        			success : function(data) {
+    					sAlert(data["result"]);
+        				if(data["state"] == "success"){
+        					clearTable("form1");
+        				}
+        			}
+        		});
+    		}
+    	}
+    	
+    	//上传学员头像
+    	function uploadTouxiang(){
+			$("#uploadImgDiv").find("iframe").attr("src","../upload/touxiangUpload.html?case=1");
+			$("#uploadImgDiv").dialog({
+				title : "照片上传",
+				resizable : false,
+				width : 850,
+				height : 600,
+				resizable : true,
+				modal : true,
+				buttons : {
+					"关闭" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+    	}
+    	
+    	function setImg(path){
+    		$("#uploadImgDiv").dialog("close");
+    		$("input[name='infopic']").val(path);
+    		$("div[class='userface']").html("<img src='" + pickerProjectAdd + path + "' />");
+    	}
+    </script>
+</body>
+</html>
