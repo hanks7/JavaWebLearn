@@ -21,6 +21,7 @@ public class ServletMain extends HttpServlet {
      * http://localhost:8080/untitled/test
      * <p>
      * http://localhost:8080/index.jsp
+     *
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
