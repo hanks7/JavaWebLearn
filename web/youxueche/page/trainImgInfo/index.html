@@ -58,6 +58,8 @@
     	
     	//分页查询
     	function searchPage(pageNo,pageSize){
+
+            sAlert(data["result"]);
     		$.ajax({
     			url : "../../trainImgInfo/getDriverTrainImgs.ao",
     			type : 'POST',

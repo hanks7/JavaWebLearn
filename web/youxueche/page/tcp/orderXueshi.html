@@ -1,119 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>命令上报学时记录</title>
-<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
-<script type="text/javascript" src="../../js/http.js"></script>
-<script type="text/javascript" src="../../js/alert.js"></script>
-<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
-<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js" ></script>
-<script type="text/javascript" src="../../js/jquery.showLoading.js" ></script>
-<script type="text/javascript" src="../../js/public.js" ></script>
-<!-- WdatePicker -->
-<script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js" ></script>
-<link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>命令上报学时记录</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/http.js"></script>
+    <script type="text/javascript" src="../../js/alert.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="../../js/jquery.showLoading.js"></script>
+    <script type="text/javascript" src="../../js/public.js"></script>
+    <!-- WdatePicker -->
+    <script type="text/javascript" src="../../js/My97DatePicker/WdatePicker.js"></script>
+    <link href="../../js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-	<div class="right_mainH4">
-		<p>
-			命令上报学时记录
-		</p>
-	</div>
-	<table class="table table-bordered .table-condensed" id="datas">
-		<tr>
-			<td style="width: 120px">参数名称</td>
-			<td style="width: 120px">参数值</td>
-		</tr>
-		<tr>
-			<td>查询方式</td>
-			<td>
-				<select id="querytype">
-					<option value="请选择">请选择</option>
-					<option value="1" onclick="changeQueryType(this);">按时间上传</option>
-					<option value="2" onclick="changeQueryType(this);">按条数上传</option>
-				</select>
-			</td>
-		</tr>
-		<tr name='timeInput' style='display:none'>
-			<td>查询起始时间</td>
-			<td><input type="text" id="begintime"  onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
-		</tr>
-		<tr name='timeInput' style='display:none'>
-			<td>查询终止时间</td>
-			<td><input type="text" id="endtime"  onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
-		</tr>
-		<tr name='numInput' style='display:none'>
-			<td>查询条数</td>
-			<td><input type="text" id="querynum" /></td>
-		</tr>
-	
-	</table>
-	 <div style="text-align: center;">
-		<input type="button" class="btn btn-info" id="addbtn" value="开始上报学时记录" onclick="cmdReportHours();" />
-	</div>
-	<script type="text/javascript">
-	//查询指定参数
-	function cmdReportHours(){
-		$.ajax({
-			url : "../../tcpReq/cmdReportHours.ao",
-			type : 'POST',
-			data :'terminalphone='+TERMINAL_HPONE()+'&'+getFormData($('#datas input')),
-			beforeSend : ajaxstar,
-			complete : ajaxend,
-			cache : false,
-			dataType : "json",
-			success : function (data){
-				try{
-					var retCode = data.root.retcode;
-					if( retCode != "0" )
-					{
-						alert( data.root.retmsg);
-						return ;
-					}else {
-						
-						var msg ="未知异常";
-						switch(data.root.msgBody.extMessage.result)
-						{
-						case 1:
-							msg="查询的记录正在上传";
-							break;
-						case 2:
-							msg="SD卡没有找到";
-							break;
-						case 3:
-							msg="执行成功，但无指定记录";
-							break;
-						case 4:
-							msg="执行成功，稍候上报查询结果";
-							break;
-						default:
-						}
-						alert(msg);
-					}
-					 
-					
-				}catch(err){
-					alert("失败!");
-				}
-			}
-		});
-	}
-	
-	function changeQueryType(obj){
-		$('#querytype').val($(obj).val());
-		
-		if ( $(obj).val() == 1) {
-			$("tr[name='numInput'").hide();
-			$("tr[name='timeInput'").show("slow");
-		}else {
-			$("tr[name='timeInput'").hide();
-			$("tr[name='numInput'").show("slow");
-			
-		}
-	}
-	</script>
+<div class="right_mainH4">
+    <p>
+        命令上报学时记录
+    </p>
+</div>
+<table class="table table-bordered .table-condensed" id="datas">
+    <tr>
+        <td style="width: 120px">参数名称</td>
+        <td style="width: 120px">参数值</td>
+    </tr>
+    <tr>
+        <td>查询方式</td>
+        <td>
+            <select id="querytype">
+                <option value="请选择">请选择</option>
+                <option value="1" onclick="changeQueryType(this);">按时间上传</option>
+                <option value="2" onclick="changeQueryType(this);">按条数上传</option>
+            </select>
+        </td>
+    </tr>
+    <tr name='timeInput' style='display:none'>
+        <td>查询起始时间</td>
+        <td><input type="text" id="begintime" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
+    </tr>
+    <tr name='timeInput' style='display:none'>
+        <td>查询终止时间</td>
+        <td><input type="text" id="endtime" onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyMMddHHmmss'})"/></td>
+    </tr>
+    <tr name='numInput' style='display:none'>
+        <td>查询条数</td>
+        <td><input type="text" id="querynum"/></td>
+    </tr>
+
+</table>
+<div style="text-align: center;">
+    <input type="button" class="btn btn-info" id="addbtn" value="开始上报学时记录" onclick="cmdReportHours();"/>
+</div>
+<script type="text/javascript">
+    //查询指定参数
+    function cmdReportHours() {
+        $.ajax({
+            url: "../../tcpReq/cmdReportHours.ao",
+            type: 'POST',
+            data: 'terminalphone=' + TERMINAL_HPONE() + '&' + getFormData($('#datas input')),
+            beforeSend: ajaxstar,
+            complete: ajaxend,
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+                try {
+                    var retCode = data.root.retcode;
+                    if (retCode != "0") {
+                        alert(data.root.retmsg);
+                        return;
+                    } else {
+
+                        var msg = "未知异常";
+                        switch (data.root.msgBody.extMessage.result) {
+                            case 1:
+                                msg = "查询的记录正在上传";
+                                break;
+                            case 2:
+                                msg = "SD卡没有找到";
+                                break;
+                            case 3:
+                                msg = "执行成功，但无指定记录";
+                                break;
+                            case 4:
+                                msg = "执行成功，稍候上报查询结果";
+                                break;
+                            default:
+                        }
+                        alert(msg);
+                    }
+
+
+                } catch (err) {
+                    alert("失败!");
+                }
+            }
+        });
+    }
+
+    function changeQueryType(obj) {
+        $('#querytype').val($(obj).val());
+
+        if ($(obj).val() == 1) {
+            $("tr[name='numInput'").hide();
+            $("tr[name='timeInput'").show("slow");
+        } else {
+            $("tr[name='timeInput'").hide();
+            $("tr[name='numInput'").show("slow");
+
+        }
+    }
+</script>
 </body>
 </html>

@@ -1,743 +1,732 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>终端参数管理</title>
-<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
-<script type="text/javascript" src="../../js/jquery.showLoading.js"></script>
-<script type="text/javascript" src="../../js/public.js"></script>
-<script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../js/public.js"></script>
-<script type="text/javascript" src="../../js/validata.js"></script>
-<script type="text/javascript" src="../../js/alert.js"></script>
-<link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
-<link rel="stylesheet" href="../../css/showLoading.css" />
+    <meta charset="UTF-8">
+    <title>终端参数管理</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.showLoading.js"></script>
+    <script type="text/javascript" src="../../js/public.js"></script>
+    <script type="text/javascript" src="../../js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/public.js"></script>
+    <script type="text/javascript" src="../../js/validata.js"></script>
+    <script type="text/javascript" src="../../js/alert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../js/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/showLoading.css"/>
 </head>
 <body class="skin-blue">
-	<div class="right_mainH4">
-		<p>
-			终端参数管理
-		</p>
-	</div>
-	<div style="height:600px">
-		<div STYLE="border-style:solid;border-width:1px; border-color:#E0E0E0">
-			<table >
-				<tr>
-					<td style="text-align: center"><input type="checkbox" onclick="selectAll(this);"/></td>
-					<td style="width: 120px;text-align: center">参数ID</td>
-					<td style="width: 120px;text-align: center">参数类型</td>
-					<td style="width: 1000px;text-align: center">参数名称</td>
-					<td style="width: 200px;text-align: center">参数值</td>
-				</tr>
-			</table>
-		</div>
-		<div style="height:550px;min-height:550px;overflow:auto;" >
-			<table class="table table-bordered .table-condensed" id="datas">
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0001</td>
-					<td>DWORD</td>
-					<td>客户端心跳发送间隔，单位为秒(s)</td>
-					<td><input type="text" id="0x0001" value="60" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0002</td>
-					<td>DWORD</td>
-					<td>TCP消息应答超时时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0002" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0003</td>
-					<td>DWORD</td>
-					<td>TCP消息重传次数</td>
-					<td><input type="text" id="0x0003" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0004</td>
-					<td>DWORD</td>
-					<td>UDP消息应答超时时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0004" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>	
-					<td>0x0005</td>
-					<td>DWORD</td>
-					<td>UDP消息重传次数</td>
-					<td><input type="text" id="0x0005" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0006</td>
-					<td>DWORD</td>
-					<td>SMS消息应答超时时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0006" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0007</td>
-					<td>DWORD</td>
-					<td>SMS消息重传次数</td>
-					<td><input type="text" id="0x0007" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0010</td>
-					<td>STRING</td>
-					<td>主服务器APN，无线通信拨号访问点。若网络制式为CDMA，则该处为PPP拨号号码</td>
-					<td><input type="text" id="0x0010" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0011</td>
-					<td>STRING</td>
-					<td>主服务器无线通信拨号用户名</td>
-					<td><input type="text" id="0x0011" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0012</td>
-					<td>STRING</td>
-					<td>主服务器无线通信拨号密码</td>
-					<td><input type="text" id="0x0012" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0013</td>
-					<td>STRING</td>
-					<td>主服务器地址，IP或域名 </td>
-					<td><input type="text" id="0x0013" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0014</td>
-					<td>STRING</td>
-					<td>备份服务器APN，无线通信拨号访问点</td>
-					<td><input type="text" id="0x0014" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0015</td>
-					<td>STRING</td>
-					<td>备份服务器无线通信拨号用户名 </td>
-					<td><input type="text" id="0x0015" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0016</td>
-					<td>STRING</td>
-					<td>备份服务器无线通信拨号密码</td>
-					<td><input type="text" id="0x0016" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0017</td>
-					<td>STRING</td>
-					<td>备份服务器地址，IP或域名</td>
-					<td><input type="text" id="0x0017" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0018</td>
-					<td>DWORD</td>
-					<td>服务器TCP端口</td>
-					<td><input type="text" id="0x0018" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0019</td>
-					<td>DWORD</td>
-					<td>服务器UDP端口</td>
-					<td><input type="text" id="0x0019" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0020</td>
-					<td>DWORD</td>
-					<td>位置汇报策略</td>
-					<td style="text-align:left">
-						<select id="0x0020">
-							<option value="请选择">请选择</option>
-							<option value="0">0：定时汇报</option>
-							<option value="1">1：定距汇报</option>
-							<option value="2">2：定时和定距汇报</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0021</td>
-					<td>DWORD</td>
-					<td>位置汇报方案</td>
-					<td style="text-align:left">
-						<select id="0x0021">
-							<option value="请选择">请选择</option>
-							<option value="0">0：根据ACC状态</option>
-							<option value="1">1：根据登录状态和ACC状态</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0022</td>
-					<td>DWORD</td>
-					<td>驾驶员未登录汇报时间间隔，单位为秒(s),>0</td>
-					<td><input type="text" id="0x0022" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0027</td>
-					<td>DWORD</td>
-					<td>SMS消息应答超时时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0027" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0028</td>
-					<td>DWORD</td>
-					<td>紧急报警时汇报时间间隔，单位为秒(s),>0</td>
-					<td><input type="text" id="0x0028" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x0029</td>
-					<td>DWORD</td>
-					<td>缺省时间汇报间隔，单位为秒(s),>0</td>
-					<td><input type="text" id="0x0029" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x002C</td>
-					<td>DWORD</td>
-					<td>缺省距离汇报间隔，单位为米(m),>0</td>
-					<td><input type="text" id="0x002C" /></td>
-				</tr>
-				<tr>
-					<td ><input type="checkbox" /></td>
-					<td>0x002D</td>
-					<td>DWORD</td>
-					<td>驾驶员未登录汇报距离间隔，单位为米(m),>0</td>
-					<td><input type="text" id="0x002D" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x002E</td>
-					<td>DWORD</td>
-					<td>休眠时汇报距离间隔，单位为米(m),>0</td>
-					<td><input type="text" id="0x002E" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x002F</td>
-					<td>DWORD</td>
-					<td>紧急报警时汇报距离间隔，单位为米(m),>0</td>
-					<td><input type="text" id="0x002F" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0030</td>
-					<td>DWORD</td>
-					<td>拐点补传角度，<180°</td>
-					<td><input type="text" id="0x0030" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0040</td>
-					<td>STRING</td>
-					<td>监控平台电话号码</td>
-					<td><input type="text" id="0x0040" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0041</td>
-					<td>STRING</td>
-					<td>复位电话号码，可采用此电话号码拨打终端电话让终端复位 </td>
-					<td><input type="text" id="0x0041" /></td>
-				</tr>
-				
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0042</td>
-					<td>STRING</td>
-					<td>恢复出厂设置电话号码，可采用此电话号码拨打终端电话让终端恢复出厂设置</td>
-					<td><input type="text" id="0x0042" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0043</td>
-					<td>STRING</td>
-					<td>监控平台SMS电话号码 </td>
-					<td><input type="text" id="0x0043" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0044</td>
-					<td>STRING</td>
-					<td>接收终端SMS文本报警号码</td>
-					<td><input type="text" id="0x0044" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0045</td>
-					<td>DWORD</td>
-					<td>终端电话接听策略</td>
-					<td style="text-align:left"> 
-						<select id="0x0045">
-							<option value="请选择">请选择</option>
-							<option value="0">0：自动接听</option>
-							<option value="1">1：ACC ON时自动接听，OFF时手动接听</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0046</td>
-					<td>DWORD</td>
-					<td>每次最长通话时间，单位为秒(s),0为不允许通话，0xFFFFFFFF为不限制</td>
-					<td><input type="text" id="0x0046" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0047</td>
-					<td>DWORD</td>
-					<td>当月最长通话时间，单位为秒(s),0为不允许通话，0xFFFFFFFF为不限制</td>
-					<td><input type="text" id="0x0047" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0048</td>
-					<td>STRING</td>
-					<td>监听电话号码</td>
-					<td><input type="text" id="0x0048" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0049</td>
-					<td>STRING</td>
-					<td>监管平台特权短信号码</td>
-					<td><input type="text" id="0x0049" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0050</td>
-					<td>DWORD</td>
-					<td>报警屏蔽字。与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警被屏蔽</td>
-					<td><input type="text" id="0x0050" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0051</td>
-					<td>DWORD</td>
-					<td>报警发送文本SMS开关，与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警时发送文本SMS</td>
-					<td><input type="text" id="0x0051" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0052</td>
-					<td>DWORD</td>
-					<td>报警拍摄开关，与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警时摄像头拍摄 </td>
-					<td><input type="text" id="0x0052" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0053</td>
-					<td>DWORD</td>
-					<td>报警拍摄存储标识，与位置信息汇报消息中的报警标识相对应，相应位为1则对相应报警时牌的照片进行存储，否则实时长传</td>
-					<td><input type="text" id="0x0053" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0054</td>
-					<td>DWORD</td>
-					<td>关键标识，与位置信息汇报消息中的报警标识相对应，相应位为1则对相应报警为关键报警 </td>
-					<td><input type="text" id="0x0054" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0055</td>
-					<td>DWORD</td>
-					<td>最高速度，单位为公里每小时(km/h)</td>
-					<td><input type="text" id="0x0055" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0056</td>
-					<td>DWORD</td>
-					<td>超速持续时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0056" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0057</td>
-					<td>DWORD</td>
-					<td>连续驾驶时间门限，单位为秒(s)</td>
-					<td><input type="text" id="0x0057" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0058</td>
-					<td>DWORD</td>
-					<td>当天累计驾驶时间门限，单位为秒(s)</td>
-					<td><input type="text" id="0x0058" value="14400"/></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0059</td>
-					<td>DWORD</td>
-					<td>最小休息时间，单位为秒(s)</td>
-					<td><input type="text" id="0x0059" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x005A</td>
-					<td>DWORD</td>
-					<td>最长停车时间，单位为秒(s)</td>
-					<td><input type="text" id="0x005A" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0070</td>
-					<td>DWORD</td>
-					<td>DWORD","图像/视频质量，1-10,1最好</td>
-					<td><input type="text" id="0x0070" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0071</td>
-					<td>DWORD</td>
-					<td>亮度，0-255</td>
-					<td><input type="text" id="0x0071" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0072</td>
-					<td>DWORD</td>
-					<td>对比度，0-127</td>
-					<td><input type="text" id="0x0072" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0073</td>
-					<td>DWORD</td>
-					<td>饱和度，0-127</td>
-					<td><input type="text" id="0x0073" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0074</td>
-					<td>DWORD</td>
-					<td>色度，0-255</td>
-					<td><input type="text" id="0x0074" /></td> 
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0080</td>
-					<td>DWORD</td>
-					<td>车辆里程表读数，1/10km</td>
-					<td><input type="text" id="0x0080" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0081</td>
-					<td>WORD</td>
-					<td>车辆所在的省域ID</td>
-					<td><input type="text" id="0x0081" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0082</td>
-					<td>WORD</td>
-					<td>车辆所在的市域ID</td>
-					<td><input type="text" id="0x0082" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0083</td>
-					<td>STRING</td>
-					<td>公安交通管理部门颁发的机动车号牌 </td>
-					<td><input type="text" id="0x0083" /></td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0084</td>
-					<td>BYTE</td>
-					<td>车牌颜色，按照JT/T415-2006的5.4.12</td>
-					<td style="text-align:left"><div class="btn-group" style="text-align:left">
-						<select id="0x0084">
-							<option value="请选择">请选择</option>
-							<option value="1">1：蓝色</option>   
-							<option value="2">2：黄色</option>   
-							<option value="3">3：黑色</option>   
-							<option value="4">4：白色</option>   
-							<option value="5">5：其他</option>   
-						</select>
-					</div>						
-					</td>
-				</tr>
-				<tr>
-				<td ><input type="checkbox" /></td>
-					<td>0x0085</td>
-					<td>DWORD</td>
-					<td>车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数 </td>
-					<td><input type="text" id="0x0085"  /></td>
-				</tr>
-			</table>
-		</div><br/>
-		
-		<div style="text-align: center;">
-			<input type="button" class="btn btn-info" value="设置终端参数" onclick="setDevicePar();" />
-			<input type="button" class="btn btn-info" value="查询所有参数" onclick="queryAllDevicePar();" />
-			<input type="button" class="btn btn-info" value="查询指定参数" onclick="queryThisDevicePar();" />
-			<input type="button" class="btn btn-danger" value="重置" onclick="reset();" />
-		</div>
-	</div>
-	
-      
+<div class="right_mainH4">
+    <p>
+        终端参数管理
+    </p>
+</div>
+<div style="height:600px">
+    <div STYLE="border-style:solid;border-width:1px; border-color:#E0E0E0">
+        <table>
+            <tr>
+                <td style="text-align: center"><input type="checkbox" onclick="selectAll(this);"/></td>
+                <td style="width: 120px;text-align: center">参数ID</td>
+                <td style="width: 120px;text-align: center">参数类型</td>
+                <td style="width: 1000px;text-align: center">参数名称</td>
+                <td style="width: 200px;text-align: center">参数值</td>
+            </tr>
+        </table>
+    </div>
+    <div style="height:550px;min-height:550px;overflow:auto;">
+        <table class="table table-bordered .table-condensed" id="datas">
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0001</td>
+                <td>DWORD</td>
+                <td>客户端心跳发送间隔，单位为秒(s)</td>
+                <td><input type="text" id="0x0001" value="60"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0002</td>
+                <td>DWORD</td>
+                <td>TCP消息应答超时时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0002"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0003</td>
+                <td>DWORD</td>
+                <td>TCP消息重传次数</td>
+                <td><input type="text" id="0x0003"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0004</td>
+                <td>DWORD</td>
+                <td>UDP消息应答超时时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0004"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0005</td>
+                <td>DWORD</td>
+                <td>UDP消息重传次数</td>
+                <td><input type="text" id="0x0005"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0006</td>
+                <td>DWORD</td>
+                <td>SMS消息应答超时时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0006"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0007</td>
+                <td>DWORD</td>
+                <td>SMS消息重传次数</td>
+                <td><input type="text" id="0x0007"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0010</td>
+                <td>STRING</td>
+                <td>主服务器APN，无线通信拨号访问点。若网络制式为CDMA，则该处为PPP拨号号码</td>
+                <td><input type="text" id="0x0010"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0011</td>
+                <td>STRING</td>
+                <td>主服务器无线通信拨号用户名</td>
+                <td><input type="text" id="0x0011"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0012</td>
+                <td>STRING</td>
+                <td>主服务器无线通信拨号密码</td>
+                <td><input type="text" id="0x0012"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0013</td>
+                <td>STRING</td>
+                <td>主服务器地址，IP或域名</td>
+                <td><input type="text" id="0x0013"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0014</td>
+                <td>STRING</td>
+                <td>备份服务器APN，无线通信拨号访问点</td>
+                <td><input type="text" id="0x0014"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0015</td>
+                <td>STRING</td>
+                <td>备份服务器无线通信拨号用户名</td>
+                <td><input type="text" id="0x0015"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0016</td>
+                <td>STRING</td>
+                <td>备份服务器无线通信拨号密码</td>
+                <td><input type="text" id="0x0016"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0017</td>
+                <td>STRING</td>
+                <td>备份服务器地址，IP或域名</td>
+                <td><input type="text" id="0x0017"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0018</td>
+                <td>DWORD</td>
+                <td>服务器TCP端口</td>
+                <td><input type="text" id="0x0018"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0019</td>
+                <td>DWORD</td>
+                <td>服务器UDP端口</td>
+                <td><input type="text" id="0x0019"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0020</td>
+                <td>DWORD</td>
+                <td>位置汇报策略</td>
+                <td style="text-align:left">
+                    <select id="0x0020">
+                        <option value="请选择">请选择</option>
+                        <option value="0">0：定时汇报</option>
+                        <option value="1">1：定距汇报</option>
+                        <option value="2">2：定时和定距汇报</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0021</td>
+                <td>DWORD</td>
+                <td>位置汇报方案</td>
+                <td style="text-align:left">
+                    <select id="0x0021">
+                        <option value="请选择">请选择</option>
+                        <option value="0">0：根据ACC状态</option>
+                        <option value="1">1：根据登录状态和ACC状态</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0022</td>
+                <td>DWORD</td>
+                <td>驾驶员未登录汇报时间间隔，单位为秒(s),>0</td>
+                <td><input type="text" id="0x0022"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0027</td>
+                <td>DWORD</td>
+                <td>SMS消息应答超时时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0027"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0028</td>
+                <td>DWORD</td>
+                <td>紧急报警时汇报时间间隔，单位为秒(s),>0</td>
+                <td><input type="text" id="0x0028"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0029</td>
+                <td>DWORD</td>
+                <td>缺省时间汇报间隔，单位为秒(s),>0</td>
+                <td><input type="text" id="0x0029"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x002C</td>
+                <td>DWORD</td>
+                <td>缺省距离汇报间隔，单位为米(m),>0</td>
+                <td><input type="text" id="0x002C"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x002D</td>
+                <td>DWORD</td>
+                <td>驾驶员未登录汇报距离间隔，单位为米(m),>0</td>
+                <td><input type="text" id="0x002D"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x002E</td>
+                <td>DWORD</td>
+                <td>休眠时汇报距离间隔，单位为米(m),>0</td>
+                <td><input type="text" id="0x002E"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x002F</td>
+                <td>DWORD</td>
+                <td>紧急报警时汇报距离间隔，单位为米(m),>0</td>
+                <td><input type="text" id="0x002F"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0030</td>
+                <td>DWORD</td>
+                <td>拐点补传角度，<180°</td>
+                <td><input type="text" id="0x0030"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0040</td>
+                <td>STRING</td>
+                <td>监控平台电话号码</td>
+                <td><input type="text" id="0x0040"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0041</td>
+                <td>STRING</td>
+                <td>复位电话号码，可采用此电话号码拨打终端电话让终端复位</td>
+                <td><input type="text" id="0x0041"/></td>
+            </tr>
+
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0042</td>
+                <td>STRING</td>
+                <td>恢复出厂设置电话号码，可采用此电话号码拨打终端电话让终端恢复出厂设置</td>
+                <td><input type="text" id="0x0042"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0043</td>
+                <td>STRING</td>
+                <td>监控平台SMS电话号码</td>
+                <td><input type="text" id="0x0043"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0044</td>
+                <td>STRING</td>
+                <td>接收终端SMS文本报警号码</td>
+                <td><input type="text" id="0x0044"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0045</td>
+                <td>DWORD</td>
+                <td>终端电话接听策略</td>
+                <td style="text-align:left">
+                    <select id="0x0045">
+                        <option value="请选择">请选择</option>
+                        <option value="0">0：自动接听</option>
+                        <option value="1">1：ACC ON时自动接听，OFF时手动接听</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0046</td>
+                <td>DWORD</td>
+                <td>每次最长通话时间，单位为秒(s),0为不允许通话，0xFFFFFFFF为不限制</td>
+                <td><input type="text" id="0x0046"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0047</td>
+                <td>DWORD</td>
+                <td>当月最长通话时间，单位为秒(s),0为不允许通话，0xFFFFFFFF为不限制</td>
+                <td><input type="text" id="0x0047"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0048</td>
+                <td>STRING</td>
+                <td>监听电话号码</td>
+                <td><input type="text" id="0x0048"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0049</td>
+                <td>STRING</td>
+                <td>监管平台特权短信号码</td>
+                <td><input type="text" id="0x0049"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0050</td>
+                <td>DWORD</td>
+                <td>报警屏蔽字。与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警被屏蔽</td>
+                <td><input type="text" id="0x0050"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0051</td>
+                <td>DWORD</td>
+                <td>报警发送文本SMS开关，与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警时发送文本SMS</td>
+                <td><input type="text" id="0x0051"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0052</td>
+                <td>DWORD</td>
+                <td>报警拍摄开关，与位置信息汇报消息中的报警标识相对应，相应位为1则相应报警时摄像头拍摄</td>
+                <td><input type="text" id="0x0052"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0053</td>
+                <td>DWORD</td>
+                <td>报警拍摄存储标识，与位置信息汇报消息中的报警标识相对应，相应位为1则对相应报警时牌的照片进行存储，否则实时长传</td>
+                <td><input type="text" id="0x0053"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0054</td>
+                <td>DWORD</td>
+                <td>关键标识，与位置信息汇报消息中的报警标识相对应，相应位为1则对相应报警为关键报警</td>
+                <td><input type="text" id="0x0054"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0055</td>
+                <td>DWORD</td>
+                <td>最高速度，单位为公里每小时(km/h)</td>
+                <td><input type="text" id="0x0055"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0056</td>
+                <td>DWORD</td>
+                <td>超速持续时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0056"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0057</td>
+                <td>DWORD</td>
+                <td>连续驾驶时间门限，单位为秒(s)</td>
+                <td><input type="text" id="0x0057"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0058</td>
+                <td>DWORD</td>
+                <td>当天累计驾驶时间门限，单位为秒(s)</td>
+                <td><input type="text" id="0x0058" value="14400"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0059</td>
+                <td>DWORD</td>
+                <td>最小休息时间，单位为秒(s)</td>
+                <td><input type="text" id="0x0059"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x005A</td>
+                <td>DWORD</td>
+                <td>最长停车时间，单位为秒(s)</td>
+                <td><input type="text" id="0x005A"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0070</td>
+                <td>DWORD</td>
+                <td>DWORD","图像/视频质量，1-10,1最好</td>
+                <td><input type="text" id="0x0070"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0071</td>
+                <td>DWORD</td>
+                <td>亮度，0-255</td>
+                <td><input type="text" id="0x0071"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0072</td>
+                <td>DWORD</td>
+                <td>对比度，0-127</td>
+                <td><input type="text" id="0x0072"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0073</td>
+                <td>DWORD</td>
+                <td>饱和度，0-127</td>
+                <td><input type="text" id="0x0073"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0074</td>
+                <td>DWORD</td>
+                <td>色度，0-255</td>
+                <td><input type="text" id="0x0074"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0080</td>
+                <td>DWORD</td>
+                <td>车辆里程表读数，1/10km</td>
+                <td><input type="text" id="0x0080"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0081</td>
+                <td>WORD</td>
+                <td>车辆所在的省域ID</td>
+                <td><input type="text" id="0x0081"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0082</td>
+                <td>WORD</td>
+                <td>车辆所在的市域ID</td>
+                <td><input type="text" id="0x0082"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0083</td>
+                <td>STRING</td>
+                <td>公安交通管理部门颁发的机动车号牌</td>
+                <td><input type="text" id="0x0083"/></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0084</td>
+                <td>BYTE</td>
+                <td>车牌颜色，按照JT/T415-2006的5.4.12</td>
+                <td style="text-align:left">
+                    <div class="btn-group" style="text-align:left">
+                        <select id="0x0084">
+                            <option value="请选择">请选择</option>
+                            <option value="1">1：蓝色</option>
+                            <option value="2">2：黄色</option>
+                            <option value="3">3：黑色</option>
+                            <option value="4">4：白色</option>
+                            <option value="5">5：其他</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>0x0085</td>
+                <td>DWORD</td>
+                <td>车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数</td>
+                <td><input type="text" id="0x0085"/></td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+
+    <div style="text-align: center;">
+        <input type="button" class="btn btn-info" value="设置终端参数" onclick="setDevicePar();"/>
+        <input type="button" class="btn btn-info" value="查询所有参数" onclick="queryAllDevicePar();"/>
+        <input type="button" class="btn btn-info" value="查询指定参数" onclick="queryThisDevicePar();"/>
+        <input type="button" class="btn btn-danger" value="重置" onclick="reset();"/>
+    </div>
+</div>
+
+
 <script type="text/javascript">
-	function getParaItems() {
-		var paraItems = [];
-		$("#datas tr").each(function (i, tr) {
-			var tds = $(tr).find("td:gt(0)");
-			
-			var paraItem = {};
-			paraItem.paraId = $(tds[0]).text();
-			paraItem.paraType =$(tds[1]).text();
-			paraItem.paraValue = $(tds[3]).find("input").val();
-			
-			paraItems.push(paraItem);		
-			
-		});
-		
-		var retJson = {};
-		retJson.para=paraItems;
-		
- 
-		return  JSON.stringify(retJson) ;
-	}
+    function getParaItems() {
+        var paraItems = [];
+        $("#datas tr").each(function (i, tr) {
+            var tds = $(tr).find("td:gt(0)");
 
-	//设置终端参数
-	function setDevicePar(){
+            var paraItem = {};
+            paraItem.paraId = $(tds[0]).text();
+            paraItem.paraType = $(tds[1]).text();
+            paraItem.paraValue = $(tds[3]).find("input").val();
 
-		$.ajax({
-			url : "../../tcpReq/setDevicePar.ao",
-			type : 'POST',
-			data : 'terminalphone='+TERMINAL_HPONE()+'&paraItems='+getParaItems(),
-			beforeSend : ajaxstar,
-			complete : ajaxend,
-			cache : false,
-			dataType : "json",
-			success : function (data){
-				try{
-					var retCode = data.root.retcode;
-					if( retCode != "0" )
-					{
-						alert( data.root.retmsg);
-						return ;
-					}else{
-						alert( data.root.retmsg);
-					}
-				}catch(err){
-					alert("设置参数失败!");
-				}
-			}
-		});
-	}
-	
- 
-	//查询所有参数 
-	function queryAllDevicePar(){
-		
- 
-		$.ajax({
-			url : host+"/tcpReq/queryAllDevicePar.ao",
-			type : 'POST',
-			data:{
-				 'terminalphone': TERMINAL_HPONE()
-			},
-			beforeSend : ajaxstar,
-			complete : ajaxend,
-			cache : false,
-			dataType : "json",
-			success : function (data){
-				
-				try{
-					var retCode = data.root.retcode;
-					if( retCode != "0" )
-					{
-						alert( data.root.retmsg);
-						return ;
-					}
-					
-					   var beanTerminalPara =  data.root.msgBody.beanTerminalPara;
-					   
-					   var paraItems   = beanTerminalPara.paraItems;
-					    
-					   $.each( paraItems, function(index, paraItem){
-						   var paraidHex =  paraItem.paraId.toString(16);
-						   for(var i=paraidHex.length;i<4;i++){
-							   paraidHex =  "0"+paraidHex;
-						   }
-						   paraidHex = "0x"+paraidHex;
-						   $("#"+paraidHex).val(paraItem.paraValueStr);
-						   var fmt = $("#"+paraidHex).attr('fmt');
-						 
-						   if(  fmt != null && fmt != 'undefined')
-							 {
-							   var cname = evalFun(fmt,paraItem.paraValueStr);
-							  
-							   $("#"+paraidHex).val(cname);
-							 }else{
-						  		 $("#"+paraidHex).val(paraItem.paraValueStr);
-							 }
-						   
-							if( paraidHex == '0x0020' || paraidHex == '0x0021'
-								 || paraidHex == '0x0045' || paraidHex=='0x0084'  )
-							 
-						 		$("#"+paraidHex).parent().find("a[title='"+paraItem.paraValueStr+"']").click();
-							
-							
-		
-					   
-					   });
-					  
-						
-					
-				}catch(err){
-					console.log(err)
-					alert("查询出错!");
-				}
-			}	
-		});
-	}
+            paraItems.push(paraItem);
 
-	function colorFmt(v){
-		switch (v){
-		case 1:
-			return '蓝色';
-		case 2:
-			return '黄色';
-		case 3:
-			return '黑色';
-		case 4:
-			return '白色';
-		default:
-			return '其他';
-		}
-		
-	}
-	
-	function evalFun(  fn,  args){
-		
-		var fnbody = fn+"("+args+")";
-		return eval(fnbody);
-	}
-	
-	//查询指定参数
-	function queryThisDevicePar(){
-		
-		var selParaIds = "";
-		//获取选中的
-		$("#datas tr").each(function(index,item){
-			var tdobj = $(item).find("td");
-			
-			 var checkObj = $(tdobj[0]).find("input[type='checkbox']:checked");
-			  
-			if( checkObj.length != 0  ) 
-			{
-				var hexparaid = parseInt($(tdobj[1]).text(),16);
-				selParaIds +=hexparaid+",";
-			}
-			
-		});
-		
-		if( selParaIds.length <=1 )
-			{
-			 	alert('请先选中要查询的参数！');
-			 	return;
-			}
-		
-		
-		
-		$.ajax({
-			url : host+"/tcpReq/queryThisDevicePar.ao",
-			type : 'POST',
-			data:{
-				 'terminalphone':TERMINAL_HPONE(),
-				 'paraids':selParaIds
-			},
-			beforeSend : ajaxstar,
-			complete : ajaxend,
-			cache : false,
-			dataType : "json",
-			success : function (data){
-				
-				try{
-					var retCode = data.root.retcode;
-					if( retCode != "0" )
-					{
-						alert( data.root.retmsg);
-						return ;
-					}
-					
-					   var beanTerminalPara =  data.root.msgBody.beanTerminalPara;
-					   
-					   var paraItems   = beanTerminalPara.paraItems;
-					    
-					   $.each( paraItems, function(index, paraItem){
-						   var paraidHex =  paraItem.paraId.toString(16);
-						   for(var i=paraidHex.length;i<4;i++){
-							   paraidHex =  "0"+paraidHex;
-						   }
-						   paraidHex = "0x"+paraidHex;
-						   $("#"+paraidHex).val(paraItem.paraValueStr);
-						   var fmt = $("#"+paraidHex).attr('fmt');
-						 
-						   if(  fmt != null && fmt != 'undefined')
-							 {
-							   var cname = evalFun(fmt,paraItem.paraValueStr);
-							  
-							   $("#"+paraidHex).val(cname);
-							 }else{
-						  		 $("#"+paraidHex).val(paraItem.paraValueStr);
-							 }
-						   
-								
-						 		$("#"+paraidHex).parent().find("a[title='"+paraItem.paraValueStr+"']").click();
-							 
-						  
-					   
-					   });
-					  
-						
-					
-				}catch(err){
-					alert("查询出错!");
-				}
-			}	
-		});
-	}
+        });
 
-	
-	function reset(){
-		$("#datas input").val('');
-		$(".sr-only").text('请选择');
-		
-	}
-	
-	function selectAll(obj)
-	{
-		if( obj.checked )
-			$("#datas input[type='checkbox']").prop("checked",true );
-		else
-			$("#datas input[type='checkbox']").prop("checked",false );
- 
-	}
-	
-	
+        var retJson = {};
+        retJson.para = paraItems;
+
+
+        return JSON.stringify(retJson);
+    }
+
+    //设置终端参数
+    function setDevicePar() {
+
+        $.ajax({
+            url: "../../tcpReq/setDevicePar.ao",
+            type: 'POST',
+            data: 'terminalphone=' + TERMINAL_HPONE() + '&paraItems=' + getParaItems(),
+            beforeSend: ajaxstar,
+            complete: ajaxend,
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+                try {
+                    var retCode = data.root.retcode;
+                    if (retCode != "0") {
+                        alert(data.root.retmsg);
+                        return;
+                    } else {
+                        alert(data.root.retmsg);
+                    }
+                } catch (err) {
+                    alert("设置参数失败!");
+                }
+            }
+        });
+    }
+
+
+    //查询所有参数
+    function queryAllDevicePar() {
+
+
+        $.ajax({
+            url: host + "/tcpReq/queryAllDevicePar.ao",
+            type: 'POST',
+            data: {
+                'terminalphone': TERMINAL_HPONE()
+            },
+            beforeSend: ajaxstar,
+            complete: ajaxend,
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+
+                try {
+                    var retCode = data.root.retcode;
+                    if (retCode != "0") {
+                        alert(data.root.retmsg);
+                        return;
+                    }
+
+                    var beanTerminalPara = data.root.msgBody.beanTerminalPara;
+
+                    var paraItems = beanTerminalPara.paraItems;
+
+                    $.each(paraItems, function (index, paraItem) {
+                        var paraidHex = paraItem.paraId.toString(16);
+                        for (var i = paraidHex.length; i < 4; i++) {
+                            paraidHex = "0" + paraidHex;
+                        }
+                        paraidHex = "0x" + paraidHex;
+                        $("#" + paraidHex).val(paraItem.paraValueStr);
+                        var fmt = $("#" + paraidHex).attr('fmt');
+
+                        if (fmt != null && fmt != 'undefined') {
+                            var cname = evalFun(fmt, paraItem.paraValueStr);
+
+                            $("#" + paraidHex).val(cname);
+                        } else {
+                            $("#" + paraidHex).val(paraItem.paraValueStr);
+                        }
+
+                        if (paraidHex == '0x0020' || paraidHex == '0x0021'
+                            || paraidHex == '0x0045' || paraidHex == '0x0084')
+
+                            $("#" + paraidHex).parent().find("a[title='" + paraItem.paraValueStr + "']").click();
+
+
+                    });
+
+
+                } catch (err) {
+                    console.log(err)
+                    alert("查询出错!");
+                }
+            }
+        });
+    }
+
+    function colorFmt(v) {
+        switch (v) {
+            case 1:
+                return '蓝色';
+            case 2:
+                return '黄色';
+            case 3:
+                return '黑色';
+            case 4:
+                return '白色';
+            default:
+                return '其他';
+        }
+
+    }
+
+    function evalFun(fn, args) {
+
+        var fnbody = fn + "(" + args + ")";
+        return eval(fnbody);
+    }
+
+    //查询指定参数
+    function queryThisDevicePar() {
+
+        var selParaIds = "";
+        //获取选中的
+        $("#datas tr").each(function (index, item) {
+            var tdobj = $(item).find("td");
+
+            var checkObj = $(tdobj[0]).find("input[type='checkbox']:checked");
+
+            if (checkObj.length != 0) {
+                var hexparaid = parseInt($(tdobj[1]).text(), 16);
+                selParaIds += hexparaid + ",";
+            }
+
+        });
+
+        if (selParaIds.length <= 1) {
+            alert('请先选中要查询的参数！');
+            return;
+        }
+
+
+        $.ajax({
+            url: host + "/tcpReq/queryThisDevicePar.ao",
+            type: 'POST',
+            data: {
+                'terminalphone': TERMINAL_HPONE(),
+                'paraids': selParaIds
+            },
+            beforeSend: ajaxstar,
+            complete: ajaxend,
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+
+                try {
+                    var retCode = data.root.retcode;
+                    if (retCode != "0") {
+                        alert(data.root.retmsg);
+                        return;
+                    }
+
+                    var beanTerminalPara = data.root.msgBody.beanTerminalPara;
+
+                    var paraItems = beanTerminalPara.paraItems;
+
+                    $.each(paraItems, function (index, paraItem) {
+                        var paraidHex = paraItem.paraId.toString(16);
+                        for (var i = paraidHex.length; i < 4; i++) {
+                            paraidHex = "0" + paraidHex;
+                        }
+                        paraidHex = "0x" + paraidHex;
+                        $("#" + paraidHex).val(paraItem.paraValueStr);
+                        var fmt = $("#" + paraidHex).attr('fmt');
+
+                        if (fmt != null && fmt != 'undefined') {
+                            var cname = evalFun(fmt, paraItem.paraValueStr);
+
+                            $("#" + paraidHex).val(cname);
+                        } else {
+                            $("#" + paraidHex).val(paraItem.paraValueStr);
+                        }
+
+
+                        $("#" + paraidHex).parent().find("a[title='" + paraItem.paraValueStr + "']").click();
+
+
+                    });
+
+
+                } catch (err) {
+                    alert("查询出错!");
+                }
+            }
+        });
+    }
+
+
+    function reset() {
+        $("#datas input").val('');
+        $(".sr-only").text('请选择');
+
+    }
+
+    function selectAll(obj) {
+        if (obj.checked)
+            $("#datas input[type='checkbox']").prop("checked", true);
+        else
+            $("#datas input[type='checkbox']").prop("checked", false);
+
+    }
+
+
 </script>
 </body>
 </html>

@@ -39,7 +39,7 @@
         }
 
         setCookie("username", "hanks7", "cookieDxpiredays");
-        tools.Ulog.w("username", getCookie("username"));
+        Ulog.w("username", getCookie("username"));
 
         var aCookie = document.cookie.split(";");
         var re = '';
@@ -50,7 +50,7 @@
             }
             re += (aCrumb[0] + " = " + aCrumb[1] + '\n\n');
         }
-        tools.Ulog.w('cookie info:\n' + re);
+        Ulog.w('cookie info:\n' + re);
     </script>
 </head>
 <body onLoad="checkCookie()">
