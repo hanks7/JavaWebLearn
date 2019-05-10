@@ -11,17 +11,17 @@
         function test() {
             var a = 1;
             return function ccc () {
-                alert(a);
+                console.log(a);
             }
         }
 
         var b = "b";
         function test2() {
-            alert(b);
+            console.log(b);
         }
 
 
-        // test()();
+        test()();
         test2();
 
 

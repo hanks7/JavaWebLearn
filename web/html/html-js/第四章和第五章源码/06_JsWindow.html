@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Js window</title>
+    <meta charset="UTF-8">
+    <title>Js window</title>
 </head>
 <body>
-	<button onclick="openwindow()">创建窗口</button>
-	<button onclick="myFunction()">调整窗口</button>
-	<button onclick="moveFunction()">移动窗口</button>
-	<button onclick="closeFunction()">关闭窗口</button>
-	
-	<script type="text/javascript">
-		var w;
-		
-		function openwindow(){
-			w=window.open('','', 'width=300,height=300');
-		}
+<button onclick="openwindow()">创建窗口</button>
+<button onclick="myFunction()">调整窗口</button>
+<button onclick="moveFunction()">移动窗口</button>
+<button onclick="closeFunction()">关闭窗口</button>
 
+<script type="text/javascript">
+    var w;
 
-		function myFunction(){
-			w.resizeTo(500,500);
-			w.focus();
-		}
-		
+    //创建窗口
+    function openwindow() {
+        w = window.open('', '', 'width=300,height=300');
+    }
 
-		function moveFunction(){
-			w.moveTo(700,500);
-			w.focus();
-		}
-		
+    //调整窗口
+    function myFunction() {
+        w.resizeTo(500, 500);
+        w.focus();
+    }
 
-		function closeFunction(){
-			w.close(700,500);
-			w.focus();
-		}
-	</script>
+    //移动窗口
+    function moveFunction() {
+        w.moveTo(700, 500);
+        w.focus();
+    }
+
+    //关闭窗口
+    function closeFunction() {
+        // w.close(700,500);
+        w.close();
+        w.focus();
+    }
+</script>
 </body>
 </html>

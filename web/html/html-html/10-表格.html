@@ -7,9 +7,30 @@
 <body>
 
 tr:表示行 td表示列
-<br>
+<hr>
+
 <table>
+    <tr><!--th标签表示表格头,默认字体会加粗-->
+        <th>学号</th>
+        <th>姓名</th>
+        <th>性别</th>
+    </tr>
     <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>男</td>
+    </tr>
+</table>
+
+<hr>
+
+<table>
+    <tr> <!--这里用表格体,作为表格头-->
         <td>学号</td>
         <td>姓名</td>
         <td>性别</td>
@@ -26,24 +47,7 @@ tr:表示行 td表示列
     </tr>
 </table>
 
-<table>
-    <tr>
-        <th>学号</th> <!--th标签表示表格头,默认字体会加粗-->
-        <th>姓名</th>
-        <th>性别</th>
-    </tr>
-    <tr>
-        <td>54564</td>
-        <td>hanks7</td>
-        <td>男</td>
-    </tr>
-    <tr>
-        <td>54564</td>
-        <td>hanks7</td>
-        <td>男</td>
-    </tr>
-</table>
-
+<hr>
 
 <table>
     <thead><!--表头-->
@@ -53,6 +57,14 @@ tr:表示行 td表示列
         <th>总分</th>
     </tr>
     </thead>
+
+    <tbody><!--表格体-->
+    <tr>
+        <td>54564</td>
+        <td>hanks7</td>
+        <td>80</td>
+    </tr>
+
     <tfoot><!--表底-->
     <tr>
         <td></td>
@@ -61,13 +73,8 @@ tr:表示行 td表示列
     </tr>
     </tfoot>
 
-    <tbody><!--表格体-->
-    <tr>
-        <td>54564</td>
-        <td>hanks7</td>
-        <td>80</td>
-    </tr>
     </tbody>
+
 </table>
 
 <!--
@@ -78,6 +85,7 @@ colspan:单元格跨列
 rowspan:单元格跨行
 align:内容对齐
 -->
+<hr>
 
 <table border="12" cellspacing="16" cellpadding="10">
     <tr align="center">
@@ -95,6 +103,8 @@ align:内容对齐
         <td>hanks7</td>
     </tr>
 </table>
+
+<hr>
 
 <table border="12" cellspacing="16" cellpadding="10">
     <tbody align="center"><!--表格体-->
