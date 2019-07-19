@@ -1,5 +1,7 @@
 package com.yidao.jdbc.test.servlet;
 
+import com.hanks.test.TestLog;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ public class DemoWebServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        TestLog.i("dsfjlasdf");
         response.getWriter().println("hello world");
     }
 

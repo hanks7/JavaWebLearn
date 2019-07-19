@@ -15,6 +15,7 @@ public class Test {
 
 
         doGetTest();
+        doPostTest();
     }
 
     private static void testAes() {
@@ -57,29 +58,29 @@ public class Test {
         Ulog.i("message", message);
 
 
-        Map<String,String> params = new HashMap<>();
-        params.put("UDI_DI","010082700209497017201130108409387");
-        params.put("UDI_EXPIDATE","201130");
-        params.put("UDI_MANUDATE","8409387");
-        params.put("UDI_LOT","161130");
-        params.put("UDI_SN","30001");
-        String result2 = HttpUtils.doPost("http://116.247.74.76:8681/CustomServicesApi/EasipassGetUdiInfo",params,"UTF-8");
+        Map<String, String> params = new HashMap<>();
+        params.put("UDI_DI", "010082700209497017201130108409387");
+        params.put("UDI_EXPIDATE", "201130");
+        params.put("UDI_MANUDATE", "8409387");
+        params.put("UDI_LOT", "161130");
+        params.put("UDI_SN", "30001");
+        String result2 = HttpUtils.doPost("http://116.247.74.76:8681/CustomServicesApi/EasipassGetUdiInfo", params, "UTF-8");
 
-        Ulog.i("result2",(result2));
+        Ulog.i("result2", (result2));
 
         doPostTest();
     }
 
     private static void doGetTest() {
-        String result = HttpUtils.sendGetRequest("http://easyway.com.cn:8088/CustomServicesApi/Scanner?type=1&code=test&msg=t&verify=1",null);
-        Ulog.i("result",result);
+        String result = HttpUtils.sendGetRequest("http://easyway.com.cn:8088/CustomServicesApi/Scanner?type=1&code=test&msg=t&verify=1", null);
+        Ulog.i("result", result);
     }
 
     private static void doPostTest() {
         String url = "http://admin.tingwen.me/index.php/api/interfaceXykj/touList";
-        Map<String,String> params = new HashMap<>();
-        params.put("page","100");
-        String result = HttpUtils.doPost(url,params,"UTF-8");
-        Ulog.i("doPostTest()",(result));
+        Map<String, String> params = new HashMap<>();
+        params.put("page", "100");
+        String result = HttpUtils.doPost(url, params, "UTF-8");
+        Ulog.i("doPostTest()", (result));
     }
 }
