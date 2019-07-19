@@ -13,6 +13,6 @@ public class Person extends Observable {
     public void setName(String name) {
         this.name = name;
         setChanged();
-        notifyObservers();
+        notifyObservers("123123");
     }
 }

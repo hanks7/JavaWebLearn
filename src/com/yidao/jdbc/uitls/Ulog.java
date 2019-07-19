@@ -14,7 +14,7 @@ public class Ulog {
 	public static void i(String tag, Object... obArray) {
 		String message="";
 		for (Object o : obArray) {
-			message=message+"==>"+o;
+			message=message+"  "+o;
 		}
 		System.out.println("time:" + getCurrentTime() + "---" + tag
 				+ message);

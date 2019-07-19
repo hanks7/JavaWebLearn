@@ -20,7 +20,7 @@ for (String l : list) {
 String content=  l;
 }
 var="l" 表示的就是 String l  jstl写法很奇特,也就遍历集合好用,其他的用处不大
-varStatus="myIndex" 使用${myIndex.index} 表示下标志 注意java foreach是没有下标值的
+varStatus="myIndex" 使用${myIndex.index} 表示下标志 注意java foreach是没有下标值的s
 --%>
 
 <c:forEach items="${list }" var="l">
