@@ -20,7 +20,7 @@ public class SetCookieServlet extends HttpServlet {
         Cookie cookie = new Cookie("user", "admin");
         cookie.setMaxAge(60 * 60 * 24 * 7);//cookie的最大值, 这里设置的是7天 秒*分*时*天
         response.addCookie(cookie);
-        response.getWriter().println("login success");
+        response.getWriter().println("login success登录成功");
 
     }
 

@@ -22,7 +22,7 @@ import java.io.IOException;
  *  * config             配置对象                  类型 javax.servlet.ServletConfig       作用域    Page
  *  * page               页面对象                  类型 javax.lang.Object                 作用域    Page
  *  * exception          例外对象                 类型 javax.lang.Throwable               作用域    page
- *  *
+ *
  */
 @WebServlet("/session/login")
 public class SetSessionServlet extends HttpServlet {
