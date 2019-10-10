@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象——若干属性的集合</title>
+    <script type="text/javascript" src="../../../html/html-html/tool.js"></script>
+    <script type="text/javascript" src="../../../html/jQuery-Ajax/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    function Fn() { }
+    Fn.prototype.name = '王福朋';
+    Fn.prototype.getYear = function () {
+        return 1988;
+    };
+
+    var fn = new Fn();//--------------非常重要必须是 new 出来的才可以调用prototype原型属性
+    console.log(fn.name);
+    console.log(fn.getYear());
+
+
+</script>
+</body>
+</html>

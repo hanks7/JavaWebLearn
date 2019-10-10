@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象——若干属性的集合</title>
+    <script type="text/javascript" src="../../../html/html-html/tool.js"></script>
+    <script type="text/javascript" src="../../../html/jQuery-Ajax/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    // 第一种创建对象方式-通过函数创建
+    function Fn() {
+        this.name = '王福朋';
+        this.year = 1988;
+    }
+    var Fn = new Fn();
+
+    // 第二种创建对象和数组方式-通过函数创建
+    var obj = {a: 10, b: 20};
+    var arr = [5, 'x', true];
+
+    // 第三种创建对象和数组方式-通过函数创建
+    var obj1 = new Object();
+    obj.a = 10;
+    obj.b = 20;
+    var arr1 = new Array();
+    arr[0] = 5;
+    arr[1] = 'x';
+    arr[2] = true;
+
+    console.log(typeof (obj1));  // object
+    console.log(typeof (arr1));  // object
+
+
+</script>
+</body>
+</html>

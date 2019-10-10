@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象——若干属性的集合</title>
+    <script type="text/javascript" src="../../../html/html-html/tool.js"></script>
+    <script type="text/javascript" src="../../../html/jQuery-Ajax/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<!--数组是对象-->
+<!--函数是对象-->
+<!--对象还是对象-->
+
+<!--对象里面的一切都是属性  属性表示为键值对的形式-->
+
+<script type="text/javascript">
+
+    Ulog.i("javascript");
+    console.log("console.log");
+    // 函数是对象 所以他可以有属性
+    var fn = function () {
+        alert(100);
+    };
+    fn.a = 10;
+    fn.b = function () {
+        alert(123);
+    };
+    fn.c = {
+        name: "王福朋",
+        year: 1988
+    };
+    Ulog.w($.trim(" dkfjkdsaf "));
+    Ulog.w(typeof $);  // function
+    Ulog.w($.trim(" ABC "));
+
+
+</script>
+</body>
+</html>

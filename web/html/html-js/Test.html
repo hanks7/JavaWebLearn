@@ -6,13 +6,13 @@
     <script type="text/javascript" src="test.js"></script>
     <script type="text/javascript">
 
-        log.i("tag","hello world");
-
-        for (var i = 0; i < 5; i++) {
-            setTimeout(function () {
-                console.log(new Date, i);
-            }, 1);
-        }
+        // log.i("tag", "hello world");
+        //
+        // for (var i = 0; i < 5; i++) {
+        //     setTimeout(function () {
+        //         console.log(new Date, i);
+        //     }, 1);
+        // }
 
         // for (var i = 0; i < 5; i++) {
         //     setTimeout(function(j) {
@@ -22,8 +22,20 @@
 
         // console.log(new Date, i);
 
-
-
+        var fn = function () {
+            alert(100);
+        };
+        fn.a = 10;
+        fn.b = function () {
+            alert(123);
+        };
+        fn.c = {
+            name: "王福朋",
+            year: 1988
+        };
+        console.log(fn());
+        console.log(fn.b());
+        console.log(fn.c.name);
     </script>
 </head>
 <body>
