@@ -9,7 +9,8 @@
 <body>
 
 <script type="text/javascript">
-    // 第一种创建对象方式-通过函数创建
+    // 第一种创建对象方式-通过函数创建 这种创建方式很关键 它能帮你理解 prototype原型 函数对象才有原型__proto__ 构造方法也是函数  所以就有__proto__
+    //正常对象只有构造方法里才有隐形属性__proto__
     function Fn() {
         this.name = '王福朋';
         this.year = 1988;
@@ -31,6 +32,8 @@
 
     console.log(typeof (obj1));  // object
     console.log(typeof (arr1));  // object
+
+    console.log(obj);  // object
 
 
 </script>

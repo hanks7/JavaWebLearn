@@ -10,16 +10,47 @@
 
 <script type="text/javascript">
 
-    function Fn() { }
+    function Fn() {
+    }
+
     Fn.prototype.name = '王福朋';
     Fn.prototype.getYear = function () {
         return 1988;
     };
 
     var fn = new Fn();//--------------非常重要必须是 new 出来的才可以调用prototype原型属性
-    console.log(fn.name);
-    console.log(fn.getYear());
+    // console.log(fn.name);
+    // console.log(fn.getYear());
+    //
+    // console.log(fn);
+    // console.log(Fn);
+    //打印 可知prototype其实是一个函数(我实在是受不了 java里叫函数) 它在构造方法里,
+    // 当你new 对象时就会执行fn.__proto__ = Fn.prototype  然后你就可以fn.name  我也不知道为什么
 
+
+    // Fn是一个函数，fn对象是从Fn函数new出来的，这样fn对象就可以调用Fn.prototype中的属性
+    // 因为每个对象都有一个隐藏的属性——“__proto__”，这个属性引用了创建这个对象的函数的prototype。即：fn.__proto__ = Fn.prototype
+
+
+    // var fn1 = new Function("x", "y", "return x+y");
+    // Ulog.i("fn1", fn1(5, 6));
+    // var obj = {a: 10, b: 20};
+    // Ulog.i(obj);
+
+    function Person() {
+    }
+
+    Person.prototype.name = '王福朋';
+    Person.prototype.getYear = function () {
+        return 1988;
+    };
+    var p = new Person()
+
+
+    console.log(Person.prototype); // Object{}
+    console.log(p ); //undefined
+
+    console.log(p.__proto__ ==Person.prototype); //true
 
 </script>
 </body>
