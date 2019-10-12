@@ -18,6 +18,18 @@
         return 1988;
     };
 
+
+    /**
+     * 所有的函数都有prototype,所有的对象都有隐藏的属性 __proto__
+     *
+     * 函数相当于java的类
+     * 对象就相当于java实例化后的对象
+     *
+     * prototype在构造方法中
+     *
+     * @type {Fn}
+     */
+
     var fn = new Fn();//--------------非常重要必须是 new 出来的才可以调用prototype原型属性
     // console.log(fn.name);
     // console.log(fn.getYear());
@@ -44,7 +56,7 @@
     Person.prototype.getYear = function () {
         return 1988;
     };
-    var p = new Person()
+    var p = new Person();
 
 
     console.log(Person.prototype); // Object{}
@@ -53,5 +65,9 @@
     console.log(p.__proto__ ==Person.prototype); //true
 
 </script>
+
+
+<button onclick='alert("test");'>点击</button>
+<button onclick="alert('test');">点击</button>
 </body>
 </html>
