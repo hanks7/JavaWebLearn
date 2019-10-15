@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        span{
+        span {
             background: lightblue;
         }
-        div > span {  /* 如果 子类没有设置样式,那么子类也会继承父类的样式 注意这里使用是又局限性的 */
+
+        div > span { /* 如果 子类没有设置样式,那么子类也会继承父类的样式 注意这里使用是有局限性的 儿子可以,孙子就不可以了*/
             background: lawngreen;
         }
     </style>
@@ -17,7 +18,7 @@
 
 <div>
     <span class="span1">div中的子元素
-        <span class="span2">是div中的后代,但不是div的子元素</span>
+        <span class="span2">是div中的后代,但不是div的子元素 <span class="span2">2222222222</span></span>
     </span>
 </div>
 
