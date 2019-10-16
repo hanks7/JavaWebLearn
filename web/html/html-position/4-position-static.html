@@ -8,34 +8,33 @@
         .block {
             width: 50px;
             height: 50px;
-            line-height: 50px;
             text-align: center;
             border: 2px solid blue;
-            box-sizing: border-box;
-        }
-        .block:nth-child(2){
-            position: static;
-            border-color:red;
-        }
-        .block:nth-child(3){
-            position: relative;
             left: 10px;
-            border-color: #00ff04;
+            position: relative;
         }
+
+        .mStatic {
+            /* 清除定位,例如:有4个 div, 想让其中一个不定位,其他3个全部绝对定位,这时就用到了 static.
+            没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明），可以把已定位的元素取消定*/
+            position: static;
+            border: 3px solid red;
+        }
+
     </style>
 </head>
 <body>
-    <div class="block">
-        A
-    </div>
-    <div class="block">
-        B
-    </div>
-    <div class="block">
-        C
-    </div>
-    <div class="block">
-        D
-    </div>
+<div class="block">
+    A
+</div>
+<div class="block mStatic">
+    B
+</div>
+<div class="block">
+    C
+</div>
+<div class="block">
+    D
+</div>
 </body>
 </html>

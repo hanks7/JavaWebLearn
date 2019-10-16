@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <title>position</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
         }
-        .page{
+
+        .div_body_main {
             width: 100%;
             height: 4043px;
             background: url("mooc.png") center top no-repeat;
         }
-        
-        .nav{
+
+        .div_nav_main {
             width: 160px;
             height: 205px;
             position: fixed;
@@ -23,8 +24,8 @@
             margin-top: -103px;
             font-family: 'Miscrosoft YaHei';
         }
-        
-        .nav-li{
+
+        .div_ul {
             width: 160px;
             height: auto;
             border-bottom: 1px solid #FFF;
@@ -35,24 +36,24 @@
             font-size: 16px;
             cursor: pointer;
         }
-        
-        .tit{
+
+        .title {
             width: 160px;
             height: 40px;
         }
-        
-        .nav-li:hover ul{
+
+        .div_ul:hover ul {
             display: block;
         }
-        
-        .nav-li ul{
+
+        .div_ul ul {
             width: 160px;
             height: auto;
             background: #FFF;
             display: none;
         }
-        
-        .nav-li ul li{
+
+        .item_li {
             width: 160px;
             height: 40px;
             border-bottom: 1px dashed #666;
@@ -61,21 +62,21 @@
             line-height: 40px;
             position: relative;
         }
-        
-        .nav-li ul li:hover .list-3{
-            display: block;
+
+        .item_li:hover .div_三级栏目 {
+            display: block; /*显示*/
         }
-        
-        .list-3{
+
+        .div_三级栏目 {
             width: 160px;
             height: auto;
             position: absolute;
             left: 160px;
             top: 0px;
-            display: none;
+            display: none; /*不显示*/
         }
-        
-        .list-3Dom{
+
+        .item_三级栏目 {
             width: 160px;
             height: 40px;
             background: #444;
@@ -84,99 +85,27 @@
             line-height: 40px;
             color: #FFF;
         }
-        
+
     </style>
 </head>
 <body>
-    <div class="page">
-        <div class="nav">
-            <div class="nav-li">
-                 <div class="tit">慕课网的标题</div>
-                 <ul>
-                     <li>
-                         二级栏目
-                         <div class="list-3">
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>                                                          
-                         </div>
-                     </li>
-                     <li>
-                         二级栏目
-                         <div class="list-3">
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>                                                          
-                         </div>
-                     </li>
-                     <li>
-                         二级栏目
-                         <div class="list-3">
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>
-                             <div class="list-3Dom">三级栏目</div>                                                          
-                         </div>
-                     </li>                                 
-                 </ul>     
-            </div>
-            <div class="nav-li">
-                 <div class="tit">慕课网的标题</div>
-                 <ul>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>                                  
-                 </ul>     
-            </div>
-            <div class="nav-li">
-                 <div class="tit">慕课网的标题</div>
-                 <ul>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>                                  
-                 </ul>     
-            </div>
-            <div class="nav-li">
-                 <div class="tit">慕课网的标题</div>
-                 <ul>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>                                  
-                 </ul>     
-            </div>
-            <div class="nav-li">
-                 <div class="tit">慕课网的标题</div>
-                 <ul>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>
-                     <li>
-                         二级栏目
-                     </li>                                  
-                 </ul>     
-            </div>                                    
+<div class="div_body_main">
+    <div class="div_nav_main">
+        <div class="div_ul">
+            <div class="title">慕课网的标题</div>
+            <ul>
+                <li class="item_li">
+                    二级栏目
+                    <div class="div_三级栏目">
+                        <div class="item_三级栏目">三级栏目</div>
+                        <div class="item_三级栏目">三级栏目</div>
+                        <div class="item_三级栏目">三级栏目</div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
- 
+</div>
+
 </body>
 </html>
