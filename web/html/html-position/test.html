@@ -11,8 +11,8 @@
 
         .div_body_main {
             width: 100%;
-            height: 4043px;
-            background: url("mooc.png") center top no-repeat;
+            height: 100px;
+            background: #8cd8ff center top no-repeat;
         }
 
         .div_nav_main {
@@ -34,7 +34,6 @@
             line-height: 40px;
             color: #FFF;
             font-size: 16px;
-            cursor: pointer;
         }
 
         .title {
@@ -50,13 +49,13 @@
             width: 160px;
             height: auto;
             background: #FFF;
-            display: none;
+
         }
 
         .item_li_二级栏目 {
             width: 160px;
             height: 40px;
-            border-bottom: 1px dashed #666;/*画虚线*/
+            border-bottom: 1px dashed #666;
             color: #333;
             text-align: center;
             line-height: 40px;
@@ -72,8 +71,9 @@
             height: auto;
             position: absolute;
             left: 160px;
+
             top: 0px;
-            display: none; /*不显示*/
+            /*不显示*/
         }
 
         .item_三级栏目 {
@@ -85,6 +85,9 @@
             line-height: 40px;
             color: #FFF;
         }
+        .mborder{
+            border: solid 1px red;
+        }
 
     </style>
 </head>
@@ -94,9 +97,9 @@
         <div class="item_div_ul">
             <div class="title">慕课网的标题</div>
             <ul>
-                <li class="item_li">
+                <li class="item_li_二级栏目">
                     二级栏目
-                    <div class="div_三级栏目">
+                    <div class="div_三级栏目 ">
                         <div class="item_三级栏目">三级栏目</div>
                         <div class="item_三级栏目">三级栏目</div>
                         <div class="item_三级栏目">三级栏目</div>
