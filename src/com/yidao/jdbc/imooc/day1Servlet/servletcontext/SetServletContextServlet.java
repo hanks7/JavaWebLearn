@@ -10,6 +10,8 @@ import java.io.IOException;
 
 /**
  * Servlet implementation class SetServletContextServlet
+ *
+ * ServletContext服务器开始，其就存在，服务器关闭，其才释放
  */
 @WebServlet("/servletcontext/init")
 public class SetServletContextServlet extends HttpServlet {

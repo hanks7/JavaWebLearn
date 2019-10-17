@@ -33,7 +33,7 @@ function startAutoPlay() {
             index = 0;
         }
         changeImg();
-    }, 3000)
+    }, 800)
 }
 
 /**
@@ -45,25 +45,37 @@ function stopAutoPlay() {
     }
 }
 
-function changeImg() {
+/**
+ * 去除dots的className
+ * banner图片设置为不可见
+ */
+function clearClassName() {
     for (var i = 0; i < dots.length; i++) {
         dots[i].className = "";
         pics[i].style.display = "none";
     }
-    dots[index].className = "active";
-    pics[index].style.display = "block";
+}
+
+/**
+ * 只显示对应的dots和banner图片
+ */
+function changeImg() {
+    clearClassName();
+    //index是全局变量
+    dots[index].className = "active";//这是有样式的
+    pics[index].style.display = "block";//banner图片可见显示为可见
 }
 
 function slideImg() {
     var main = byId("main");
     var menuContent = byId("menu-content");
-    main.onmouseover = function () {
+    main.onmouseover = function () {//鼠标离开banner图片
         stopAutoPlay();
     }
-    main.onmouseout = function () {
+    main.onmouseout = function () {//鼠标放在banner图片上
         startAutoPlay();
     }
-    main.onmouseout();
+    startAutoPlay();
 
     // 点击导航切换
     for (var i = 0, len = dots.length; i < len; i++) {

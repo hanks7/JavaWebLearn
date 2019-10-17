@@ -1,4 +1,4 @@
-package com.yidao.jdbc.imooc.daty2el;
+package com.yidao.jdbc.imooc.day2el;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * el 表达式练习

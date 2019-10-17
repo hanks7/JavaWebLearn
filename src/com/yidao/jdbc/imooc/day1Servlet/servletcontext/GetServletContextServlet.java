@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * ServletContext服务器开始，其就存在，服务器关闭，其才释放
+ */
 @WebServlet("/servletcontext/default")
 public class GetServletContextServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

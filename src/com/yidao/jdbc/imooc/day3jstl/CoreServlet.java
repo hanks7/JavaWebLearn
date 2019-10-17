@@ -1,6 +1,6 @@
 package com.yidao.jdbc.imooc.day3jstl;
 
-import com.yidao.jdbc.imooc.daty2el.Student;
+import com.yidao.jdbc.imooc.day2el.Student;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

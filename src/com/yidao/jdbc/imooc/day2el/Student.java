@@ -1,4 +1,4 @@
-package com.yidao.jdbc.imooc.daty2el;
+package com.yidao.jdbc.imooc.day2el;
 
 public class Student {
 
