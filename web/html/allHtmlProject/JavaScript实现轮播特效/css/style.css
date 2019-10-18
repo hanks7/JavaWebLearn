@@ -11,8 +11,7 @@
     url('../img/font/iconfont.ttf') format('truetype'),
     url('../img/font/iconfont.svg#iconfont') format('svg');
 }
-
-a {
+menu-item a {
     text-decoration: none;
 }
 

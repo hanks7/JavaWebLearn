@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-        .border {
-            border: 1px red solid;
+        * {
+            margin: 0;
+            padding: 0;
         }
 
         @font-face {
@@ -17,55 +18,44 @@
             url('img/font/iconfont.svg#iconfont') format('svg');
         }
 
+        menu-item a {
+            text-decoration: none;
+        }
+
+        a:link, a:visited {
+            color: #ff8300;
+        }
+
         body {
             font-family: "微软雅黑";
             color: #14191e;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        /*<!--*/
-        /*visible	默认值。内容不会被修剪，会呈现在元素框之外。*/
-        /*hidden	内容会被修剪，并且其余内容是不可见的。*/
-        /*scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。*/
-        /*auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。*/
-        /*inherit	规定应该从父元素继承 overflow 属性的值。*/
-        /*-->*/
         .main {
-            margin: 30px auto;
-            position: relative;
+            background: #bbecff;
             width: 1200px;
             height: 460px;
-            background-color: rgba(38, 35, 11, 0.21);
-            overflow: hidden; /*这里并不是去除浮动,是为了隐藏多出来的界面,你可以注释这句就能看出效果*/
-        }
-
-        .menu-content {
-            background: rgba(211, 140, 118, 0.32);
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            width: 244px;
-            height: 460px;
-            z-index: 2;
-            padding-top: 6px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
         }
 
         .menu-item {
             height: 64px;
             line-height: 66px;
             font-size: 12px;
+            cursor: pointer;
             padding: 0 24px;
             position: relative;
         }
 
+        .menu-item :nth-child(1) {
+            background: #2f4956;
+        }
+
         .menu-item a {
-            color: rgb(255, 255, 255);
-            text-decoration: none;
             display: block;
+            color: #fff;
             padding: 0 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             height: 63px;
@@ -74,18 +64,6 @@
 
         .menu-item:last-child a {
             border-bottom: none;
-        }
-
-        span:link {
-            background-color: green;
-        }
-
-        span:hover {
-            background-color: blue;
-        }
-
-        span:active {
-            background-color: yellow;
         }
 
         .menu-item i {
@@ -100,81 +78,53 @@
             font-family: "iconfont";
         }
 
-        .button {
-            width: 50px;
-            height: 50px;
+        /* menu-box */
+        .menu-box {
+            background: rgba(255, 115, 0, 0.82);
+            opacity: 0.5;
             position: absolute;
-            top: 50%;
-            margin-top: -25px;
-            z-index: 22;
+            left: 0px;
+            top: 0px;
+            width: 244px;
+            height: 460px;
+            z-index: 1;
         }
 
-        .pre {
+        .menu-content {
+            background: rgba(117, 19, 49, 0.32);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 244px;
+            height: 460px;
+            z-index: 2;
+            padding-top: 6px;
+        }
+
+        .sub-menu {
+            border: 1px solid #d9dde1;
+            background: #fff;
+            position: absolute;
             left: 244px;
+            top: 0px;
+            width: 730px;
+            height: 458px;
+            z-index: 581;
+            box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
         }
 
-        .next {
-            right: 0;
-        }
-
-        .dots {
-            z-index: 22;
-            position: absolute;
-            bottom: 0px;
-            width: 100px;
-            line-height: 30px;
-            right: 30px;
-        }
-
-        .dots span {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-left: 8px;
-            background-color: rgba(7, 17, 27, 0.4);
-            cursor: pointer;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8) inset;
-        }
-
-        .dots span.active {
-            box-shadow: 0 0 0 2px rgba(7, 17, 27, 0.4) inset;
-            background-color: #ffffff;
-        }
-        .slide1 {
-            background-image: url(img/bg1.jpg);
-        }
-
-        .slide2 {
-            background-image: url(img/bg2.jpg);
-        }
-
-        .slide3 {
-            background-image: url(img/bg3.jpg);
-        }
-        .banner {
-            width: 1200px;
-            height: 460px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .banner-slide {
-            width: 1200px;
-            height: 460px;
-            background-repeat: no-repeat;
-            float: left;
+        .hide {
             display: none;
         }
 
-        .slide-active {
-            display: block;
-        }
     </style>
 
 </head>
 <body>
-<div class="main">
+<div class="main" id="main">
+    <div class="menu-box">
+    </div>
+
     <!-- 菜单 -->
     <div class="menu-content" id="menu-content">
         <div class="menu-item">
@@ -202,32 +152,7 @@
             </a>
         </div>
     </div>
-    <div class="border button pre">
-    </div>
-    <div class="border button next">
-    </div>
-    <div class="dots border" id="dots">
-        <span class="active"></span>
-        <span></span>
-        <span></span>
-    </div>
-    <style>
 
-
-
-
-    </style>
-    <div class="banner" id="banner">
-        <a href="">
-            <div class="banner-slide slide1 slide-active"></div>
-        </a>
-        <a href="">
-            <div class="banner-slide slide2"></div>
-        </a>
-        <a href="">
-            <div class="banner-slide slide3"></div>
-        </a>
-    </div>
 </div>
 
 </body>
