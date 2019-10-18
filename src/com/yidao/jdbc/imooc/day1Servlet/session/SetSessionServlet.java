@@ -29,6 +29,7 @@ public class SetSessionServlet extends HttpServlet {
     /**
      * 与cookie不同的是cookie_id是存在浏览器上的
      * 而session_id是存储在tomcat内存上的
+     * 作用域 : 打开浏览器第一访问服务器,到关闭浏览器. session就为空了
      *
      * @param request
      * @param response

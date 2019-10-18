@@ -22,7 +22,7 @@ public class GetSessionServlet extends HttpServlet {
         String name = (String) session.getAttribute("name");
         Ulog.i("name",name);
         response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println("这是首页，当前用户为:" + name+"当前sessionId:"+sessionId);
+        response.getWriter().println("这是首页，当前用户为:" + name+",当前sessionId:"+sessionId);
 
     }
 
