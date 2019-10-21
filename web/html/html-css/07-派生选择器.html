@@ -8,27 +8,38 @@
             border: solid 1px red;
             display: inline-block;
         }
+
+        /*************************************** ****************************************/
+        /***************************************注意 派生选择器是哟bug的 当ul下有别的标签时,
+        ****************************************比如在第一个li标签加一个div,nth-child(2), 表示的是第三个
+        /*************************************** ****************************************/
+        /*表示第2个li标签*/
         li:nth-child(2) {
             background-color: #68ff7b;
         }
+
         /*选取大于等于4标签，“n”表示从整数*/
         li:nth-child(n+4) {
             background-color: #58e6ff;
         }
+
         /*选取小于等于4标签*/
         li:nth-child(-n+4) {
             background-color: #43a6ff;
         }
+
         /*选取偶数标签*/
         li:nth-child(2n) {
             background-color: #3229ff;
         }
+
         /*选取奇数标签*/
         li:nth-child(2n-1) {
             background-color: #b237ff;
         }
+
         /*选取倒数第几个标签,3表示选取第3个*/
-        li:nth-last-child(3){
+        li:nth-last-child(3) {
             background-color: #ff2728;
         }
     </style>
@@ -38,6 +49,7 @@
 
 
 <ul id="u3">
+    <!--<div>这里是一个bug,看上方12行注释</div>-->
     <li>苹果</li>
     <li>西瓜</li>
     <li>香蕉</li>

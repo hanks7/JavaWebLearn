@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: 'iconfont';
+            src: url('img/font/iconfont.eot');
+            src: url('img/font/iconfont.eot') format('embedded-opentype'),
+            url('img/font/iconfont.woff') format('woff'),
+            url('img/font/iconfont.ttf') format('truetype'),
+            url('img/font/iconfont.svg#iconfont') format('svg');
+        }
+
+        a:link, a:visited {
+            color: #ff8300;
+        }
+
+        body {
+            font-family: "微软雅黑";
+            color: #14191e;
+        }
+
+        .main {
+            background: #bbecff;
+            width: 1200px;
+            height: 460px;
+            margin: 30px auto; /*左右居中,上下边距30px*/
+            position: relative; /*配合menu-content position: absolute;使用使用的*/
+            overflow: hidden; /* 超过main的部分隐藏, menu-content中padding-top: 6px,所以menu-content会变大超过main规定的范围*/
+        }
+
+        .menu-content {
+            background: rgba(0, 117, 45, 0.4);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 244px;
+            height: 460px;
+            z-index: 2; /***保证menu-content在main上面**/
+            padding-top: 6px; /***高度会增加6px**/
+        }
+
+        .menu-item {
+            background: #2f4956;
+            height: 66px;
+            /*内容上下居中,虽然line-height设置了,并不是表示height就没有用,你可以设置line-height: 36px,加个边框就知道原因了*/
+            line-height: 66px;
+            font-size: 12px;
+            padding: 0 24px; /*左右空24px,可是你会发现i 并没有也padding,是因为i的 position: absolute;   right: 32px;所以并不会受到padding的影响*/
+            position: relative;
+        }
+
+        .menu-item a {
+            /*表示去除下划线*/
+            text-decoration: none;
+            /*内联级元素变成块级元素,内联级元素宽高是不起作用的,只有块级元素才能起作用,若果不写width就是独占一行
+            当你添加边框时候,你会发现为何两边有空,虽然你写了padding: 0 8px;但是这个属性起作用,其实是上一级 .menu-item padding: 0 24px;起作用*/
+            display: block;
+            color: #fff;
+            /*这里的padding 和android的padding不一样,android是宽高不变压缩里面的内容,但是html是扩大控件而实现padding*/
+            padding: 0 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); /*最后一位是透明度*/
+            height: 63px;
+            font-size: 16px;
+        }
+
+        .menu-item:last-child a {
+            /*去除底部边框*/
+            border-bottom: none;
+        }
+
+        /*斜体字,由于menu-item设置line-height=66px,相当于menu-item中的内容的高都为66px*/
+        .menu-item i {
+            /*上一级并不是position: relative;但是这里对应的是上上一级menu-item的position: relative,各一代是不影响*/
+            position: absolute;
+            right: 32px;
+            color: rgba(255, 54, 108, 0.5);
+            font-size: 24px;
+            top: 2px;
+            font-style: normal;
+            font-weight: normal;
+            font-family: "iconfont";
+        }
+
+        .bor {
+            border: 2px red solid;
+        }
+
+
+    </style>
+
+</head>
+<body>
+<div class="main">
+
+
+    <div class="menu-content ">
+        <div class="menu-item ">
+            <a href="" class=" ">
+                <span>手机、配件</span>
+                <i>&#xe665;</i>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="">
+                <span>电脑</span>
+                <i class="bor ">&#xe665;</i>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
