@@ -44,7 +44,9 @@
             width: 244px;
             height: 460px;
             z-index: 2; /***保证menu-content在main上面**/
-            padding-top: 6px; /***高度会增加6px**/
+            /*这里的padding 和android的padding不一样,android是宽高不变压缩里面的内容,但是html是扩大控件而实现padding,
+            这里添加padding会出现问题,就是控件会变大,会超过main所限定的大小,所以main有属性overflow: hidden*/
+            padding-top: 6px;
         }
 
         .menu-item {
@@ -71,6 +73,7 @@
             font-size: 16px;
         }
 
+        /*.menu-item a:last-child 这样写死不对的*/
         .menu-item:last-child a {
             /*去除底部边框*/
             border-bottom: none;
