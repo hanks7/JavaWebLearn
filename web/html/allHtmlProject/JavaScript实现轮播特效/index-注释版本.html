@@ -45,7 +45,8 @@
             height: 460px;
             z-index: 2; /***保证menu-content在main上面**/
             /*这里的padding 和android的padding不一样,android是宽高不变压缩里面的内容,但是html是扩大控件而实现padding,
-            这里添加padding会出现问题,就是控件会变大,会超过main所限定的大小,所以main有属性overflow: hidden*/
+            但是该控件没有 "width"属性那么逻辑还是很android一致的.
+            这里添加padding会出现问题,由于该控件有"width"属性就是控件会变大,会超过main所限定的大小,所以main有属性overflow: hidden*/
             padding-top: 6px;
         }
 
@@ -63,13 +64,14 @@
             /*表示去除下划线*/
             text-decoration: none;
             /*内联级元素变成块级元素,内联级元素宽高是不起作用的,只有块级元素才能起作用,若果不写width就是独占一行
-            当你添加边框时候,你会发现为何两边有空,虽然你写了padding: 0 8px;但是这个属性起作用,其实是上一级 .menu-item padding: 0 24px;起作用*/
+            当你添加边框时候,你会发现为何两边有空并不是独占一行,虽然你写了padding: 0 8px;但并不是这个属性起作用,其实是上一级 .menu-item padding: 0 24px;起作用*/
             display: block;
             color: #fff;
-            /*这里的padding 和android的padding不一样,android是宽高不变压缩里面的内容,但是html是扩大控件而实现padding*/
+            /*这里的padding 和android的padding不一样,android是宽高不变压缩里面的内容,但是html是扩大控件而实现padding,
+              但是该控件和子控件没有 "width"属性那么逻辑还是很android一致的*/
             padding: 0 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2); /*最后一位是透明度*/
-            height: 63px;
+            height: 63px;/*这里和border-bottom这个属性有关*/
             font-size: 16px;
         }
 
@@ -83,10 +85,10 @@
         .menu-item i {
             /*上一级并不是position: relative;但是这里对应的是上上一级menu-item的position: relative,各一代是不影响*/
             position: absolute;
+            top: 2px;
             right: 32px;
             color: rgba(255, 54, 108, 0.5);
             font-size: 24px;
-            top: 2px;
             font-style: normal;
             font-weight: normal;
             font-family: "iconfont";
@@ -105,8 +107,8 @@
 
 
     <div class="menu-content ">
-        <div class="menu-item ">
-            <a href="" class=" ">
+        <div class="menu-item">
+            <a href="" class=" bor">
                 <span>手机、配件</span>
                 <i>&#xe665;</i>
             </a>
