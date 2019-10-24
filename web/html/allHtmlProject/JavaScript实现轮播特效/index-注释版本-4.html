@@ -27,55 +27,9 @@
             background: rgba(86, 88, 89, 0.35);
         }
 
-        .menu-content {
-            background: rgba(117, 19, 49, 0.32);
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            width: 244px;
-            height: 460px;
-            z-index: 2;
-            padding-top: 6px;
-        }
-
-        .menu-item {
-            background: rgba(117, 53, 107, 0.32);
-            height: 64px;
-            line-height: 66px;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 0 24px;
-            position: relative;
-        }
-
-        .menu-item a {
-            display: block;
-            color: #fff;
-            padding: 0 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            height: 63px;
-            font-size: 16px;
-        }
-
-        .menu-item:last-child a {
-            border-bottom: none;
-        }
-
-        .menu-item i {
-            position: absolute;
-            right: 32px;
-            top: 24px;
-            color: rgba(255, 54, 108, 0.5);
-            font-size: 24px;
-            top: 2px;
-            font-style: normal;
-            font-weight: normal;
-            font-family: "iconfont";
-        }
-
         .sub-menu {
             border: 1px solid #d9dde1;
-            background: #fff;
+            background: url(img/fe.png) no-repeat;
             position: absolute;
             left: 244px;
             top: 0px;
@@ -88,7 +42,7 @@
         .inner-box {
             width: 100%;
             height: 100%;
-            background: url(/img/fe.png) no-repeat;
+            /* 千万不可 /img/fe.png 一定要  img/fe.png   第一个"/"千万不能加*/
             /*display: none;*/
         }
 
@@ -130,12 +84,9 @@
 
         a:link, a:visited {
             color: #ff8300;
-        }
-
-        .menu-item a {
-            color: white;
             text-decoration: none;
         }
+
     </style>
 
 
@@ -144,7 +95,7 @@
 
 <div class="main">
     <!--内容-->
-    <div class="sub-menu  bor ">
+    <div class="sub-menu">
         <div class="inner-box  ">
             <div class="sub-inner-box">
                 <div class="title">手机、配件</div>
@@ -156,58 +107,10 @@
                     <span class="ml10 mr10">/</span>
                     <a href="">以旧换新</a>
                 </div>
-                <div class="sub-row">
-                    <span class="bold mr10">手机配件：</span>
-                    <a href="">手机壳</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">手机存储卡</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">数据线</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">充电器</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">电池</a>
-                </div>
-                <div class="sub-row">
-                    <span class="bold mr10">运营商：</span>
-                    <a href="">中国联通</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">中国移动</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">中国电信</a>
-                </div>
-                <div class="sub-row">
-                    <span class="bold mr10">智能设备：</span>
-                    <a href="">智能手环</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">智能家居</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">智能手表</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">其他配件</a>
-                </div>
-                <div class="sub-row">
-                    <span class="bold mr10">娱乐：</span>
-                    <a href="">耳机</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">音响</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">收音机</a>
-                    <span class="ml10 mr10">/</span>
-                    <a href="">麦克风</a>
-                </div>
             </div>
         </div>
     </div>
-    <!-- 菜单 -->
-    <div class="menu-content" id="menu-content">
-        <div class="menu-item">
-            <a href="">
-                <span>手机、配件</span>
-                <i class="icon">></i>
-            </a>
-        </div>
-    </div>
+
 </div>
 
 </body>
