@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .bor {
+            border: 2px red solid;
+        }
+
+        /*轮播图的区域*/
+        .banner {
+            margin: 30px auto; /*上下边距30px,左右居中*/
+            width: 1200px;
+            height: 460px;
+            overflow: hidden; /*三张图片都在banner中,但是超过边界的部分都隐藏了*/
+            position: relative;
+        }
+
+        /*显示图片控件*/
+        .banner-slide {
+            width: 1200px;
+            height: 460px;
+            background-repeat: no-repeat;
+            float: left;  /*虽然使用了overflow: hidden;为了方便js控制 添加了.slide-active*/
+            display: none;/*全部隐藏*/
+        }
+
+        .slide1 {
+            background-image: url(img/bg1.jpg);
+        }
+
+        .slide2 {
+            background-image: url(img/bg2.jpg);
+        }
+
+        .slide3 {
+            background-image: url(img/bg3.jpg);
+        }
+
+        .slide-active {
+            display: block;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div class="banner" id="banner">
+    <a href="">
+        <div class="banner-slide slide1 "></div>
+    </a>
+    <a href="">
+        <div class="banner-slide slide2  slide-active"></div>
+    </a>
+    <a href="">
+        <div class="banner-slide slide3  "></div>
+    </a>
+</div>
+
+</body>
+</html>

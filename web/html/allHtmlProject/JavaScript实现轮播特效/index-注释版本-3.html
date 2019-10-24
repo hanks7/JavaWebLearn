@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .bor {
+            border: 2px red solid;
+        }
+
+        body {
+            font-family: "微软雅黑";
+            color: #14191e;
+        }
+
+        .main {
+            width: 1200px;
+            height: 460px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+            background: rgba(86, 88, 89, 0.35);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 24px;
+            right: 0;
+            /*text-align: right;*/
+            padding-right: 24px;
+            /*填写行高时,还是把height添加上,否则会出现问题
+            如果不写会留下留白*/
+            line-height: 112px;
+            height: 112px;
+        }
+
+        .dots span {
+            background-color: rgba(7, 17, 27, 0.4);
+            display: inline-block; /*显示成为块级内联级,这样就可以设置宽高,但是不会独占一行*/
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            margin-left: 8px;
+            /*cursor: pointer;*/
+
+            /*属性说明（顺序依次对应）：
+            阴影的 1.X轴  2.Y轴 3.阴影模糊值（大小）  4.边框    5.阴影的颜色    6.内外阴影
+
+            注意:内阴影：inset 可以设置成内部阴影,不加就是外部阴影,可以添加删除试一试便知,外阴影：不填写 默认是外阴影
+             X轴 Y轴   (可以使用负值) */
+            box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        .dots span.active {
+            box-shadow: 0 0 0 12px rgba(7, 17, 27, 0.4) inset;
+            background-color: #ffffff;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div class="main">
+    <div class="dots bor" id="dots">
+        <span class="active "></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+</body>
+</html>

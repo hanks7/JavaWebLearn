@@ -1,4 +1,8 @@
-var timer = null,
+/**
+ * 初始化
+ * @type {null}
+ */
+var timer = null,//计时器
     pics = byId("banner").getElementsByTagName("div"),
     dots = byId("dots").getElementsByTagName("span"),//小圆点
     size = pics.length,
@@ -9,7 +13,7 @@ var timer = null,
     subItems = subMenu.getElementsByClassName("inner-box");
 
 /**
- *
+ *工具方法
  * @param id
  * @returns {HTMLElement}
  */
@@ -69,15 +73,18 @@ function changeImg() {
 function slideImg() {
     var main = byId("main");
     var menuContent = byId("menu-content");
-    main.onmouseover = function () {//鼠标离开banner图片
+    main.onmouseover = function () {//鼠标放在main布局上 停止轮播
         stopAutoPlay();
     }
-    main.onmouseout = function () {//鼠标放在banner图片上
+    main.onmouseout = function () {//鼠标离开main布局上 开始轮播
         startAutoPlay();
     }
-    startAutoPlay();
+    startAutoPlay();//开始轮播
 
-    // 点击导航切换
+
+    /**
+     * 给每个点 添加点击事件 执行切换图片
+     */
     for (var i = 0, len = dots.length; i < len; i++) {
         dots[i].id = i;
         dots[i].onclick = function () {
