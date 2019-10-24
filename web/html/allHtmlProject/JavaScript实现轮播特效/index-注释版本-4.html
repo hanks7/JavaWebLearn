@@ -10,7 +10,7 @@
         }
 
         .bor {
-            border: 2px red solid;
+            background: rgba(21, 228, 255, 0.51);
         }
 
         body {
@@ -47,7 +47,9 @@
         }
 
         .sub-inner-box {
-            width: 652px;
+            /*width: 100%;*/
+            /*使用padding会增大自身,变宽40px,把背景图片放在外层*/
+            /*padding-left: 40px;*/
             margin-left: 40px;
             /*overflow: hidden;*/
         }
@@ -56,7 +58,9 @@
             color: #f01414;
             font-size: 16px;
             line-height: 16px;
-            margin-top: 28px;
+            /*这里使用margin-top会有bug,sub-inner-box无法填充父类,不要用border看 用 background来查看,使用padding就没有问题了*/
+            /*margin-top: 28px;*/
+            padding-top: 28px;
             font-weight: bold;
             margin-bottom: 30px;
         }
@@ -96,8 +100,8 @@
 <div class="main">
     <!--内容-->
     <div class="sub-menu">
-        <div class="inner-box  ">
-            <div class="sub-inner-box">
+        <div class="inner-box">
+            <div class="sub-inner-box   bor ">
                 <div class="title">手机、配件</div>
                 <div class="sub-row">
                     <span class="bold mr10">手机通讯：</span>
