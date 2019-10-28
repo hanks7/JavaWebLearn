@@ -9,6 +9,11 @@
             padding: 0;
         }
 
+        .bor {
+            /*background: rgba(126, 169, 255, 0.4);*/
+            /*border: 2px solid #ff000f;*/
+        }
+
         @font-face {
             font-family: 'iconfont';
             src: url('img/font/iconfont.eot');
@@ -94,10 +99,6 @@
             font-family: "iconfont";
         }
 
-        .bor {
-            /*background: rgba(126, 169, 255, 0.4);*/
-        }
-
         .menu-item:hover {
             background: rgb(117, 53, 107);
         }
@@ -177,28 +178,14 @@
             text-decoration: none;
         }
     </style>
-    <script type="text/javascript">
-
-        var subMenu = document.getElementById("sub-menu");
-
-        subMenu.onmouseover = function () {
-            this.className = "sub-menu";
-        }
-
-        subMenu.onmouseout = function () {
-            this.className = "sub-menu hide";
-        }
-        alert("test");
-
-    </script>
 </head>
 <body>
 <div class="main">
 
 
-    <div class="menu-content ">
+    <div class="menu-content bor" id="menu-content">
         <div class="menu-item">
-            <a href="" class=" bor">
+            <a href="">
                 <span>手机、配件</span>
                 <i>&#xe665;</i>
             </a>
@@ -206,28 +193,58 @@
         <div class="menu-item">
             <a href="">
                 <span>电脑</span>
-                <i class="bor ">&#xe665;</i>
+                <i>&#xe665;</i>
             </a>
         </div>
 
     </div>
     <!--内容-->
-    <div class="sub-menu hide">
+    <div class="sub-menu hide" id="sub-menu">
         <div class="inner-box">
             <div class="sub-inner-box     ">
                 <div class="title">手机、配件</div>
                 <div class="sub-row">
                     <span class="bold mr10 bor">手机通讯：</span>
-                    <a href="">手机</a>
+                    <a href="javascript:;">手机</a>
                     <span class="ml10 mr10">/</span>
-                    <a href="">手机维修</a>
+                    <a href="javascript:;">手机维修</a>
                     <span class="ml10 mr10">/</span>
-                    <a href="">以旧换新</a>
+                    <a href="javascript:;">以旧换新</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!--
+在写js时很容易犯低级错误,如果是java,编译不通过,并报出错误地址.而html则不会,错误如以下几点.
+1.class 当成 id
+2.HTML id 或者 class写的有问题.
+3.语句没有以";"结尾
+4.语句以","结尾
+5."{" 没有以"}"结束
+-->
+<script>
+    var menuContent = document.getElementById("menu-content"),
+        subMenu = document.getElementById("sub-menu"),
+        menuItems = menuContent.getElementsByTagName("div");
+    // 菜单
+    for (var m = 0, mlen = menuItems.length; m < mlen; m++) {
+        menuItems[m].onmouseover = function () {
+            subMenu.className = "sub-menu";
+        }
+        menuItems[m].onmouseout = function () {
+            subMenu.className = "sub-menu hide  ";
+        }
+    }
+
+
+    subMenu.onmouseover = function () {
+        subMenu.className = "sub-menu  ";
+    }
+    subMenu.onmouseout = function () {
+        subMenu.className = "sub-menu hide  ";
+    }
+</script>
 </body>
 </html>
