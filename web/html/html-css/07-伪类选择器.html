@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+
+        span, a {
+            display: inline-block;
+            height: 30px;
+            padding: 10px 112px;
+            line-height: 30px;
+            background: green;
+        }
+
         /*默认的样式*/
         a:link {
             color: green;
         }
 
-        /*光标放在上面还没点*/
+        /* 放在上面*/
         a:hover {
             color: blue;
         }
@@ -21,8 +30,14 @@
 
         /*点击后*/
         a:visited {
-            color: red;
+            /*color: red;*/
         }
+
+        span:hover {
+            background: rgba(117, 53, 107, 0.35);
+        }
+
+
     </style>
 
 </head>
@@ -38,6 +53,9 @@
 -->
 
 <a href="#">www.baidu.com</a>
+
+
+<span class="body-style"> 测试 </span>
 
 
 </body>
