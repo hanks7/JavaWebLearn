@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三行两列布局</title>
+    <style>
+        div {
+            text-align: center;
+            line-height: 100px;
+            width: 200px;
+            height: 100px;
+            margin: 100px auto; /*相邻两个元素都设置了外边距,那么外边距会重合*/
+
+            /*属性说明（顺序依次对应）：
+
+         阴影的 1.X轴  2.Y轴 3.阴影模糊值 4.边框  5.阴影的颜色 6.内外阴影
+                 0px     4px     8px         0px     inset       rgba(0, 0, 0, 0.1)
+
+         注意:内阴影：inset 可以设置成内部阴影,不加就是外部阴影,可以添加删除试一试便知,外阴影：不填写 默认是外阴影
+          X轴 Y轴   (可以使用负值) */
+            box-shadow: 0px 4px 8px 0px inset rgba(0, 0, 0, 0.1);
+        }
+
+
+    </style>
+</head>
+<body>
+<div>1</div>
+
+</body>
+</html>

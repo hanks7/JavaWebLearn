@@ -36,13 +36,18 @@
             width: 730px;
             height: 458px;
             z-index: 581;
+            /*属性说明（顺序依次对应）：
+          阴影的 1.X轴  2.Y轴 3.阴影模糊值（大小）  4.边框    5.阴影的颜色    6.内外阴影
+
+          注意:内阴影：inset 可以设置成内部阴影,不加就是外部阴影,可以添加删除试一试便知,外阴影：不填写 默认是外阴影
+           X轴 Y轴   (可以使用负值) */
             box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
         }
 
         .inner-box {
             width: 100%;
             height: 100%;
-            /* 千万不可 /img/fe.png 一定要  img/fe.png   第一个"/"千万不能加*/
+            /* 千万不可 /img/fe.png 一定要  img/fe.png   第一个"/"千万不能加         */
             /*display: none;*/
         }
 
@@ -101,10 +106,10 @@
     <!--内容-->
     <div class="sub-menu">
         <div class="inner-box">
-            <div class="sub-inner-box   bor ">
+            <div class="sub-inner-box     ">
                 <div class="title">手机、配件</div>
                 <div class="sub-row">
-                    <span class="bold mr10">手机通讯：</span>
+                    <span class="bold mr10 bor">手机通讯：</span>
                     <a href="">手机</a>
                     <span class="ml10 mr10">/</span>
                     <a href="">手机维修</a>
