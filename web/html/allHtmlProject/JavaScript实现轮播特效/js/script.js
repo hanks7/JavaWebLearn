@@ -45,7 +45,7 @@ function startAutoPlay() {
  */
 function stopAutoPlay() {
     if (timer) {
-        clearInterval(timer);
+        clearInterval(timer);//清除定时
     }
 }
 
@@ -66,7 +66,7 @@ function clearClassName() {
 function changeImg() {
     clearClassName();
     //index是全局变量
-    dots[index].className = "active";//这是有样式的
+    dots[index].className = "active";//让导航的小点成为已经激活的样式
     pics[index].style.display = "block";//banner图片可见显示为可见
 }
 
@@ -109,29 +109,36 @@ function slideImg() {
 
     // 菜单
     for (var m = 0, mlen = menuItems.length; m < mlen; m++) {
-        menuItems[m].setAttribute("data-index", m);
+        menuItems[m].setAttribute("data-index", m);//给所有的菜单列表添加下标属性
+        //注意这个控件的鼠标事件,不注意的话,你会产生迷惑
         menuItems[m].onmouseover = function () {
-            subMenu.className = "sub-menu";
-            var idx = this.getAttribute("data-index");
+            subMenu.className = "sub-menu";// 鼠标悬浮到菜单列表时 显示详情界面
+            var idx = this.getAttribute("data-index");//得到下标数值
+            //所有的详情,全都隐藏
+            //所有的菜单列表都去除背景颜色
+            //这是一个偷懒的写法,本应该是写if - else的
             for (var j = 0; j < subItems.length; j++) {
                 subItems[j].style.display = 'none';
                 menuItems[j].style.background = "none";
             }
+            //指让对应悬浮的菜单列表的详情显示
             subItems[idx].style.display = "block";
+            //指让对应悬浮的菜单列表背景更改颜色.
             menuItems[idx].style.background = "#2f4956";
         }
+
     }
 
     subMenu.onmouseover = function () {
-        this.className = "sub-menu";
+        this.className = "sub-menu";//鼠标悬浮菜单时显示详情
     }
 
     subMenu.onmouseout = function () {
-        this.className = "sub-menu hide";
+        this.className = "sub-menu hide";//鼠标离开菜单隐藏详情
     }
 
     menuContent.onmouseout = function () {
-        subMenu.className = "sub-menu hide";
+        subMenu.className = "sub-menu hide";//鼠标离开详情隐藏详情
     }
 }
 
