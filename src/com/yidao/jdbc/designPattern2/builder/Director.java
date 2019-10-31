@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern.builder;
+package com.yidao.jdbc.designPattern2.builder;
 
 /**
  * 电脑城老板委派任务给装机人员（Director）

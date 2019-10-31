@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern;
+package com.yidao.jdbc.designPattern2;
 
 import com.yidao.jdbc.uitls.Ulog;
 

@@ -1,7 +1,4 @@
-package com.yidao.jdbc.designPattern.builder;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.yidao.jdbc.designPattern2.builder;
 
 //装机人员1
 public class ConcreteBuilder extends Builder {

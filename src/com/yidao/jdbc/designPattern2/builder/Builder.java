@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern.builder;
+package com.yidao.jdbc.designPattern2.builder;
 
 /**
  * 定义组装的过程（Builder）：组装电脑的过程

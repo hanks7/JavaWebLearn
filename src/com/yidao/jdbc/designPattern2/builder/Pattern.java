@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern.builder;
+package com.yidao.jdbc.designPattern2.builder;
 
 public class Pattern {
     public static void main(String[] args) {

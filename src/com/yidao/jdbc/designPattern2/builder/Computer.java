@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern.builder;
+package com.yidao.jdbc.designPattern2.builder;
 
 import java.util.ArrayList;
 import java.util.List;

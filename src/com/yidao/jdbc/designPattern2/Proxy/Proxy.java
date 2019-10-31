@@ -1,4 +1,4 @@
-package com.yidao.jdbc.designPattern.Proxy;
+package com.yidao.jdbc.designPattern2.Proxy;
 
 /**
  * 设计模式
