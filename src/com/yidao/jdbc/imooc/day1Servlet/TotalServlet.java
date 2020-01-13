@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * http://localhost:8080/jdbc/total1?value=1
+ */
 @WebServlet("/total1")
 public class TotalServlet extends HttpServlet {
     int intTotal = 0;

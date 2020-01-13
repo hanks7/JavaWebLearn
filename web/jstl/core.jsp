@@ -23,12 +23,12 @@ var="l" 表示的就是 String l  jstl写法很奇特,也就遍历集合好用,�
 varStatus="myIndex" 使用${myIndex.index} 表示下标志 注意java foreach是没有下标值的s
 --%>
 
-<c:forEach items="${list }" var="l">
-    <span style="color:#2eb11d"> ${l}</span>
+<c:forEach items="${sessionScope.list }" var="li">
+    <span style="color:#2eb11d"> ${li}</span>
 </c:forEach>
 
 <c:forEach items="${sessionScope.stus }" var="c" varStatus="myIndex">
-    <h1 style="color:#2eb11d">${sessionScope.stus.size()-myIndex.index} ${c.name}</h1>
+    <h1 style="color:#2eb11d">下标${sessionScope.stus.size()-myIndex.index}内容 ${c.name}</h1>
 </c:forEach>
 
 </body>

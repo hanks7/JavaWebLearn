@@ -32,8 +32,8 @@ public class CoreServlet extends HttpServlet {
             s.setMobile(i+""+i+""+i);
             stus.add(s);
         }
-        session.setAttribute("list", list);
         session.setAttribute("stus", stus);
+
         request.getRequestDispatcher("jstl/core.jsp").forward(request, response);
     }
 

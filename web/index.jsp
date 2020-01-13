@@ -13,9 +13,9 @@
     <title>登录</title>
 </head>
 <body>
-<form action="<%=basePath %>Servlet2" method="get">
-    <p>用户名：<input type="text" name="username"></p>
-    <p>密&nbsp;码：<input type="password" name="password"></p>
+<form action="<%=basePath %>/ServletZhuanFaChongDingXiang" method="get">
+    <p>用户名：<input type="text" name="username" value="admin"> </p>
+    <p>密&nbsp;码：<input type="password" name="password" value="123"> </p>
     <p>
         <input type="submit" value="登录">
         <input type="reset" value="重置">
