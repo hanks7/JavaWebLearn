@@ -36,7 +36,8 @@ public class FirstServlet extends HttpServlet {
         String name = request.getParameter("name");
         String mobile = request.getParameter("mobile");
         String sex = request.getParameter("sex");
-        String[] specs = request.getParameterValues("spec");
+        String[] specs = request.getParameterValues("spec");//拼接&spec=test-spec2&spec=test-spec3
+
         PrintWriter out = response.getWriter();//向浏览器输出的数据流
         out.println("<h1>method:" + methodName + "</h1>");
         out.println("<h1>name:" + name + "</h1>");
