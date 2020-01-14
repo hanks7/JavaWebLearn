@@ -17,6 +17,7 @@ public class GetServletContextServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
 
+
         //从配置文件中web.xml得到,相当于从Android vlues/string得到字符串
         String copyright = context.getInitParameter("copyright");
         String title = context.getInitParameter("title");
