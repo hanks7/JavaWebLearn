@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .main {
+            margin: 100px auto;
+            border: 1px red solid;
+            width: 1000px;
+            height: 200px;
+        }
+
+        input {
+            margin-top: 12px;
+        }
+    </style>
 </head>
 <body>
 <!-- form表单:
@@ -62,13 +74,29 @@ enctype:指定表单内容编码 UTF-8 -->
     <br>
 
 
-    <input type="submit" value="确定"/>  <!--如果你不写value默认是"提交"-->
+    <input type="submit" value="确定"/>  <!--如果你不写value默认是"提交"  只有type="submit"才能提交表单-->
     <br>
 
     <button type="reset" from="formID">重置</button><!--type="reset":重置表单内提交的内容-->
 </form>
 
 <button type="submit" from="formID">提交</button><!--from="formID" : 表示提交表单id为formID的表单-->
+
+
+<div class="main">
+    <form
+            action="http://localhost:8080/jdbc/PlusServlet"
+            method="post"
+            id="formID2"
+            enctype="UTF-8"
+    >
+        <div>加法计算器</div>
+        <div>加数1 ： <input type="number" maxlength="10" value="2" name="param1"/>  <!--value:默认值--></div>
+        <div>加数2 ： <input type="number" maxlength="10" value="3" name="param1"/>  <!--value:默认值--></div>
+        <input type="submit" value="计算"/>
+    </form>
+
+</div>
 
 </body>
 </html>

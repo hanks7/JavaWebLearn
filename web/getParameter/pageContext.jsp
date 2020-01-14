@@ -12,8 +12,8 @@
 </head>
 <body>
 <%
-   pageContext.include("header.jsp");
-   pageContext.setAttribute("key","value");
+    pageContext.include("header.jsp");
+    pageContext.setAttribute("key", "value");
     pageContext.getAttribute("key");
 %>
 <%=pageContext.getAttribute("key")%>

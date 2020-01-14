@@ -17,7 +17,7 @@ public class CharsetServlet extends HttpServlet {
      * 修改 <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443"  />
      * 为
      * <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" URIENcoding="UTF-8" />
-     * <p>
+     *
      * 否则还是要适配的 request.setCharacterEncoding("UTF-8");这句话的
      *
      * @param request
