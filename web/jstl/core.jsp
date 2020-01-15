@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstlTag" %>
 <%--
 如果你想使用jstl表达式你需要两个jar包分别是:taglibs-standard-impl-1.2.5.jar
                                             taglibs-standard-spec-1.2.5.jar
@@ -12,7 +12,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>jstl表达式</title>
+    <
+    <style>
+        h1 span {
+            color: #2eb11d
+        }
+    </style>
 </head>
 <body>
 <%--
@@ -23,13 +29,15 @@ var="l" 表示的就是 String l  jstl写法很奇特,也就遍历集合好用,�
 varStatus="myIndex" 使用${myIndex.index} 表示下标志 注意java foreach是没有下标值的s
 --%>
 
-<c:forEach items="${sessionScope.list }" var="li">
-    <span style="color:#2eb11d"> ${li}</span>
-</c:forEach>
+<jstlTag:forEach items="${sessionScope.list }" var="li">
+    <span> ${li}</span>
+</jstlTag:forEach>
 
-<c:forEach items="${sessionScope.stus }" var="c" varStatus="myIndex">
-    <h1 style="color:#2eb11d">下标${sessionScope.stus.size()-myIndex.index}内容 ${c.name}</h1>
-</c:forEach>
+<h1>集合长度${sessionScope.stus.size()}</h1>
+
+<jstlTag:forEach items="${sessionScope.stus }" var="stu" varStatus="myIndex"> <%-- items var varStatus对应 list<Student> Student position--%>
+    <h1>下标${myIndex.index}内容 ${stu.name}</h1>
+</jstlTag:forEach>
 
 </body>
 </html>

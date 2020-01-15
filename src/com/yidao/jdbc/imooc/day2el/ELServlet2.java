@@ -15,16 +15,12 @@ import java.io.IOException;
 public class ELServlet2 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String teacher = request.getParameter("teacher");
-        Student stu = new Student();
-        stu.setName("子墨");
-        stu.setMobile(null);
-        String grade = "A";
+        Student stu=new Student("侯建军","18670801569");
 //		request.setAttribute("grade", "B");
 //		request.getServletContext().setAttribute("grade", "C");
         HttpSession session = request.getSession();
         session.setAttribute("student", stu);
-        session.setAttribute("grade", grade);
+        session.setAttribute("grade", "A");
 
         request.getRequestDispatcher("el/el_info.jsp").forward(request, response);
     }

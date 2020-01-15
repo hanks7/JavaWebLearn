@@ -13,13 +13,15 @@ import java.io.IOException;
 @WebServlet("/info1")
 public class ELServlet1 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Student stu=new Student();
-        stu.setName("Test");
+        Student stu=new Student("hanks7","18670801569");
 
-        String grade="A";
         request.setAttribute("student",stu);
-        request.setAttribute("grade",grade);
-        request.getRequestDispatcher("el/el_info.jsp").forward(request,response);
+        request.setAttribute("grade","A");
+        request.setAttribute("teacher","Teacher");
+
+
+
+        request.getRequestDispatcher("el/el_info.jsp?teacher=kkk").forward(request,response);
 
 
 
