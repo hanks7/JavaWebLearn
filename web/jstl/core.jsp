@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstlTag" %>
 <%--
 如果你想使用jstl表达式你需要两个jar包分别是:taglibs-standard-impl-1.2.5.jar
@@ -13,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>jstl表达式</title>
-    <
+
     <style>
         h1 span {
             color: #2eb11d
