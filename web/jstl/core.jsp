@@ -14,7 +14,11 @@
     <title>jstl表达式</title>
 
     <style>
-        h1 span {
+        span {
+            color: #2eb11d
+        }
+
+        h1 {
             color: #2eb11d
         }
     </style>
@@ -34,7 +38,8 @@ varStatus="myIndex" 使用${myIndex.index} 表示下标志 注意java foreach是
 
 <h1>集合长度${sessionScope.stus.size()}</h1>
 
-<jstlTag:forEach items="${sessionScope.stus }" var="stu" varStatus="myIndex"> <%-- items var varStatus对应 list<Student> Student position--%>
+<jstlTag:forEach items="${sessionScope.stus }" var="stu"
+                 varStatus="myIndex"> <%-- items var varStatus对应 list<Student> Student position--%>
     <h1>下标${myIndex.index}内容 ${stu.name}</h1>
 </jstlTag:forEach>
 
