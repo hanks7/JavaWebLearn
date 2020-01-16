@@ -1,37 +1,51 @@
 package com.yidao.jdbc.bean;
 
 public class User {
-    private int age;
-    private String name;
-    private String address;
-
-    public User(int age, String name, String address) {
-        this.age = age;
-        this.name = name;
-        this.address = address;
+    private String username;
+    private String password;
+    private String nickname;
+    private String sex;
+    private String hobby;
+    private String path;
+    public String getUsername() {
+        return username;
     }
-
-    public int getAge() {
-        return age;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
-    public void setAge(int age) {
-        this.age = age;
+    public String getPassword() {
+        return password;
     }
-
-    public String getName() {
-        return name;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getNickname() {
+        return nickname;
     }
-
-    public String getAddress() {
-        return address;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public String getSex() {
+        return sex;
+    }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+    public String getHobby() {
+        return hobby;
+    }
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+    public String getPath() {
+        return path;
+    }
+    public void setPath(String path) {
+        this.path = path;
+    }
+    @Override
+    public String toString() {
+        return "User [username=" + username + ", password=" + password + ", nickname=" + nickname + ", sex=" + sex
+                + ", hobby=" + hobby + ", path=" + path + "]";
     }
 }

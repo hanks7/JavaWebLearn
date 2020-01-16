@@ -50,6 +50,8 @@ ${1<==3 && 2>4}
 <h3>年级：${requestScope.grade }</h3>
 <h3>讲师：${requestScope.teacher}</h3>
 <h3>手机：${requestScope.student.mobile }</h3>
+
+<%--http://localhost:8080/jdbc/el/el_info.jsp?teacher=kkk 通过传参--%>
 <h3>teacher：${param.teacher }</h3>
 
 
