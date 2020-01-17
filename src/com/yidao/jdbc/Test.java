@@ -1,4 +1,7 @@
 package com.yidao.jdbc;
+
+import com.yidao.jdbc.uitls.Ulog;
+
 import javax.servlet.jsp.jstl.core.Config;
 
 public class Test {
@@ -9,6 +12,11 @@ public class Test {
     }
 
     public static void main(String[] strings) {
+
+        String str = "012345";
+
+        str.substring(1, str.length() - 1);
+        Ulog.i(str.substring(1, 2));
 //        long privus = System.currentTimeMillis();
 //        String message = HttpUtils.sendGetRequest("http://116.247.74.76:8682/api/AutoUpdate?id=00000000000001", null);
 //        Ulog.i(message);

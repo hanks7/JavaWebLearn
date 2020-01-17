@@ -10,8 +10,8 @@ public class Employee {
     private String ename;
     private String job;
 
-
-    @JSONField(name = "hiredate", format = "yyyy-MM-dd")//@JSONField(format="yyyy-MM-dd HH:mm:ss SSS")
+    //@JSONField(format="yyyy-MM-dd HH:mm:ss SSS")//这是正常的转换时间格式 下面的注解多了一个name属性,为的是修改原来的属性名称
+    @JSONField(name = "hiredate", format = "yyyy-MM-dd")//这个name在json中就显示为hiredate,就不显示为hdate
     private Date hdate;
 
     private Float salary;

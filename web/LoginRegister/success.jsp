@@ -19,11 +19,10 @@
 		if(session.getAttribute("user")!=null){
 			User user = (User)session.getAttribute("user");
 			System.out.println(user.getPath());
-//			// 获得绝对路径最后一个\的位置
+ 			// 获得绝对路径最后一个\的位置
 			int idx = user.getPath().lastIndexOf("\\");
-//			// 获得文件上传的唯一文件名：
+ 			// 获得文件上传的唯一文件名：
 			String fileName = user.getPath().substring(idx+1);
-//			String fileName ="";
 	%>
 	<div class="login">
 		<div class="header">
