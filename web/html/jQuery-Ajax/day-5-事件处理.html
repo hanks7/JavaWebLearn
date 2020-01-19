@@ -66,7 +66,7 @@
         //简化形式
         $(function () {
             $("p.myclass").on("click", function () {
-                //$(this)是指当前事件产生的对象
+                //$(this)是指当前事件产生的对象 也就是 $("p.myclass")  和java不一样
                 $(this).css("background-color", "yellow");
             });
 
@@ -74,7 +74,7 @@
                 $(this).css("background-color", "lightgreen");
             });
 
-            $("input[name='uname']").keypress(function (event) {
+            $("input[name='uname']").keypress(function (event) {// $("input[name='uname']") 表示的是 用户名后面的 input输入框 当在输入框按下键盘输入时就触发了这个事件
                 Ulog.i(event);
                 if (event.keyCode == 32) {
                     $(this).css("color", "red");

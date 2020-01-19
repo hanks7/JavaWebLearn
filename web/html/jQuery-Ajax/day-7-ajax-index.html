@@ -2,18 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Ajax基本使用</title>
 </head>
 <body>
 	<input id="btnLoad" type="button" value="加载">
 	<div id="divContent"></div>
 	<script>
 		document.getElementById("btnLoad").onclick = function(){
-			//1. 创建XmlHttpRequest对象
+			//1. 创建XmlHttpRequest对象 由浏览器的不通创建xmlhttp 会有些不通 通过window.XMLHttpRequest boolean值来判断
 			var xmlhttp;
 			if(window.XMLHttpRequest){
+			    // 支持IE7,Firefox,chrome,opera,Safari浏览器 创建对象的方法 new XMLHttpRequest()
 				xmlhttp = new XMLHttpRequest();
 			}else{
+			    //支持老的IE6,IE5浏览器的
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 			console.log(xmlhttp);
@@ -24,15 +26,20 @@
 			//3. 处理服务器响应
 			xmlhttp.onreadystatechange = function(){
 
-                function getCustomer() {
-                    return jsonBean.message;
-                }
+                // xmlhttp.readyState == 0 请求未初始化
+                // xmlhttp.readyState == 1 服务器连接已建立
+                // xmlhttp.readyState == 2 请求已被接受
+                // xmlhttp.readyState == 3 请求正在处理
+                // xmlhttp.readyState == 4 响应文本已被接受
+
+				// xmlhttp.status == 200 (Servlet http 常见状态码 )
 
                 if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var t = xmlhttp.responseText;
-                    var jsonBean = JSON.parse(t);
-					alert(getCustomer());
-					document.getElementById("divContent").innerHTML = getCustomer();
+					var strResponse = xmlhttp.responseText;
+
+                    var jsonBean = JSON.parse(strResponse);
+					Ulog.i(jsonBean.message);
+					document.getElementById("divContent").innerHTML =jsonBean.message;
 				}
 			}
 		}

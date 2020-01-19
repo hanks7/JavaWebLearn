@@ -2,29 +2,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>jQuery对Ajax的支持</title>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="../html-js/tool.js"></script>
 <script type="text/javascript">
 	$(function(){
         /*
-            1. url
-            2. 要发送的参数，可以是字符串也可以是json
-            3. 响应处理函数
+        $.ajax({
+            1. url	 发送请求的地址
+            2. type  请求类型 get|post
+            3. data  要发送的参数，可以是字符串也可以是json    响应处理函数
             4. dataType(可选) 服务器返回的数据类型(text|json|xml|html|script)
-            $.ajax()
+            5. success  接受响应时的处理的函数 "success" : function(json){ 业务 }
+            6. error    请求失败时的处理的函数  "error" : function(xmlhttp , errorText){ 业务 }
+            })
+
+            名称全部都要加引号 "url"	"type",不加也是可以的 js中是支持的,但是当在java文件中或者其他文件中使用时会出现不兼容的问题,为了严谨还是加上吧
         */
 		$.ajax({
-			"url" : "http://localhost:8080/jdbc/Servlet1",
+			"url" : "http://localhost:8080/jdbc/NewsListServlet",
 			"type" : "get" ,
-			"data" : {"t":"pypl" , "abc":"123" , "uu":"777"},
-			//"data" : "t=pypl&abc=123&uu=777" , 
+			// "data" : {"t":"pypl" , "abc":"123" , "uu":"777"},
+			"data" : "t=pypl&abc=123&uu=777" ,
 			"dataType" : "json" ,
 			"success" : function(json){
-               var bean= json.data.customers
 				Ulog.i("json",JSON.stringify(json));
-				for(var i = 0 ; i < bean.length ; i++){
-					$("#container").append("<h1>" + bean[i].name + "</h1>");
+				for(var i = 0 ; i < json.length ; i++){
+					$("#container").append("<h1>" + json[i].content + "</h1>");
 				}
 			},
 			"error" : function(xmlhttp , errorText){
