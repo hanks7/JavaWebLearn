@@ -7,7 +7,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
     Ulog.i("basePath", basePath);
 %>
-<base href="<%=basePath%>">
+<base href="<%=basePath%>">  <%--值包含href 不包含form action --%>
 <!DOCTYPE html>
 <html>
 <head>

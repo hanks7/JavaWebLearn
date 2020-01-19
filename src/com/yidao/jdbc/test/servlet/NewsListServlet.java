@@ -2,6 +2,7 @@ package com.yidao.jdbc.test.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.yidao.jdbc.bean.News;
+import com.yidao.jdbc.uitls.Ulog;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +16,16 @@ import java.util.List;
 @WebServlet("/NewsListServlet")
 public class NewsListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String type = request.getParameter("t");
+        Ulog.i("type", type);
         List<News> list = null;
         if (type != null && type.equals("pypl")) {
             list = getNews(type);
-        }else{
+        } else {
             list = getNews("未填写");
         }
 
