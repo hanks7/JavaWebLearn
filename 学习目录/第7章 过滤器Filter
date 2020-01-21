@@ -75,7 +75,8 @@
             1.  /index.jsp-执行资源精准匹配
             2.  /test/*  有前缀的模糊匹配
             3.  *.jsp    以后缀进行的模糊匹配
-            4.web.xml 配置
+            4. 多个过滤配置
+                   1. web.xml 配置
                               <filter>
                                       <filter-name>CharseterEncodingFilter</filter-name><!--过滤器的名称-->
                                       <filter-class>com.yidao.jdbc.imooc.day7filter.CharseterEncodingFilter</filter-class><!--用于说明哪一个类属于过滤器-->
@@ -93,7 +94,7 @@
                                       <url-pattern>/*</url-pattern>
                               </filter-mapping>
 
-                              2.注解 配置
+                    2. 注解 配置
                               @WebFilter(filterName = "CharseterEncodingFilter", urlPatterns = {"/*","/index.jsp","/test/*","*.jsp"},initParams={
                                       @WebInitParam(name = "encoding", value = "GBK") ,
                                       @WebInitParam(name = "param1", value = "参数1") ,
