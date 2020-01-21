@@ -13,6 +13,12 @@ import java.io.IOException;
 public class CharsetServlet extends HttpServlet {
 
     /**
+     * 解决中文乱码
+     *          1.get请求 tomcate根目录/conf/server.xml 中添加  URIENcoding="UTF-8"
+     *          2.post请求 request.setCharacterEncoding("UTF-8");
+     *
+     *
+     *
      * 非常值得注意的是 Tomcat8以下的版本需要修改 tomcate根目录/conf/server.xml
      * 修改 <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443"  />
      * 为

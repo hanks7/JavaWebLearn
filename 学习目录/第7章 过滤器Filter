@@ -1,0 +1,80 @@
+
+
+
+  过滤器Filter    MyFilter
+       一.知识点
+                   1.过滤器是j2EE Servlet 模块下的组件
+                   2.Filter的作用是对Url进行统一的拦截处理
+                   3.过滤器不仅会对请求做出拦截，也会对响应做出拦截
+                   4.需要实现Filter接口
+                   5.在Filter接口doFilter()方法中编写过滤器的功能代码
+                   6.在web.xml中配置过滤器,说明拦截url的范围
+
+                   7.并发时 采用的是单例多线程
+                   8.一旦触发下面的<url-pattern>/* 就是满足了过滤条件 就会去执行 Filter的生命周期
+
+
+
+                        <filter>
+                            <filter-name>myfilter</filter-name>                                           <!--过滤器的名称-->
+                            <filter-class>com.yidao.jdbc.imooc.day7filter.MyFilter</filter-class>         <!--用于说明哪一个类属于过滤器-->
+                        </filter>
+                        <filter-mapping>                                                                   <!--映射-->
+                            <filter-name>myfilter</filter-name>                                            <!--对应 <filter>中 的<filter-name>-->
+                            <url-pattern>/*</url-pattern>                                                  <!--/* 表示对所有 本项目的url进行拦截-->
+                        </filter-mapping>
+
+        二.生命周期
+                       初始化 init()
+                       提供服务 doFilter()
+                       销毁 destroy() tomcat 关闭时才会调用
+
+        三.过滤器注解形式
+                    @WebFilter(filterName = "MyAnnoationFilter", urlPatterns = "/*")
+                    public class AnnotationFilter implements Filter {}
+                    1.filterName名字可以随便填写
+        四.中文乱码
+                    1.解决request 参数乱码 CharsetServlet
+                            1.get请求 tomcate根目录/conf/server.xml 中添加  URIENcoding="UTF-8"
+                            2.post请求 request.setCharacterEncoding("UTF-8");
+                    2.response 响应乱码
+                            1.response.setContentType("text/html:charset=UTF-8");
+                    3.使用拦截器 CharseterEncodingFilter 把所有的request 和 response 都设置成为UTF-8 不用管get还是post
+                             response.setContentType("text/html:charset=UTF-8");
+                             request.setCharacterEncoding("UTF-8");
+
+        五.过滤器参数化  CharseterEncodingFilter
+                1.web.xml 配置
+                  <filter>
+                          <filter-name>CharseterEncodingFilter</filter-name><!--过滤器的名称-->
+                          <filter-class>com.yidao.jdbc.imooc.day7filter.CharseterEncodingFilter</filter-class><!--用于说明哪一个类属于过滤器-->
+                          <init-param>
+                              <param-name>encoding</param-name>
+                              <param-value>UTF-8</param-value>
+                          </init-param>
+                  </filter>
+                  <filter-mapping><!--映射-->
+                          <filter-name>CharseterEncodingFilter</filter-name><!--对应 <filter>中 的<filter-name>-->
+                          <url-pattern>/*</url-pattern><!--/* 表示对所有 本项目的url进行拦截-->
+                  </filter-mapping>
+
+                  2.注解 配置
+                  @WebFilter(filterName = "CharseterEncodingFilter", urlPatterns = "/*",initParams={
+                          @WebInitParam(name = "encoding", value = "GBK") ,
+                          @WebInitParam(name = "param1", value = "参数1") ,
+                          @WebInitParam(name = "param2", value = "参数2")
+                  })
+
+                  3.读取配置
+                          public void init(FilterConfig filterConfig) throws ServletException {
+                             String strEncoding = filterConfig.getInitParameter("encoding");
+                          }
+                  4.如果 注解和web.xml 都配置了,以web.xml过滤器配置为主.
+
+        六.url-pattern常用写法
+            1.  /index.jsp-执行资源精准匹配
+            2.  /jdbc/*  有前缀的模糊匹配
+            3.  *.jsp    以后缀进行的模糊匹配
+
+
+

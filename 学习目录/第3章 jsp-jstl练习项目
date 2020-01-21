@@ -1,0 +1,20 @@
+
+
+
+三 项目:登录注册功能  login.jsp  LoginServlet RegistServlet InitServlet
+    1.mvc概述  Servlet + jsp + JavaBean 模式  
+        model 模型层-----JavaBean
+        view  视图层-----jsp
+        controller 控制层-----Servlet
+
+            如果你加了  <base href="<%=basePath%>">  basePath= "http://localhost:8080/jdbc/"
+            <a href="LoginRegister/login.jsp">登录</a>
+            因为 jsp 页面 因为HTML读不到项目结构 
+            <form action="/jdbc/LoginServlet" method="post">  action 读不到 basePath 只能读到IP端口号也就是http://localhost:8080
+
+    2.文件上传
+            文件上传的条件
+                * 表单必须是post提交方式
+                * 表单中必须有文件上传项，文件上传项必须有name属性和值
+                * 表单的enctype属性必须设置为multipart/form-data
+                * web-lib 需要两个jar 包  commons-fileupload-1.2.1.jar   conmons-io-1.4.jar 

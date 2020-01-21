@@ -1,0 +1,49 @@
+一.Servlet
+    1.web/html
+    2.com.yidao.jdbc.imocc.day1Servlet
+    3.Create0Servlet   服务启动时,第一个加载的servlet，优先加载 0表示 优先级最高，相当于android的application
+    4.UserAgentServlet 通过response判断是window是还是android
+
+    5.响应的结构 三部分 响应行 响应头 响应体
+
+    6.http 常见状态码
+        200服务器处理成功过
+        404 无法找到文件    ip端口号是对的，但是找不到对应的servlet 或者jsp
+        500 内部服务错误    其实就是你代码写错了，页面会爆出java代码错误，例如空指针错误。
+        403 服务器拒绝访问
+        301 302 请求重定向
+        400 无效的请求
+        401 未经过授权
+        503 服务器超负载或正在停机维护，无法处理请求
+
+    7.ContentTypeServlet
+    8.请求转发与重定向 com.yidao.jdbc.imocc.day1Servlet.direct
+    9.cookie  SetCookieServlet
+
+    10.Session SetSessionServlet  Session 和浏览器有关，有30分钟的时效性，Session其实是浏览器的成员变量。当浏览器关闭时
+                              Session也就销毁了。但是Session是存在服务端的，并且建立一个Session_id 键值对保存，浏览器只有
+                              Session_id是用cookie保存的。
+
+    11.ServletContextServlet      ServletContext服务器开始，其就存在，服务器关闭，其才释放
+    12.CharsetServlet 解决中文乱码
+    13.web.xml常用配置
+           1.修改默认首页
+           2.Servlet通配符映射   PatternServlet
+           3.404 500状态码默认页面
+           4.初始化参数     ServletContextServlet  向ServletContext中赋值，我并没有直接写String \
+             而是通过 String copyright = context.getInitParameter("copyright");
+             context.getInitParameter 相当于从web.xml配置文件中取值
+
+    15.发布war包  参考文章   https://blog.csdn.net/u011291072/article/details/53232115
+
+    16.要注意的点:
+                        1.get 或者 post 请求 要注意响应请求 ContentTypeServlet
+                        2.//重定向   需要增加contextPath CheckLoginServlet
+                        3.解决request 参数乱码 CharsetServlet
+
+    17.使用注解设置服务启动时的Servlet
+
+            @WebServlet(urlPatterns = "/unused", loadOnStartup = 2)
+            public class Create2Servlet extends HttpServlet {}
+
+             服务启动时,第一个加载的servlet，优先加载 0表示 优先级最高，相当于android的application

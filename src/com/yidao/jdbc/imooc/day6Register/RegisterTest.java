@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterJava {
+public class RegisterTest {
 
     public static void main(String[] args) {
         StringBuilder content = new StringBuilder();

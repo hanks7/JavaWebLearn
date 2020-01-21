@@ -101,6 +101,29 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- 设置跨域访问-->
+    <filter>
+        <filter-name>myfilter</filter-name><!--过滤器的名称-->
+        <filter-class>com.yidao.jdbc.imooc.day7filter.MyFilter</filter-class><!--用于说明哪一个类属于过滤器-->
+    </filter>
+    <filter-mapping><!--映射-->
+        <filter-name>myfilter</filter-name><!--对应 <filter>中 的<filter-name>-->
+        <url-pattern>/*</url-pattern><!--/* 表示对所有 本项目的url进行拦截-->
+    </filter-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>CharseterEncodingFilter</filter-name>&lt;!&ndash;过滤器的名称&ndash;&gt;-->
+        <!--<filter-class>com.yidao.jdbc.imooc.day7filter.CharseterEncodingFilter</filter-class>&lt;!&ndash;用于说明哪一个类属于过滤器&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>encoding</param-name>-->
+            <!--<param-value>UTF-8</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>&lt;!&ndash;映射&ndash;&gt;-->
+        <!--<filter-name>CharseterEncodingFilter</filter-name>&lt;!&ndash;对应 <filter>中 的<filter-name>&ndash;&gt;-->
+        <!--<url-pattern>/*</url-pattern>&lt;!&ndash;/* 表示对所有 本项目的url进行拦截&ndash;&gt;-->
+    <!--</filter-mapping>-->
+
 
     <servlet>
         <description></description>
