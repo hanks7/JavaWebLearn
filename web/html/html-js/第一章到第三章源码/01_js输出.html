@@ -6,6 +6,12 @@
 </head>
 <body>
 <p id="one"></p>
+
+<p>
+    <input type="submit" value="界面上显示的内容"   onclick="diag()"/>
+</p>
+
+
 <script type="text/javascript">
     /**
      window.alert() 警告框
@@ -27,6 +33,17 @@
     }
 
     document.write(sayHi.toString());
+
+    //prompt("随便写点儿啥吧", "比如我叫啥")  "随便写点儿啥吧" 为标题 ,"比如我叫啥"为默认输入.
+    function diag() {
+        var str = prompt("随便写点儿啥吧", "比如我叫啥");
+        if (str) {
+            alert("点击确定,您刚输入的是：" + str)
+        }else{
+            alert("点击取消,结果是：" + str)
+        }
+    }
 </script>
+
 </body>
 </html>

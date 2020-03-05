@@ -10,14 +10,25 @@
     var x = 'the answer is' + 42;
     var y = 42 + 'the answer is';
 
+
+    Ulog.w(x);//the answer is42
+    Ulog.w(y);//42the answer is
+    Ulog.w("37" + 7);//377
+
+
     /*
-    "==" 与"==="
-     "===" 类型比较之后就是值比较
-     */
-    Ulog.w("fasdfasdf", "fasdfasdf");
-    Ulog.w(x);
-    Ulog.w(y);
-    Ulog.w("37" + 7);
+     "==" 与"==="
+      "===" 类型比较之后就是值比较
+      */
+    function test1() {
+        return 32 == "32";
+    }
+    function test2() {
+        return 32 === "32";
+    }
+
+    Ulog.w(test1());//true;
+    Ulog.w(test2());//false;
 
 
 </script>

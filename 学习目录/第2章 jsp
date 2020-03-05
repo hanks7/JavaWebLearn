@@ -28,7 +28,7 @@
         3.sessionScope  对应session
         4.applicationScope  对应ServletContext
 
-    3.JSTL标签库
+    3.JSTL标签库 使用前准备
         (jsp standard Tag library) jsp标准标签库
         1.需要两个jar包
                     taglibs-standard-impl-1.2.5.jar
