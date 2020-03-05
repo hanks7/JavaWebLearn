@@ -58,18 +58,18 @@
                           <url-pattern>/*</url-pattern><!--/* 表示对所有 本项目的url进行拦截-->
                   </filter-mapping>
 
-                  2.注解 配置
+                2.注解 配置
                   @WebFilter(filterName = "CharseterEncodingFilter", urlPatterns = "/*",initParams={
                           @WebInitParam(name = "encoding", value = "GBK") ,
                           @WebInitParam(name = "param1", value = "参数1") ,
                           @WebInitParam(name = "param2", value = "参数2")
                   })
 
-                  3.读取配置
+                3.读取配置
                           public void init(FilterConfig filterConfig) throws ServletException {
                              String strEncoding = filterConfig.getInitParameter("encoding");
                           }
-                  4.如果 注解和web.xml 都配置了,以web.xml过滤器配置为主.
+                4.如果 注解和web.xml 都配置了,以web.xml过滤器配置为主.
 
         六.url-pattern常用写法
             1.  /index.jsp-执行资源精准匹配
@@ -94,7 +94,7 @@
                                       <url-pattern>/*</url-pattern>
                               </filter-mapping>
 
-                    2. 注解 配置
+                   2. 注解 配置
                               @WebFilter(filterName = "CharseterEncodingFilter", urlPatterns = {"/*","/index.jsp","/test/*","*.jsp"},initParams={
                                       @WebInitParam(name = "encoding", value = "GBK") ,
                                       @WebInitParam(name = "param1", value = "参数1") ,
