@@ -19,8 +19,10 @@
      *
      * prototype在构造方法中
      *
-     * 当你new 对象时就会执行Person.__proto__ = Person.prototype  然后你就可以Person.name  我也不知道为什么
-     * 因为每个对象都有一个隐藏的属性——“__proto__”，这个属性引用了创建这个对象的函数的prototype。即：fn.__proto__ = Fn.prototype
+     * 1.当你new 对象时就会执行Person.__proto__ = Person.prototype  然后你就可以Person.name  我也不知道为什么
+     * 2.因为每个对象都有一个隐藏的属性——“__proto__”，这个属性引用了创建这个对象的函数的prototype。即：Person.__proto__ = Person.prototype
+     * 3.__proto__ 默写情况下使用是可以隐藏的 例如:p.__proto__.name, p.name 这两种写法是一个意思
+     * 4.注意 ""_ _proto_ _"  是两个下滑线(为了方便观察我加了空格)
      */
     function Person() {
     }
