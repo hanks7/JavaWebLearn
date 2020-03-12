@@ -4,28 +4,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        /*justify-content属性
+             flex-start：从左到右排列
+             flex-end：从右到左排列
+             center：中间开始排列
+             space-between：平分
+             space-around：平分，且两边占1/2
+        */
+
         .flex-container {
             display: flex;
+            display: -webkit-flex;
+            width: 500px;
+            background-color: darkcyan;
+            justify-content: center;
             flex-direction: column;
-            flex-wrap: wrap;
-            width: 1200px;
-            height: 640px;
-            background-color: lightsteelblue;
         }
+
         .flex-item {
-            width: 320px;
-            height: 240px;
-            margin: 10px;
-            background-color:lightsalmon;
+            width: 130px;
+            height: 125px;
+            margin: auto;
+            margin-top: 10px  ;
+            margin-bottom: 10px;
+            background-color: yellowgreen;
         }
 
     </style>
-</head>
+
 <body>
 <div class="flex-container">
-    <div class="flex-item"></div>
-    <div class="flex-item"></div>
-    <div class="flex-item"></div>
+    <div class="flex-item one">盒子1</div>
+    <div class="flex-item tow">盒子2</div>
+    <div class="flex-item three">盒子3</div>
 </div>
 </body>
 </html>
