@@ -2,41 +2,45 @@
 <html>
 <head>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
         .child_1 {
             width: 248px;
             height: 250px;
             background-color: red;
-            display: none; /*不可见*/
+            display:block;/*显示 根据需求填写block inner-block inner*/
+
         }
 
         .child_2 {
             width: 248px;
             height: 250px;
-            display: initial; /*不可见*/
+            visibility:hidden;/*隐藏 但是 占据位置*/
             background-color: #11ff18;
         }
 
         .child_3 {
             width: 248px;
             height: 250px;
-            display: block; /*可见*/
+            display:none; /*隐藏 不占据位置*/
             background-color: #ff366c;
+        }
+
+        .main {
+            border: 1px solid red;
         }
     </style>
 </head>
 <body>
 
-<!--
-visible	默认值。内容不会被修剪，会呈现在元素框之外。
-hidden	内容会被修剪，并且其余内容是不可见的。
-scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
-auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
-inherit	规定应该从父元素继承 overflow 属性的值。
--->
-<div class="child_1"></div>
-<div class="child_2"></div>
-<div class="child_3"></div>
 
+<div class="main">
+    <div class="child_1"></div>
+    <div class="child_2"></div>
+    <div class="child_3"></div>
+</div>
 </body>
 </html>
