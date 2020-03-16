@@ -7,25 +7,24 @@
         .flex-container {
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
+            flex-wrap: wrap;/*超出的元素是否换行*/
             width: 700px;
             height: 150px;
             background-color: lightsteelblue;
-            align-items:baseline;
-            justify-content:space-around;
+            align-items: center;
         }
 
         .flex-container .flex-item {
             width: 160px;
             height: 80px;
             margin: 10px;
-
             background-color: lightsalmon;
         }
 
         .flex-container .one {
             width: 140px;
             height: 90px;
+            align-items:end;
         }
 
         .flex-container .two {
@@ -48,7 +47,6 @@
     <div class="flex-item three">3333</div>
 </div>
 
-<a href="https://www.jianshu.com/p/5856c4ae91f2">参考文献1</a>
 <br/>
 <a href="https://www.jianshu.com/p/dd127da6e4b8">参考文献2</a>
 </body>
