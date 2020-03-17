@@ -8,34 +8,49 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            width: 700px;
-            height: 150px;
+            width: 1200px;
+            height: 240px;
             background-color: lightsteelblue;
-            align-items:baseline;
-            justify-content:space-around;
+            align-items:center;
+            justify-content: space-between;
         }
 
         .flex-container .flex-item {
-            width: 160px;
+            width: 30px;
             height: 80px;
             margin: 10px;
             background-color: lightsalmon;
         }
 
         .flex-container .one {
-            width: 140px;
+            width: 50px;
             height: 90px;
+            align-self: flex-start;/*垂直方向居上*/
         }
 
         .flex-container .two {
-            width: 120px;
+            width: 60px;
             height: 100px;
+            align-self: flex-end;/*垂直方向居下*/
         }
 
         .flex-container .three {
             font-size: 28px;
             width: 300px;
             height: 130px;
+            align-self: center;/*居中*/
+        }
+        .flex-container .four {
+            font-size: 28px;
+            width: 260px;
+            height: 130px;
+            align-self: stretch;/*拉伸,只是高度铺满容器,未研究清楚,这样写是不起作用的*/
+        }
+        .flex-container .five {
+            font-size: 48px;
+            width: 260px;
+            height: 130px;
+            align-self: baseline;/*基线上,和有align-self: baseline的子项,文字在一条线上*/
         }
 
     </style>
@@ -45,6 +60,8 @@
     <div class="flex-item one">1111</div>
     <div class="flex-item two">2222</div>
     <div class="flex-item three">3333</div>
+    <div class="flex-item four">4444</div>
+    <div class="flex-item five">5555</div>
 </div>
 
 <a href="https://www.jianshu.com/p/5856c4ae91f2">参考文献1</a>

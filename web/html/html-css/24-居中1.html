@@ -3,8 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!--http://localhost:8080/jdbc/html/regular/regular.html-->
-    <title>正则表达式</title>
+    <title></title>
     <style>
+
         /*这个是居中关键否则.login 中   top: 50%;会不起作用,但是有的界面没写也不会有影响*/
         html, css {
             width: 100%;
@@ -19,6 +20,11 @@
             height: 100%;
         }
 
+        /*
+        1.使用绝对定位,
+        2.使用top left
+        3.再使用margin-top margin-left
+        */
         .login {
             width: 450px;
             height: 380px;
@@ -36,7 +42,8 @@
 
 
 <body>
-<div class="login">
+<div class="login">水平左右居中用text-align: center
+    上下垂直居中用行高 line-height,或者弹性盒子模型
 </div>
 </body>
 </html>

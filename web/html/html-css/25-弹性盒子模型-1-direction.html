@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三行两列布局</title>
+    <style>
+        /*
+        flex-direction
+             row             横向显示
+             row-reverse     横向反向排序显示
+             column          垂直显示
+             column-reverse  垂直反向排序显示
+
+        flex-wrap
+            wrap            换行
+            wrap-reverse    向上换行
+            nowrap          不换行
+
+        */
+        .flex-container {
+            display: flex;/*设置弹性盒子模型*/
+            flex-direction: row;/*类似线性布局,水平显示*/
+            flex-wrap: wrap;/*超出的部分换行*/
+            width: 700px;
+            height: 240px;
+            background-color: lightsteelblue;
+            align-items:center;/*内容垂直居中  上下居中*/
+
+        }
+
+        .flex-container .flex-item {
+            width: 30px;
+            height: 80px;
+            margin: 10px;
+            background-color: lightsalmon;
+        }
+
+        .flex-container .one {
+            width: 50px;
+            height: 90px;
+        }
+
+        .flex-container .two {
+            width: 60px;
+            height: 100px;
+        }
+
+        .flex-container .three {
+            font-size: 28px;
+            width: 300px;
+            height: 130px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="flex-container">
+    <div class="flex-item one">1111</div>
+    <div class="flex-item two">2222</div>
+    <div class="flex-item three">3333</div>
+</div>
+
+<a href="https://www.jianshu.com/p/5856c4ae91f2" target="_blank">CSS3弹性盒布局方式</a>
+<br/>
+<a href="https://www.jianshu.com/p/dd127da6e4b8" target="_blank">你知道弹性盒子的使用吗？</a>
+</body>
+</html>

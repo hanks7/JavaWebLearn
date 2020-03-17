@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>三行两列布局</title>
     <style>
+        /*
+          align-items
+          center     所有的子项上下居中
+          flex-start 所有子项居上
+          flex-end   所有子项居下
+          baseline   所有子项居基线上,所有的文字在一条线上(解释不清你自己试试,下面div中必须有文字,并且大小不一样,才能看出效果)
+          */
         .flex-container {
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;/*超出的元素是否换行*/
+            flex-wrap: wrap; /*超出的元素是否换行*/
             width: 700px;
             height: 150px;
             background-color: lightsteelblue;
@@ -24,7 +31,7 @@
         .flex-container .one {
             width: 140px;
             height: 90px;
-            align-items:end;
+            align-items: end;
         }
 
         .flex-container .two {
@@ -48,6 +55,6 @@
 </div>
 
 <br/>
-<a href="https://www.jianshu.com/p/dd127da6e4b8">参考文献2</a>
+<a href="https://www.jianshu.com/p/dd127da6e4b8" target="_blank">参考文献2</a>
 </body>
 </html>
