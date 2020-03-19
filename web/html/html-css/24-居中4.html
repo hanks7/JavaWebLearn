@@ -4,28 +4,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!--http://localhost:8080/jdbc/html/regular/regular.html-->
     <title>正则表达式</title>
-    <style>
-        html, css {
-            width: 100%;
-            height: 100%;
-        }
-
-        .main {
-            width: 200px;
-            height: 200px;
-            display: inline-block;
-            border: 1px solid red;
-            vertical-align: middle;
-            text-align: center;    /*文字  左右居中,水平居中*/
-        }
-
-
-    </style>
 </head>
 
 
 <body>
-<div class="main">11111111111111
+<style type="text/css">
+    .ctn-block {
+        display: block;
+        background-color: #bbb;
+        line-height: 200px;
+        font-size: 50px;
+    }
+
+    .ctn-block .child1 {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin: 10px 0;
+        vertical-align: middle;/*垂直方向上 ,居中对齐,其实就是上下对齐,前提条件是父元素有行高  eg:line-height: 200px;*/
+        background-color: aliceblue;
+    }
+</style>
+
+<div class="ctn-block">
+    <div class="child1"></div>
+    <span>Gg</span>
 </div>
 </body>
 </html>
