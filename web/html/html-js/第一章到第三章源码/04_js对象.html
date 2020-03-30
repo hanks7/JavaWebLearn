@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js数据类型</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var td="全局变量";
+        // JavaScript 对象   键值对
+        var person={
+            td:"对象里的属性",
+            firstname:"John",
+            lastname:"Doe",
+            id:5566,
+			test:function(strContent){
+                console.log( strContent)//全局变量
+                console.log( this.td)//对象里的属性
+			}
+        };
+        person.test("teset");
+        person.test("teset");
+        person.test("teset");
+        person.test("teset");
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

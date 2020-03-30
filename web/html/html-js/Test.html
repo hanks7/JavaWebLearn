@@ -6,39 +6,48 @@
     <script type="text/javascript" src="test.js"></script>
     <script type="text/javascript">
 
-        // log.i("tag", "hello world");
-        //
-        // for (var i = 0; i < 5; i++) {
-        //     setTimeout(function () {
-        //         console.log(new Date, i);
-        //     }, 1);
-        // }
 
-        // for (var i = 0; i < 5; i++) {
-        //     setTimeout(function(j) {
-        //         console.log(new Date, j);
-        //     }, 1000, i);
-        // }
-
-        // console.log(new Date, i);
-
-        var fn = function () {
-            alert(100);
-        };
-        fn.a = 10;
-        fn.b = function () {
-            alert(123);
-        };
-        fn.c = {
-            name: "王福朋",
-            year: 1988
-        };
-        console.log(fn());
-        console.log(fn.b());
-        console.log(fn.c.name);
     </script>
+    <style>
+        .main{
+           border:1px solid red;
+            overflow: hidden;
+        }
+        .div1 {
+            float: right;
+            width: 200px;
+            height: 200px;
+            background: #75356b;
+        }
+
+        .div2 {
+            float: right;
+            width: 200px;
+            height: 300px;
+            background: #15e4ff;
+        }
+
+        .div3 {
+            position: relative;
+            top: 150px;
+            z-index: -1;
+            width: 100%;
+            height: 1px;
+            background: #000000;
+        }
+    </style>
 </head>
 <body>
+<div class="main">
+    <div class="div1">
 
+    </div>
+    <div class="div2">
+
+    </div>
+    <div class="div3">
+
+    </div>
+</div>
 </body>
 </html>
