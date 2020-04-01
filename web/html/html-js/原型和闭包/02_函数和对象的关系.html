@@ -18,6 +18,13 @@
 
     var Fn = new Fn();
 
+    //添加新属性的方法
+    Fn.param1 = "第一种添加新属性的方法";
+    //添加新属性的方法
+    Fn["param2"] = "第二种添加新属性的方法";
+
+    console.log(Fn );
+
     // 第二种创建对象和数组方式
     var obj = {a: 10, b: 20};
     var arr = [5, 'x', true];

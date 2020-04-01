@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title>三行两列布局</title>
     <style>
+
+       /*
+        align-self
+            flex-start    垂直方向居上
+            flex-end      垂直方向居下
+            center        居中
+            stretch       拉伸,只是高度铺满容器,未研究清楚,这样写是不起作用的
+            baseline      基线上,和有align-self: baseline的子项,文字在一条线上
+         */
         .flex-container {
             display: flex;
             flex-direction: row;
@@ -11,46 +20,44 @@
             width: 1200px;
             height: 240px;
             background-color: lightsteelblue;
-            align-items:center;
+            align-items: center;
             justify-content: space-between;
         }
 
         .flex-container .flex-item {
-            width: 30px;
-            height: 80px;
-            margin: 10px;
             background-color: lightsalmon;
         }
 
         .flex-container .one {
             width: 50px;
             height: 90px;
-            align-self: flex-start;/*垂直方向居上*/
+            align-self: flex-start; /*垂直方向居上*/
         }
 
         .flex-container .two {
             width: 60px;
             height: 100px;
-            align-self: flex-end;/*垂直方向居下*/
+            align-self: flex-end; /*垂直方向居下*/
         }
 
         .flex-container .three {
             font-size: 28px;
             width: 300px;
             height: 130px;
-            align-self: center;/*居中*/
+            align-self: center; /*居中*/
         }
+
         .flex-container .four {
             font-size: 28px;
             width: 260px;
-            height: 130px;
-            align-self: stretch;/*拉伸,只是高度铺满容器,未研究清楚,这样写是不起作用的*/
+            align-self: stretch; /*拉伸,只是高度铺满容器,如果不写高度(父类也没有),那么高度就铺满容器*/
         }
+
         .flex-container .five {
             font-size: 48px;
             width: 260px;
             height: 130px;
-            align-self: baseline;/*基线上,和有align-self: baseline的子项,文字在一条线上*/
+            align-self: baseline; /*基线上,和有align-self: baseline的子项,文字在一条线上*/
         }
 
     </style>
