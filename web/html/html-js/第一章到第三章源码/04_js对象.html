@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>js数据类型</title>
+    <meta charset="UTF-8">
+    <title>js数据类型</title>
 </head>
 <body>
-	<script type="text/javascript">
-		var td="全局变量";
-        // JavaScript 对象   键值对
-        var person={
-            td:"对象里的属性",
-            firstname:"John",
-            lastname:"Doe",
-            id:5566,
-			test:function(strContent){
-                console.log( strContent)//全局变量
-                console.log( this.td)//对象里的属性
-			}
-        };
-        //添加新属性的方法
-        person.param = "添加新属性的方法";
-        //添加新属性的方法
-        person["tttt"] = "第二种添加新属性的方法";
+<script type="text/javascript">
+    var dd = "全局变量";
 
-        console.log(person );
-        // person.test("teset");
-        // person.test("teset");
-        // person.test("teset");
-        // person.test("teset");
+    var test = {
+        dd: "test的属性",
+        ff: "John",
+        aa: dd,
+        ee: this.dd,
+        cc: {
+            yy: "test.cc的属性",
+            tt: function () {
+                console.log(this);//this 是 test.cc
+            }
+        },
+        bb: function () {
+            console.log(this)//this 是
+        }
+    };
 
-	</script>
+    test.cc.tt();
+    test.bb();
+
+    //添加新属性的方法
+    test.param = "添加新属性的方法";
+    //添加新属性的方法
+    test["tttt"] = "第二种添加新属性的方法";
+
+    var teacher = {
+        teachernn: "teachernn的属性",
+
+        student: {
+            studentnn: "student的属性",
+
+            tt: function (param) {
+
+                console.log(param.name);
+                console.log(this);//this 是 student
+            }
+        },
+
+        kk: function () {
+            this.student.tt({name: this});//this 是 teacher   所以这里的this 是无法指向自己的,只能是外部类teacher
+        }
+    };
+    teacher.kk();
+
+
+</script>
 </body>
 </html>
 
