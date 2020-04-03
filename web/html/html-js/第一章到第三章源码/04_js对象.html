@@ -12,7 +12,7 @@
         dd: "test的属性",
         ff: "John",
         aa: dd,
-        ee: this.dd,
+        ee: this,  //this 是 全局对象
         cc: {
             yy: "test.cc的属性",
             tt: function () {
@@ -26,6 +26,7 @@
 
     test.cc.tt();
     test.bb();
+    console.log( test.ee)
 
     //添加新属性的方法
     test.param = "添加新属性的方法";
