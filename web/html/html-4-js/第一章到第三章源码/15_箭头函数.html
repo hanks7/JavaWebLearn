@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js Break 和 Continue 语句</title>
+
+    <script type="text/javascript">
+        function fn1() {//普通函数定义方式
+            console.log("普通函数");
+        }
+
+        let fn = () => { //箭头函数定义
+            console.log("箭头函数");
+        }
+        //或
+        let fn2 = function () {
+            console.log("箭头函数");
+        }
+
+
+        /*  箭头函数带返回值 不用加{}
+          加了{}就必须写 return*/
+        let fn3 = () => 3;
+        let fn4 = () => {
+
+
+
+            return 3
+        };
+
+        console.log(fn3());
+        console.log(fn4());
+    </script>
+</head>
+<body>
+
+</body>
+</html>
