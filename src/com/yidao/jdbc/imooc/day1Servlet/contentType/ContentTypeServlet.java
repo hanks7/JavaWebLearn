@@ -25,9 +25,9 @@ import java.io.IOException;
  */
 @WebServlet("/ct")
 public class ContentTypeServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
        
-
 	/**
 	 * plain:表示纯文本 Ctrl+F5 表示清除缓存并更新 非常重要
 	 * @param request

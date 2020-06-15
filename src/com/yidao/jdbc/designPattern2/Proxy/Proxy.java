@@ -1,7 +1,6 @@
 package com.yidao.jdbc.designPattern2.Proxy;
 
 /**
- * 设计模式
  * 代理模式
  */
 public class Proxy implements Subject {

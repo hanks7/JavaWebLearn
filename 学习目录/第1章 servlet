@@ -1,5 +1,5 @@
 一.Servlet
-    1.web/html
+    1.web.xml
     2.com.yidao.jdbc.imocc.day1Servlet
     3.Create0Servlet   服务启动时,第一个加载的servlet，优先加载 0表示 优先级最高，相当于android的application
     4.UserAgentServlet 通过response判断是window是还是android

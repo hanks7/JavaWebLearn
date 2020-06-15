@@ -4,33 +4,44 @@ import com.yidao.jdbc.uitls.Ulog;
 
 import javax.servlet.jsp.jstl.core.Config;
 
-public class Test {
-    static int i = 1;
 
-    public static void foo(int t) {
-        t = 2;
+class A {
+
+    static {
+        //1
+        System.out.print("1");
     }
 
-    public static void main(String[] strings) {
+    public A() {
+        //3 5
+        System.out.print("2");
+    }
+}
 
-        String str = "012345";
+class B extends A {
 
-        str.substring(1, str.length() - 1);
-        Ulog.i(str.substring(1, 2));
-//        long privus = System.currentTimeMillis();
-//        String message = HttpUtils.sendGetRequest("http://116.247.74.76:8682/api/AutoUpdate?id=00000000000001", null);
-//        Ulog.i(message);
-//        Ulog.i("网络请求所用时间:", (System.currentTimeMillis() - privus));
-//        TestLog.i("测试引入的module");
-//
-//        foo(i);
-//        Ulog.i("i", i);
+    static {
 
-//        UtilJdbcMySql.startMySQLConn();
-//        UtilJdbcMySql.useDB();
-//        UtilJdbcMySql.insertBatch();
-//        Ulog.i( UtilJdbcMySql.setlect());
-//        UtilJdbcMySql.stopMySQLConn();
+        //2
+        System.out.print("a");
+    }
+
+    public B() {
+        //4 6
+        System.out.print("b");
+    }
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+        A ab = new B();//1a2b
+        ab = new B();//2b
+
     }
 
 }
+
+
+
+

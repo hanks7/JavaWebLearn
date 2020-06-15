@@ -75,13 +75,14 @@
             1.  /index.jsp-执行资源精准匹配
             2.  /test/*  有前缀的模糊匹配
             3.  *.jsp    以后缀进行的模糊匹配
-            4. 多个过滤配置
+            4.  /* 表示对所有 本项目的url进行拦截
+            5. 多个过滤配置
                    1. web.xml 配置
                               <filter>
                                       <filter-name>CharseterEncodingFilter</filter-name><!--过滤器的名称-->
                                       <filter-class>com.yidao.jdbc.imooc.day7filter.CharseterEncodingFilter</filter-class><!--用于说明哪一个类属于过滤器-->
                                       <init-param>
-                                          <param-name>encoding</param-name>
+                                          <param-name>encoding</param-name>  要传一个键值对到CharseterEncodingFilter  encoding=UTF-8
                                           <param-value>UTF-8</param-value>
                                       </init-param>
                               </filter>
@@ -91,7 +92,7 @@
                               </filter-mapping>
                               <filter-mapping>
                                       <filter-name>CharseterEncodingFilter</filter-name>
-                                      <url-pattern>/*</url-pattern>
+                                      <url-pattern>/test/*</url-pattern>  <!--有前缀的模糊匹配-->
                               </filter-mapping>
 
                    2. 注解 配置
