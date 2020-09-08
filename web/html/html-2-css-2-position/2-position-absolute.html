@@ -12,13 +12,13 @@
             background: red;
         }
         .sub {
-            position: absolute;
+            position: absolute;/*  在使用绝对定位之前,必须把父类的控件设置为position: relative,没有父类则不用设置*/
             width: 50px;
             height: 50px;
         }
 
         .tl {
-            top:0;
+            top:0;/*由于已经设置了position: absolute;那么 top left 就不表示便宜,而是表示靠离距离 下面三个控件相同*/
             left: 0;
             background: green;
         }
